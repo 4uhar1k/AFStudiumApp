@@ -5,11 +5,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AFStudiumApp"
     Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarForegroundColor="Green"
+    
     Title="AFStudiumApp">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.TitleView>
+        <HorizontalStackLayout BackgroundColor="White">
+            <Image Source="unilogo.png" />
+            
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+    <TabBar >
+        <ShellContent
+    Icon="study.png"
+    
+    ContentTemplate="{DataTemplate local:MainPage}"
+    Route="MainPage" />
+        <ShellContent
+    Icon="nutzer.png"
+    ContentTemplate="{DataTemplate local:ProfilePage}"
+    Route="ProfilePage" />
+    </TabBar>
+    
 
 </Shell>

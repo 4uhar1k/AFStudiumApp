@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AFStudiumApp.ProfilePage"
+             Title="ProfilePage">
+    <ScrollView>
+        <VerticalStackLayout
+         Padding="30,0"
+         Spacing="25"
+         >
+            <Grid Margin="0,30,0,0" RowSpacing="30" ColumnSpacing="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Grid.Column="0" WidthRequest="150"  HeightRequest="150" CornerRadius="0" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Mein &#10;Stunden-&#10;plan" LineBreakMode="WordWrap" TextColor="White" FontSize="25"/>
+                <Button Grid.Row="0" Grid.Column="1" WidthRequest="150"  HeightRequest="150" CornerRadius="0" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Meine &#10;Module" LineBreakMode="WordWrap"  TextColor="White" FontSize="25"/>
+                <Button Grid.Row="1" Grid.Column="0" WidthRequest="150"  HeightRequest="150" CornerRadius="0" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Meine &#10;Prüfungen" LineBreakMode="WordWrap" TextColor="White" FontSize="25"/>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
