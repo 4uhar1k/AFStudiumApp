@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using AFStudiumAPIClient.IoC;
+using AFStudiumAPIClient;
 
 namespace AFStudiumApp
 {
@@ -14,9 +16,17 @@ namespace AFStudiumApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
+            builder.Services.AddAFStudiumAPIClientService(x => x.ApiBaseAddress = "http://localhost:5214/");
+           /* builder.Services.AddSingleton<AFStudiumAPIClientService>();
+            builder.Services.AddHttpClient<AFStudiumAPIClientService>(client =>
+            {
+                client.BaseAddress = new Uri("http://10.0.2.2:5214/");
+            });*/
+            builder.Services.AddTransient<MainPage>();
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
+            //builder.Services.AddSingleton<SqlConnectionBase>();
+
 #endif
 
             return builder.Build();
