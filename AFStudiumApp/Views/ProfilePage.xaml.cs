@@ -1,4 +1,5 @@
 using AFStudiumAPIClient;
+using AFStudiumApp.ViewModels;
 
 namespace AFStudiumApp;
 
@@ -10,6 +11,7 @@ public partial class ProfilePage : ContentPage
 	{
 		InitializeComponent();
         _apiClient = apiClient;
+        BindingContext = new ViewModelBase(apiClient);
 	}
 
     public async void GoToModules(object sender, EventArgs e)

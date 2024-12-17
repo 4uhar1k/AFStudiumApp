@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using AFStudiumAPIClient.IoC;
 using AFStudiumAPIClient;
+using AFStudiumApp.ViewModels;
 
 namespace AFStudiumApp
 {
@@ -24,6 +25,7 @@ namespace AFStudiumApp
             });*/
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<ProfilePage>();
+            builder.Services.AddTransient<ViewModelBase>();
 
             //builder.
 #if DEBUG

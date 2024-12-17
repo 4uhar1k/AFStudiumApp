@@ -8,6 +8,14 @@
          Padding="30,0"
          Spacing="25"
          >
+            <Label>
+                <Label.Text>
+                    <MultiBinding StringFormat="{}Herzlich Willkommen, {0} {1}">
+                        <Binding Path="CurName"/>
+                        <Binding Path="CurSurName"/>
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
             <Grid Margin="0,30,0,0" RowSpacing="30" ColumnSpacing="30">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>

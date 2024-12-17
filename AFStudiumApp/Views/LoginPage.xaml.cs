@@ -20,11 +20,12 @@ public partial class LoginPage : ContentPage
 		var user = await _apiClient.GetUserByEmailNPass(loginentry.Text, passentry.Text);
 		if (user !=null)
 		{
-			File.Create(CurUserPath);
+			//File.Create(CurUserPath);
+			
 			using (StreamWriter sw = new StreamWriter(CurUserPath, false))
 			{
-				sw.WriteLine(user.Email);
-				sw.WriteLine(user.Password);
+				sw.WriteLine(user.MatrikelNum);
+				//sw.WriteLine(user.Password);
 				sw.Close();
 			}
 			await DisplayAlert("", $"Success: {user.MatrikelNum} {user.Name} {user.Surname}", "OK");
