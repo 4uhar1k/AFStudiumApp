@@ -7,13 +7,13 @@ namespace AFStudiumApp
     public partial class MainPage : ContentPage
     {
         public ObservableCollection<User> AllUsers { get; set; }
-        public SqlConnectionBase ConnectionBase { get; set; }
+        //public SqlConnectionBase ConnectionBase { get; set; }
         private readonly AFStudiumAPIClientService _apiClient;
 
         public MainPage(AFStudiumAPIClientService apiClient)
         {
             InitializeComponent();
-            ConnectionBase = new SqlConnectionBase();
+            //ConnectionBase = new SqlConnectionBase();
             AllUsers = new ObservableCollection<User>();
             //LoadUsers();
             _apiClient = apiClient;
