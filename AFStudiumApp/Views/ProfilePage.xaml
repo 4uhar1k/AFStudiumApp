@@ -22,7 +22,7 @@
                 <Button Grid.Row="0" Grid.Column="0" WidthRequest="150"  HeightRequest="150"  BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Mein &#10;Stunden-&#10;plan" LineBreakMode="WordWrap" TextColor="White" FontSize="25"/>
                 <Button Grid.Row="0" Grid.Column="1" Clicked="GoToModules" WidthRequest="150"  HeightRequest="150"  BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Meine &#10;Module" LineBreakMode="WordWrap"  TextColor="White" FontSize="25"/>
                 <Button Grid.Row="1" Grid.Column="0" Clicked="GoToExams" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Meine &#10;Prüfungen" LineBreakMode="WordWrap" TextColor="White" FontSize="25"/>
-
+                <Button Grid.Row="1" Grid.Column="1" Clicked="LogOut" WidthRequest="150"  HeightRequest="150" BackgroundColor="Red" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Abmelden" LineBreakMode="WordWrap" TextColor="White" FontSize="25"/>
             </Grid>
 
         </VerticalStackLayout>

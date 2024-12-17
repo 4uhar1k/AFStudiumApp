@@ -7,7 +7,12 @@ namespace AFStudiumApp
     {
         private readonly SqliteConnectionBase _connectionBase;
 
-        public App(SqliteConnectionBase connectionBase)
+        public App()
+        {
+            InitializeComponent();
+            MainPage = new AppShell();
+        }
+        /*public App(SqliteConnectionBase connectionBase)
         {
             InitializeComponent();
             //OnStart();
@@ -26,6 +31,6 @@ namespace AFStudiumApp
             //await database.CreateTablesAsync<GoalDto, TicketDto>();
 
             base.OnStart();
-        }
+        }*/
     }
 }

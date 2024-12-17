@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AFStudiumApp.LoginPage"
+             Title="LoginPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to login"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="30"/>
+
+        <Entry x:Name="loginentry" Placeholder="Login..." PlaceholderColor="Black" TextColor="Black" FontSize="20" />
+        <Entry x:Name="passentry" Placeholder="Password..." PlaceholderColor="Black" TextColor="Black" IsPassword="True" FontSize="20"/>
+        <Button Text="Log in" Clicked="LogIn"/>
+    </VerticalStackLayout>
+</ContentPage>

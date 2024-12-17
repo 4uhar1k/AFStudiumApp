@@ -2,6 +2,7 @@
 //using AFStudiumApp.Models;
 using System.Collections.ObjectModel;
 using AFStudiumAPIClient.Models.ApiModels;
+using AFStudiumApp.ViewModels;
 namespace AFStudiumApp
 {
     public partial class MainPage : ContentPage
@@ -9,15 +10,27 @@ namespace AFStudiumApp
         public ObservableCollection<User> AllUsers { get; set; }
         //public SqlConnectionBase ConnectionBase { get; set; }
         private readonly AFStudiumAPIClientService _apiClient;
+        public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
+
 
         public MainPage(AFStudiumAPIClientService apiClient)
         {
             InitializeComponent();
+            
             //ConnectionBase = new SqlConnectionBase();
             AllUsers = new ObservableCollection<User>();
             //LoadUsers();
             _apiClient = apiClient;
             BindingContext = this;
+            if (!File.Exists(CurUserPath))
+            {
+                GoToLogin();
+            }
+            //ViewModelBase viewModelBase = new ViewModelBase();
+            //if (viewModelBase.IsUserLogged().Result == false)
+            //{
+
+            //}
         }
 
         /* public async void LoadUsers()
@@ -51,6 +64,10 @@ namespace AFStudiumApp
         public async void GoToExams(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ExamsPage());
+        }
+        public async void GoToLogin()
+        {
+            await Navigation.PushModalAsync(new LoginPage(_apiClient));
         }
     }
 

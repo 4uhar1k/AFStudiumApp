@@ -13,12 +13,12 @@ namespace AFStudiumApp
 {
     public class SqliteConnectionBase
     {
-        string DataBasePath = "curuserdatabase.db3";
+        /*string DataBasePath = "curuserdatabase.db3";
         public ISQLiteAsyncConnection CreateConnection()
         {
             return new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory, DataBasePath),
                 SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.SharedCache);
-        }
+        }*/
         /* private readonly string _connectionString;
 
          public SqlConnectionBase()

@@ -23,12 +23,12 @@ namespace AFStudiumApp
                 client.BaseAddress = new Uri("http://10.0.2.2:5214/");
             });*/
             builder.Services.AddTransient<MainPage>();
-            builder.Services.AddSingleton<SqliteConnectionBase>();
+            builder.Services.AddTransient<ProfilePage>();
 
             //builder.
 #if DEBUG
             builder.Logging.AddDebug();
-
+            //builder.Services.AddSingleton<SqliteConnectionBase>();
 #endif
 
             return builder.Build();
