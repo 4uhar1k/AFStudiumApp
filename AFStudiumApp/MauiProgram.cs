@@ -16,7 +16,7 @@ namespace AFStudiumApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            builder.Services.AddAFStudiumAPIClientService(x => x.ApiBaseAddress = "http://localhost:5214/");
+            builder.Services.AddAFStudiumAPIClientService(x => x.ApiBaseAddress = "http://10.0.2.2:5000");
            /* builder.Services.AddSingleton<AFStudiumAPIClientService>();
             builder.Services.AddHttpClient<AFStudiumAPIClientService>(client =>
             {
