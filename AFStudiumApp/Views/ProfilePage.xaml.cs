@@ -6,4 +6,14 @@ public partial class ProfilePage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    public async void GoToModules(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new ModulesPage());
+    }
+
+    public async void GoToExams(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new ExamsPage());
+    }
 }
