@@ -20,8 +20,9 @@
                     <ColumnDefinition Width="1*"/>                    
                 </Grid.ColumnDefinitions>
                 <Button Grid.Row="0" Grid.Column="0" Clicked="GoToModules" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Module" TextColor="White" FontSize="25"/>
-                <Button Grid.Row="0" Grid.Column="1" Clicked="GoToExams" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Prüfungen" TextColor="White" FontSize="25"/>
-                <Button Grid.Row="1" Grid.Column="0" Clicked="TestAddUser" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Übungen" TextColor="White" FontSize="25"/>
+                <Button Grid.Row="0" Grid.Column="1" Clicked="GoToModules" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Vorlesungen" TextColor="White" FontSize="20"/>
+                <Button Grid.Row="1" Grid.Column="0" Clicked="GoToExams" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Prüfungen" TextColor="White" FontSize="25"/>
+                <Button Grid.Row="1" Grid.Column="1" Clicked="TestAddUser" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Übungen" TextColor="White" FontSize="25"/>
 
             </Grid>
             <CollectionView x:Name="UsersCollection">
