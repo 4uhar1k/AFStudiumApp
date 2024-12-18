@@ -18,9 +18,11 @@ namespace AFStudiumApp.ViewModels
         // public ISQLiteAsyncConnection CurUserConnection { get; set; }
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public string curname, cursurname;
-        private readonly AFStudiumAPIClientService _apiClient;
+        protected readonly AFStudiumAPIClientService _apiClient;
         public User CurUser { get; set; }
         // public bool IsLoggedIn { get; set; }
+
+        
 
         public ViewModelBase(AFStudiumAPIClientService apiClient)
         {
@@ -32,14 +34,14 @@ namespace AFStudiumApp.ViewModels
             //IsLoggedIn = IsUserLogged().Result;
            
         }
-        public async Task<bool> IsUserLogged()
-        {
-           // CurUserConnection = CurUserBase.CreateConnection();
-            //CurUser = await CurUserConnection.Table<User>().FirstAsync();
-            if (CurUser == null)
-                return false;
-            return true;
-        }
+        //public async Task<bool> IsUserLogged()
+        //{
+        //   // CurUserConnection = CurUserBase.CreateConnection();
+        //    //CurUser = await CurUserConnection.Table<User>().FirstAsync();
+        //    if (CurUser == null)
+        //        return false;
+        //    return true;
+        //}
         public async void GetUsersInfo()
         {
             int CurMatrikel = 0;

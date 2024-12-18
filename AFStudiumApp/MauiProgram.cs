@@ -26,6 +26,8 @@ namespace AFStudiumApp
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<ProfilePage>();
             builder.Services.AddTransient<ViewModelBase>();
+            builder.Services.AddTransient<ModulesViewModel>();
+            builder.Services.AddTransient<ModulesPage>();
 
             //builder.
 #if DEBUG

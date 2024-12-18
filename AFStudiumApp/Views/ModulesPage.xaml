@@ -12,6 +12,23 @@
             <Label Text="Alle Module" Grid.Column="0" FontSize="25" Margin="20,5,0,0" />
             <SearchBar Placeholder="Module suchen..." WidthRequest="250" Margin="-20,0,0,0" FontSize="17" Grid.Column="1" />
         </Grid>
+        <CollectionView HeightRequest="550" ItemsSource="{Binding AllSubjects}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label>
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                    <Binding Path="SubjectId"/>
+                                    <Binding Path="SubjectName"/>
+                                    <Binding Path="CreatedPerson"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         
         <Button Text="+" BackgroundColor="Green" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="End"/>
     </VerticalStackLayout>

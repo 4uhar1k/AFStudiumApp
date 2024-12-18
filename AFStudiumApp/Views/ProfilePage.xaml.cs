@@ -16,7 +16,7 @@ public partial class ProfilePage : ContentPage
 
     public async void GoToModules(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ModulesPage());
+        await Navigation.PushAsync(new ModulesPage(_apiClient));
     }
 
     public async void GoToExams(object sender, EventArgs e)

@@ -22,10 +22,10 @@ namespace AFStudiumApp
             //LoadUsers();
             _apiClient = apiClient;
             BindingContext = this;
-            if (!File.Exists(CurUserPath))
-            {
-                GoToLogin();
-            }
+            //if (!File.Exists(CurUserPath))
+            //{
+              //  GoToLogin();
+            //}
             //ViewModelBase viewModelBase = new ViewModelBase();
             //if (viewModelBase.IsUserLogged().Result == false)
             //{
@@ -58,7 +58,7 @@ namespace AFStudiumApp
 
         public async void GoToModules(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ModulesPage());
+            await Navigation.PushAsync(new ModulesPage(_apiClient));
         }
 
         public async void GoToExams(object sender, EventArgs e)
