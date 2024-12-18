@@ -3,18 +3,13 @@ using AFStudiumApp.ViewModels;
 
 namespace AFStudiumApp;
 
-public partial class ModulesPage : ContentPage
+public partial class AddModulPage : ContentPage
 {
 	private readonly AFStudiumAPIClientService _apiClient;
-	public ModulesPage(AFStudiumAPIClientService apiClient)
+	public AddModulPage(AFStudiumAPIClientService apiClient)
 	{
 		InitializeComponent();
 		_apiClient = apiClient;
 		BindingContext = new ModulesViewModel(_apiClient);
-	}
-
-	public async void AddModul(object sender, EventArgs e)
-	{
-		await Navigation.PushAsync(new AddModulPage(_apiClient));
 	}
 }
