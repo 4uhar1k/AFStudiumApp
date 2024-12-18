@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AFStudiumApp.AddEventPage"
+             Title="AddEventPage">
+    <VerticalStackLayout>
+        <Entry Text="{Binding SubjectName}" FontSize="25" PlaceholderColor="Black" Placeholder="Modulname..." IsReadOnly="True" />
+        <Picker Title="Fakultät" SelectedItem="{Binding EventType}">
+            <Picker.Items>
+                <x:String>Vorlesung</x:String>
+                <x:String>Übung</x:String>
+                <x:String>Seminar</x:String>
+                <x:String>Praktikum</x:String>
+                <x:String>Tutorium</x:String>
+                <x:String>Klausur</x:String>
+            </Picker.Items>
+        </Picker>
+        <Button Text="Hinzufügen" Command="{Binding AddEvent}" FontSize="20"/>
+    </VerticalStackLayout>
+</ContentPage>

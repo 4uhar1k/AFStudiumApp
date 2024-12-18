@@ -12,20 +12,19 @@
             <Label Text="Alle Module" Grid.Column="0" FontSize="25" Margin="20,5,0,0" />
             <SearchBar Placeholder="Module suchen..." WidthRequest="250" Margin="-20,0,0,0" FontSize="17" Grid.Column="1" />
         </Grid>
-        <CollectionView HeightRequest="550" ItemsSource="{Binding AllSubjects}">
+        <CollectionView x:Name="SubjectsCollection" HeightRequest="550" ItemsSource="{Binding AllSubjects}" SelectionMode="Single" SelectionChanged="ShowModul" 
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference Name=SubjectsCollection}, Path=SelectedItem}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout>
-                        <Label>
-                            <Label.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="SubjectId"/>
-                                    <Binding Path="SubjectName"/>
-                                    <Binding Path="CreatedPerson"/>
-                                </MultiBinding>
-                            </Label.Text>
-                        </Label>
-                    </StackLayout>
+                    <Border>
+                        <StackLayout>
+                            <Label Text="{Binding Faculty}" FontSize="20"/>
+                            <Label FontSize="27" Text="{Binding SubjectName}" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+
+                        </StackLayout>
+                    </Border>
+                    
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

@@ -5,6 +5,16 @@
              Title="AddModulPage">
     <VerticalStackLayout>
         <Entry Text="{Binding SubjectName}" FontSize="25" PlaceholderColor="Black" Placeholder="Modulname..." />
+        <Picker Title="Fakultät" SelectedItem="{Binding Faculty}">
+            <Picker.Items>
+                <x:String>Fakultät Mathematik</x:String>
+                <x:String>Fakultät Informatik</x:String>
+                <x:String>Fakultät Statistik</x:String>
+                <x:String>Fakultät Chemie</x:String>
+                <x:String>Fakultät BCI</x:String>
+                <x:String>Fakultät Wirtschaftswissenschaften</x:String>
+            </Picker.Items>
+        </Picker>
         <Button Text="Hinzufügen" Command="{Binding AddSubject}" FontSize="20"/>
     </VerticalStackLayout>
 </ContentPage>

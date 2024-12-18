@@ -22,10 +22,10 @@ namespace AFStudiumApp
             //LoadUsers();
             _apiClient = apiClient;
             BindingContext = this;
-            //if (!File.Exists(CurUserPath))
-            //{
-              //  GoToLogin();
-            //}
+            if (!File.Exists(CurUserPath))
+            {
+                GoToLogin();
+            }
             //ViewModelBase viewModelBase = new ViewModelBase();
             //if (viewModelBase.IsUserLogged().Result == false)
             //{

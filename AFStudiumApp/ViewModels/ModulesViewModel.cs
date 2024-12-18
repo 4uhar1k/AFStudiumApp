@@ -16,8 +16,8 @@ namespace AFStudiumApp.ViewModels
     public class ModulesViewModel: INotifyPropertyChanged
     {
         private readonly AFStudiumAPIClientService _apiClient;
-        public int subjectid;
-        public string subjectname, createdperson, curname, cursurname;
+        public int subjectid, eventid, studentsamount;
+        public string subjectname, faculty, curname, cursurname, eventname, eventtype;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public User CurUser;
         
@@ -26,20 +26,26 @@ namespace AFStudiumApp.ViewModels
 
         public ObservableCollection<Subject> AllSubjects { get; set; }
         public ICommand AddSubject { get; set; }
+        public ICommand AddEvent { get; set; }
         public ModulesViewModel(AFStudiumAPIClientService apiClient)
         {
             _apiClient = apiClient;
             AllSubjects = new ObservableCollection<Subject>();
             LoadSubjects();
-            GetUsersInfo();
+            //GetUsersInfo();
 
             AddSubject = new Command(() =>
-            {
-                
+            {               
 
-                Subject NewSubject = new Subject() { SubjectName = SubjectName, CreatedPerson = $"{curname} {cursurname}" };
+                Subject NewSubject = new Subject() { SubjectName = SubjectName, Faculty = Faculty };
                 _apiClient.PostSubject(NewSubject);
-            }, () => SubjectName!="" & SubjectName!=null);
+            }, () => SubjectName!="" & SubjectName!=null & Faculty!=null);
+
+            AddEvent = new Command(() =>
+            {
+                Event e = new Event() { SubjectId = SubjectId, EventName = $"{SubjectName} {EventType}", EventType = EventType };
+                _apiClient.PostEvent(e);
+            }, () => EventType != "" & EventType!= null);
         }
         public async void GetUsersInfo()
         {
@@ -79,6 +85,31 @@ namespace AFStudiumApp.ViewModels
             }
         }
 
+        public int EventId
+        {
+            get => eventid;
+            set
+            {
+                if (eventid != value)
+                {
+                    eventid = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int StudentsAmount
+        {
+            get => studentsamount;
+            set
+            {
+                if (studentsamount != value)
+                {
+                    studentsamount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string SubjectName
         {
             get => subjectname;
@@ -91,14 +122,40 @@ namespace AFStudiumApp.ViewModels
                 }
             }
         }
-        public string CreatedPerson
+        public string Faculty
         {
-            get => createdperson;
+            get => faculty;
             set
             {
-                if (createdperson != value)
+                if (faculty != value)
                 {
-                    createdperson = value;
+                    faculty = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string EventName
+        {
+            get => eventname;
+            set
+            {
+                if (eventname != value)
+                {
+                    eventname = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string EventType
+        {
+            get => eventtype;
+            set
+            {
+                if (eventtype != value)
+                {
+                    eventtype = value;
                     OnPropertyChanged();
                 }
             }
@@ -107,6 +164,7 @@ namespace AFStudiumApp.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
             ((Command)AddSubject).ChangeCanExecute();
+            ((Command)AddEvent).ChangeCanExecute();
         }
 
     }

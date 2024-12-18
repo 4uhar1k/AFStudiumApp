@@ -3,6 +3,7 @@ using AFStudiumAPIClient.IoC;
 using AFStudiumAPIClient;
 using AFStudiumApp.ViewModels;
 
+
 namespace AFStudiumApp
 {
     public static class MauiProgram
@@ -29,7 +30,8 @@ namespace AFStudiumApp
             builder.Services.AddTransient<ModulesViewModel>();
             builder.Services.AddTransient<ModulesPage>();
             builder.Services.AddTransient<AddModulPage>();
-
+            builder.Services.AddTransient<AddEventPage>();
+            builder.Services.AddTransient<AboutModulPage>();
 
             //builder.
 #if DEBUG
