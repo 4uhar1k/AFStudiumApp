@@ -4,10 +4,26 @@
              x:Class="AFStudiumApp.AboutModulPage"
              Title="AboutModulPage">
     <VerticalStackLayout>
-        <Label x:Name="SubjectName" FontSize="40"
-            Text="Welcome to .NET MAUI!"
+        <Label FontSize="40"
+            Text="{Binding SubjectName}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <CollectionView x:Name="SubjectsCollection" HeightRequest="550" ItemsSource="{Binding EventsOfSubject}" 
+                >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border>
+                        <StackLayout>
+                            <Label Text="{Binding EventName}" FontSize="20"/>
+                            <Label FontSize="27" Text="{Binding CreatedPerson}" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+
+                        </StackLayout>
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         <Button Text="+" BackgroundColor="Green" Clicked="AddEvent" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="Center"/>
 
     </VerticalStackLayout>

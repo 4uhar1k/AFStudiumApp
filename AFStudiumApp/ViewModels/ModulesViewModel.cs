@@ -25,14 +25,17 @@ namespace AFStudiumApp.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public ObservableCollection<Subject> AllSubjects { get; set; }
+        public ObservableCollection<Event> EventsOfSubject { get; set; }
         public ICommand AddSubject { get; set; }
         public ICommand AddEvent { get; set; }
         public ModulesViewModel(AFStudiumAPIClientService apiClient)
         {
             _apiClient = apiClient;
             AllSubjects = new ObservableCollection<Subject>();
+            EventsOfSubject = new ObservableCollection<Event>();
             LoadSubjects();
-            //GetUsersInfo();
+            //LoadEventsOfSubject();
+            GetUsersInfo();
 
             AddSubject = new Command(() =>
             {               
@@ -43,7 +46,7 @@ namespace AFStudiumApp.ViewModels
 
             AddEvent = new Command(() =>
             {
-                Event e = new Event() { SubjectId = SubjectId, EventName = $"{SubjectName} {EventType}", EventType = EventType };
+                Event e = new Event() { SubjectId = SubjectId, EventName = $"{SubjectName} {EventType}", EventType = EventType, CreatedPerson=$"{curname} {cursurname}" };
                 _apiClient.PostEvent(e);
             }, () => EventType != "" & EventType!= null);
         }
@@ -70,6 +73,20 @@ namespace AFStudiumApp.ViewModels
             {
                 AllSubjects.Add(subject);
             }
+        }
+
+        public async void LoadEventsOfSubject()
+        {
+            try
+            {
+                var events = await _apiClient.GetEvents();
+                foreach (Event e in events)
+                {
+                    if (e.SubjectId == SubjectId)
+                        EventsOfSubject.Add(e);
+                }
+            }
+            catch { }
         }
 
         public int SubjectId
