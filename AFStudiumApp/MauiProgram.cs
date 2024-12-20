@@ -33,7 +33,7 @@ namespace AFStudiumApp
             builder.Services.AddTransient<AddEventPage>();
             builder.Services.AddTransient<AboutModulPage>();
             builder.Services.AddTransient<ExamsPage>();
-
+            builder.Services.AddTransient<LecturesPage>();
             //builder.
 #if DEBUG
             builder.Logging.AddDebug();

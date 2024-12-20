@@ -65,6 +65,10 @@ namespace AFStudiumApp
         {
             await Navigation.PushAsync(new ExamsPage(_apiClient));
         }
+        public async void GoToLectures(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new LecturesPage(_apiClient));
+        }
         public async void GoToLogin()
         {
             await Navigation.PushModalAsync(new LoginPage(_apiClient));

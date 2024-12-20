@@ -12,6 +12,7 @@ public partial class ModulesPage : ContentPage
 		InitializeComponent();
 		_apiClient = apiClient;
 		BindingContext = new ModulesViewModel(_apiClient);
+
 	}
 
 	public async void AddModul(object sender, EventArgs e)

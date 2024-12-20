@@ -5,7 +5,7 @@
              Title="AddEventPage">
     <VerticalStackLayout>
         <Entry Text="{Binding SubjectName}" FontSize="25" PlaceholderColor="Black" Placeholder="Modulname..." IsReadOnly="True" />
-        <Picker Title="Fakultät" SelectedItem="{Binding EventType}">
+        <Picker Title="Veranstaltungstyp" SelectedItem="{Binding EventType}">
             <Picker.Items>
                 <x:String>Vorlesung</x:String>
                 <x:String>Übung</x:String>
