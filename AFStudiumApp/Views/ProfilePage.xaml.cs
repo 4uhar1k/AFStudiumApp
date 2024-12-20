@@ -21,7 +21,7 @@ public partial class ProfilePage : ContentPage
 
     public async void GoToExams(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ExamsPage());
+        await Navigation.PushAsync(new ExamsPage(_apiClient));
     }
 
     public async void LogOut(object sender, EventArgs e)

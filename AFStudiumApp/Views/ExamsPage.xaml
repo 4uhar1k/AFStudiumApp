@@ -12,7 +12,22 @@
             <Label Text="Alle Prüfungen" Grid.Column="0" FontSize="25" Margin="8,5,0,0" />
             <SearchBar Placeholder="Prüfungen suchen..." WidthRequest="250" Margin="-20,0,0,0" FontSize="17" Grid.Column="1" />
         </Grid>
+        <CollectionView x:Name="SubjectsCollection" HeightRequest="550" ItemsSource="{Binding Exams}" SelectionMode="Single"  
+                SelectionChangedCommandParameter="{Binding Source={x:Reference Name=SubjectsCollection}, Path=SelectedItem}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border>
+                        <StackLayout>
+                            <Label Text="{Binding CreatedPerson}" FontSize="20" HorizontalTextAlignment="Center"/>
+                            <Label FontSize="27" Text="{Binding EventName}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding StudentsAmount}" FontSize="15" HorizontalTextAlignment="End" TextColor="Grey" />
 
+                        </StackLayout>
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         <Button Text="+" BackgroundColor="Green" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="End"/>
     </VerticalStackLayout>
 </ContentPage>

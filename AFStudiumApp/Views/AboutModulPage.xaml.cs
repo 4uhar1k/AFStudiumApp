@@ -17,7 +17,7 @@ public partial class AboutModulPage : ContentPage
 		ModulesViewModel thisContext = new ModulesViewModel(_apiClient);
 		thisContext.SubjectName = subject.SubjectName;
 		thisContext.SubjectId = subject.SubjectId;
-		thisContext.LoadEventsOfSubject();
+		//thisContext.LoadEventsOfSubject();
 		BindingContext = thisContext;
 	}
 
