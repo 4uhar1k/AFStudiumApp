@@ -10,7 +10,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Label Text="Alle Module" Grid.Column="0" FontSize="25" Margin="20,5,0,0" />
-            <SearchBar Placeholder="Suchen..." WidthRequest="250" Margin="-20,0,0,0" FontSize="17" Grid.Column="1" />
+            <SearchBar Placeholder="Suchen..."  WidthRequest="250" Margin="-20,0,0,0" FontSize="17" Grid.Column="1" />
         </Grid>
         <CollectionView x:Name="SubjectsCollection" HeightRequest="550" ItemsSource="{Binding AllSubjects}" SelectionMode="Single" SelectionChanged="ShowModul" 
                         SelectionChangedCommandParameter="{Binding Source={x:Reference Name=SubjectsCollection}, Path=SelectedItem}">
@@ -20,8 +20,6 @@
                         <StackLayout>
                             <Label Text="{Binding Faculty}" FontSize="20"/>
                             <Label FontSize="27" Text="{Binding SubjectName}" HorizontalOptions="Center" VerticalOptions="Center"/>
-
-
                         </StackLayout>
                     </Border>
                     

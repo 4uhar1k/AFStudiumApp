@@ -1,5 +1,6 @@
 ﻿using AFStudiumAPIClient;
 using AFStudiumApp.ViewModels;
+using System.Data;
 
 namespace AFStudiumApp;
 
@@ -38,8 +39,15 @@ public partial class EventsPage : ContentPage
 
         
 	}
-	public void blabla()
+	/*public void SearchEvent(object sender, EventArgs e)
 	{
-		SubjectsCollection.ItemsSource = thisContext.Exams;
+		SearchBar searchBar = (SearchBar)sender;
+		SubjectsCollection.ItemsSource = DataService.GetSearchResults(searchBar.Text);
+	}*/
+
+	public async void EditEvent(object sender, EventArgs e)
+	{
+		Button EditBtn = (Button)sender;
+		await Navigation.PushAsync(new AddEventPage(_apiService, EditBtn.CommandParameter));
 	}
 }

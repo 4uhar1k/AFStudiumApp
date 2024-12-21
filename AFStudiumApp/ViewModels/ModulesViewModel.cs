@@ -31,6 +31,7 @@ namespace AFStudiumApp.ViewModels
         public ObservableCollection<Event> Exercises { get; set; }
         public ICommand AddSubject { get; set; }
         public ICommand AddEvent { get; set; }
+        public ICommand DeleteEvent { get; set; }
         public ModulesViewModel(AFStudiumAPIClientService apiClient)
         {
             _apiClient = apiClient;
@@ -55,6 +56,11 @@ namespace AFStudiumApp.ViewModels
                 Event e = new Event() { SubjectId = SubjectId, EventName = $"{SubjectName} {EventType}", EventType = EventType, CreatedPerson=$"{curname} {cursurname}", Date="Montag", Time="14:00-16:00" };
                 _apiClient.PostEvent(e);
             }, () => EventType != "" & EventType!= null);
+            DeleteEvent = new Command((object e) =>
+            {
+                Event EventToDelete = (Event)e;
+                _apiClient.DeleteEvent(EventToDelete.EventId);
+            });
         }
         public async void GetUsersInfo()
         {

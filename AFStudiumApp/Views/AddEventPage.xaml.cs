@@ -16,4 +16,16 @@ public partial class AddEventPage : ContentPage
 		thisContext.SubjectId = subject.SubjectId;
 		BindingContext = thisContext;
 	}
+	public AddEventPage(AFStudiumAPIClientService apiClient, object e)
+    {
+        InitializeComponent();
+        _apiClient = apiClient;
+		Event SelectedEvent = (Event)e;
+		//Subject SelectedSubject = _apiClient.GetSubjectById(SelectedEvent.SubjectId).Result;
+        ModulesViewModel thisContext = new ModulesViewModel(_apiClient);
+
+        thisContext.SubjectName = "smth";
+        thisContext.EventType = SelectedEvent.EventType;
+        BindingContext = thisContext;
+    }
 }
