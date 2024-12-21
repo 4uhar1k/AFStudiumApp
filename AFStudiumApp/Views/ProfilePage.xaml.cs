@@ -21,11 +21,11 @@ public partial class ProfilePage : ContentPage
 
     public async void GoToExams(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ExamsPage(_apiClient));
+        await Navigation.PushAsync(new EventsPage(_apiClient, "Klausur"));
     }
     public async void GoToLectures(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new LecturesPage(_apiClient));
+        await Navigation.PushAsync(new EventsPage(_apiClient, "Vorlesung"));
     }
     public async void LogOut(object sender, EventArgs e)
     {
