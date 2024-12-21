@@ -32,6 +32,8 @@ namespace AFStudiumApp.ViewModels
         public ICommand AddSubject { get; set; }
         public ICommand AddEvent { get; set; }
         public ICommand DeleteEvent { get; set; }
+        public ICommand EditSubject { get; set; }
+        public Subject SubjectToEdit { get; set; }
         public ModulesViewModel(AFStudiumAPIClientService apiClient)
         {
             _apiClient = apiClient;
@@ -40,6 +42,7 @@ namespace AFStudiumApp.ViewModels
             Exams = new ObservableCollection<Event>();
             Lectures = new ObservableCollection<Event>();
             Exercises = new ObservableCollection<Event>();
+            SubjectToEdit = new Subject();
             LoadSubjects();
             LoadEventsOfSubject();
             GetUsersInfo();
@@ -50,6 +53,11 @@ namespace AFStudiumApp.ViewModels
                 Subject NewSubject = new Subject() { SubjectName = SubjectName, Faculty = Faculty };
                 _apiClient.PostSubject(NewSubject);
             }, () => SubjectName!="" & SubjectName!=null & Faculty!=null);
+            EditSubject = new Command(() =>
+            {
+                Subject NewSubject = new Subject() { SubjectId = SubjectId, SubjectName = SubjectName, Faculty = Faculty };
+                _apiClient.PutSubject(NewSubject);
+            });
 
             AddEvent = new Command(() =>
             {

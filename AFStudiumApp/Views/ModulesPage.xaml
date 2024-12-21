@@ -20,6 +20,8 @@
                         <StackLayout>
                             <Label Text="{Binding Faculty}" FontSize="20"/>
                             <Label FontSize="27" Text="{Binding SubjectName}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Button x:Name="EditBtn" Clicked="EditModule" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
+                            <Button Text="Delete" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteModule}" CommandParameter="{Binding .}" />
                         </StackLayout>
                     </Border>
                     

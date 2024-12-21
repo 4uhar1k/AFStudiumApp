@@ -1,4 +1,5 @@
 ﻿using AFStudiumAPIClient;
+using AFStudiumAPIClient.Models.ApiModels;
 using AFStudiumApp.ViewModels;
 using System.Data;
 
@@ -48,6 +49,8 @@ public partial class EventsPage : ContentPage
 	public async void EditEvent(object sender, EventArgs e)
 	{
 		Button EditBtn = (Button)sender;
-		await Navigation.PushAsync(new AddEventPage(_apiService, EditBtn.CommandParameter));
+		Event ev = (Event)EditBtn.CommandParameter;
+		object sub = _apiService.GetSubjectById(ev.SubjectId);
+		await Navigation.PushAsync(new AddEventPage(_apiService, ev));
 	}
 }

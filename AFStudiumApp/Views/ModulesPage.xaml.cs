@@ -28,4 +28,11 @@ public partial class ModulesPage : ContentPage
 			await Navigation.PushAsync(new AboutModulPage(_apiClient, SelectedSubject));
 		}
 	}
+    public async void EditModule(object sender, EventArgs e)
+    {
+        Button EditBtn = (Button)sender;
+        Subject sub = (Subject)EditBtn.CommandParameter;
+        
+        await Navigation.PushAsync(new AddModulPage(_apiClient, sub));
+    }
 }
