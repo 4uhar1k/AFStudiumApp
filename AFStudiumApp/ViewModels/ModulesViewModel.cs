@@ -30,9 +30,11 @@ namespace AFStudiumApp.ViewModels
         public ObservableCollection<Event> Lectures { get; set; }
         public ObservableCollection<Event> Exercises { get; set; }
         public ICommand AddSubject { get; set; }
+        public ICommand DeleteSubject { get; set; }
+        public ICommand EditSubject { get; set; }
         public ICommand AddEvent { get; set; }
         public ICommand DeleteEvent { get; set; }
-        public ICommand EditSubject { get; set; }
+        public ICommand EditEvent { get; set; }
         public Subject SubjectToEdit { get; set; }
         public ModulesViewModel(AFStudiumAPIClientService apiClient)
         {
@@ -58,12 +60,21 @@ namespace AFStudiumApp.ViewModels
                 Subject NewSubject = new Subject() { SubjectId = SubjectId, SubjectName = SubjectName, Faculty = Faculty };
                 _apiClient.PutSubject(NewSubject);
             });
-
+            DeleteSubject = new Command((object s) =>
+            {
+                Subject SubjectToDelete = (Subject)s;
+                _apiClient.DeleteSubject(SubjectToDelete.SubjectId);
+            });
             AddEvent = new Command(() =>
             {
-                Event e = new Event() { SubjectId = SubjectId, EventName = $"{SubjectName} {EventType}", EventType = EventType, CreatedPerson=$"{curname} {cursurname}", Date="Montag", Time="14:00-16:00" };
+                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson=$"{curname} {cursurname}", Date="Montag", Time="14:00-16:00" };
                 _apiClient.PostEvent(e);
             }, () => EventType != "" & EventType!= null);
+            EditEvent = new Command(() =>
+            {
+                Event e = new Event() { EventId = EventId, SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = $"{curname} {cursurname}", Date = "Montag", Time = "14:00-16:00" };
+                _apiClient.PutEvent(e);
+            });
             DeleteEvent = new Command((object e) =>
             {
                 Event EventToDelete = (Event)e;

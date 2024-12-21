@@ -12,7 +12,8 @@ public partial class AddModulPage : ContentPage
 	{
 		InitializeComponent();
 		_apiClient = apiClient;
-		BindingContext = new ModulesViewModel(_apiClient);
+		thisContext = new ModulesViewModel(_apiClient);
+		BindingContext = thisContext;
 	}
 
     public AddModulPage(AFStudiumAPIClientService apiClient, Subject s)

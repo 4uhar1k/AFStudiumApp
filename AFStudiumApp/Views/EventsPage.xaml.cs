@@ -50,7 +50,7 @@ public partial class EventsPage : ContentPage
 	{
 		Button EditBtn = (Button)sender;
 		Event ev = (Event)EditBtn.CommandParameter;
-		object sub = _apiService.GetSubjectById(ev.SubjectId);
+		//object sub = _apiService.GetSubjectById(ev.SubjectId);
 		await Navigation.PushAsync(new AddEventPage(_apiService, ev));
 	}
 }

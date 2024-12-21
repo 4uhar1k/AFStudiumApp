@@ -4,15 +4,10 @@
              x:Class="AFStudiumApp.AddEventPage"
              Title="AddEventPage">
     <VerticalStackLayout>
-        <Entry FontSize="25" PlaceholderColor="Black" Placeholder="Modulname..." >
-            <Entry.Text>
-                <MultiBinding StringFormat="{}{0} {1}">
-                    <Binding Path="SubjectName"/>
-                    <Binding Path="EventType"/>
-                </MultiBinding>
-            </Entry.Text>
+        <Entry Text="{Binding EventName}" x:Name="EventNameEntry" FontSize="25" PlaceholderColor="Black" Placeholder="Modulname..." >
+            
         </Entry>
-        <Picker Title="Veranstaltungstyp" SelectedItem="{Binding EventType}">
+        <Picker x:Name="EventPicker" SelectedIndexChanged="ChangeText" Title="Veranstaltungstyp" SelectedItem="{Binding EventType}">
             <Picker.Items>
                 <x:String>Vorlesung</x:String>
                 <x:String>Übung</x:String>
@@ -22,6 +17,6 @@
                 <x:String>Klausur</x:String>
             </Picker.Items>
         </Picker>
-        <Button Text="Hinzufügen" Command="{Binding AddEvent}" FontSize="20"/>
+        <Button x:Name="AddBtn" Text="Hinzufügen" Command="{Binding AddEvent}" FontSize="20"/>
     </VerticalStackLayout>
 </ContentPage>
