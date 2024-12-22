@@ -40,13 +40,22 @@ public partial class EventsPage : ContentPage
 
         
 	}
-	/*public void SearchEvent(object sender, EventArgs e)
+
+    public EventsPage(AFStudiumAPIClientService apiService)
+    {
+		InitializeComponent();
+		_apiService = apiService;
+		thisContext = new ModulesViewModel(_apiService);
+		BindingContext = thisContext;
+		SubjectsCollection.ItemsSource = thisContext.MyEvents;
+    }
+    /*public void SearchEvent(object sender, EventArgs e)
 	{
 		SearchBar searchBar = (SearchBar)sender;
 		SubjectsCollection.ItemsSource = DataService.GetSearchResults(searchBar.Text);
 	}*/
 
-	public async void EditEvent(object sender, EventArgs e)
+    public async void EditEvent(object sender, EventArgs e)
 	{
 		Button EditBtn = (Button)sender;
 		Event ev = (Event)EditBtn.CommandParameter;
