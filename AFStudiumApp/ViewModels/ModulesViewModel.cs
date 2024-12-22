@@ -64,7 +64,7 @@ namespace AFStudiumApp.ViewModels
             DeleteSubject = new Command((object s) =>
             {
                 Subject SubjectToDelete = (Subject)s;
-                _apiClient.DeleteSubject(SubjectToDelete.SubjectId);
+                DeleteEventsOfSubject(SubjectToDelete);
             });
             AddEvent = new Command(() =>
             {
@@ -105,6 +105,19 @@ namespace AFStudiumApp.ViewModels
             {
                 AllSubjects.Add(subject);
             }
+        }
+        public async void DeleteEventsOfSubject(Subject subject)
+        {
+            var eventsofsub = await _apiClient.GetEventsBySubjectId(subject.SubjectId);
+            if (eventsofsub != null)
+            {
+                foreach (Event e in eventsofsub)
+                {
+                    _apiClient.DeleteEvent(e.EventId);
+                }
+            }
+           await _apiClient.DeleteSubject(subject.SubjectId);
+
         }
 
         public async void LoadEventsOfSubject()
