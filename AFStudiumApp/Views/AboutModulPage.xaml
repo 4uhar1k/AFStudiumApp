@@ -17,7 +17,8 @@
                             <Label Text="{Binding EventName}" FontSize="20"/>
                             <Label FontSize="27" Text="{Binding CreatedPerson}" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-
+                            <Button x:Name="EditBtn" Clicked="EditEvent" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
+                            <Button Text="Delete" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteEvent}" CommandParameter="{Binding .}" />
                         </StackLayout>
                     </Border>
 

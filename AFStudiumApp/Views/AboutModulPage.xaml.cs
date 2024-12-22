@@ -25,4 +25,11 @@ public partial class AboutModulPage : ContentPage
 	{
 		await Navigation.PushAsync(new AddEventPage(_apiClient, thisSubject));
 	}
+    public async void EditEvent(object sender, EventArgs e)
+    {
+        Button EditBtn = (Button)sender;
+        Event ev = (Event)EditBtn.CommandParameter;
+        //object sub = _apiService.GetSubjectById(ev.SubjectId);
+        await Navigation.PushAsync(new AddEventPage(_apiClient, ev));
+    }
 }
