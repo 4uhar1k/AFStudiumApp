@@ -16,12 +16,12 @@ public partial class ProfilePage : ContentPage
 
     public async void GoToModules(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new EventsPage(_apiClient));
+        await Navigation.PushAsync(new EventsPage(_apiClient, false));
     }
 
     public async void GoToExams(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new EventsPage(_apiClient, "Klausur"));
+        await Navigation.PushAsync(new EventsPage(_apiClient, true));
     }
     public async void GoToLectures(object sender, EventArgs e)
     {

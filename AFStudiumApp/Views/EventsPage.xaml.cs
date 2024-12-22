@@ -41,13 +41,16 @@ public partial class EventsPage : ContentPage
         
 	}
 
-    public EventsPage(AFStudiumAPIClientService apiService)
+    public EventsPage(AFStudiumAPIClientService apiService, bool isExam)
     {
 		InitializeComponent();
 		_apiService = apiService;
 		thisContext = new ModulesViewModel(_apiService);
 		BindingContext = thisContext;
-		SubjectsCollection.ItemsSource = thisContext.MyEvents;
+		if (isExam)
+			SubjectsCollection.ItemsSource = thisContext.MyExams;
+		else
+			SubjectsCollection.ItemsSource = thisContext.MyEvents;
     }
     /*public void SearchEvent(object sender, EventArgs e)
 	{
