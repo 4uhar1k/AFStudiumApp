@@ -51,6 +51,12 @@ public partial class EventsPage : ContentPage
 			SubjectsCollection.ItemsSource = thisContext.MyExams;
 		else
 			SubjectsCollection.ItemsSource = thisContext.MyEvents;
+		GetMyEvents();
+    }
+	public async void GetMyEvents()
+	{
+        var mysubjects = await _apiService.GetConnectionsByUserId(thisContext.CurMatrikel);
+        MySubjectsCollection.ItemsSource = mysubjects;
     }
     /*public void SearchEvent(object sender, EventArgs e)
 	{
