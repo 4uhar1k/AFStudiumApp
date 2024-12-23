@@ -23,10 +23,7 @@ public partial class ProfilePage : ContentPage
     {
         await Navigation.PushAsync(new EventsPage(_apiClient, true));
     }
-    public async void GoToLectures(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new EventsPage(_apiClient, "Vorlesung"));
-    }
+    
     public async void LogOut(object sender, EventArgs e)
     {
         File.Delete(CurUserPath);

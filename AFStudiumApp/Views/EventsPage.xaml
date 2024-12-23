@@ -18,7 +18,6 @@
                 <DataTemplate>
                     <Border>
                         <StackLayout>
-                            <Label Text="{Binding CreatedPerson}" FontSize="20" HorizontalTextAlignment="Center"/>
                             <Label FontSize="27" Text="{Binding EventName}" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label Text="{Binding StudentsAmount}" FontSize="15" HorizontalTextAlignment="End" TextColor="Grey" />
                             <Button x:Name="EditBtn" Clicked="EditEvent" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />

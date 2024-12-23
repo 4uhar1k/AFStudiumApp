@@ -25,6 +25,13 @@ public partial class LoginPage : ContentPage
 			using (StreamWriter sw = new StreamWriter(CurUserPath, false))
 			{
 				sw.WriteLine(user.MatrikelNum);
+				sw.WriteLine(user.Email);
+				sw.WriteLine(user.Password);
+				sw.WriteLine(user.Name);
+				sw.WriteLine(user.Surname);
+				sw.WriteLine(user.Course);
+				sw.WriteLine(user.Semester);
+				sw.WriteLine(user.Role);
 				//sw.WriteLine(user.Password);
 				sw.Close();
 			}

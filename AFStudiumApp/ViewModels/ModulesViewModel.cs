@@ -16,8 +16,8 @@ namespace AFStudiumApp.ViewModels
     public class ModulesViewModel: INotifyPropertyChanged
     {
         private readonly AFStudiumAPIClientService _apiClient;
-        public int subjectid, eventid, studentsamount;
-        public string subjectname, faculty, curname, cursurname, eventname, eventtype;
+        public int subjectid, eventid, studentsamount, CurMatrikel, CurSemester, createdperson;
+        public string subjectname, faculty, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public User CurUser;
         
@@ -70,12 +70,12 @@ namespace AFStudiumApp.ViewModels
             });
             AddEvent = new Command(() =>
             {
-                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson=$"{curname} {cursurname}", Date="Montag", Time="14:00-16:00" };
+                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson=CreatedPerson, Date="Montag", Time="14:00-16:00" };
                 _apiClient.PostEvent(e);
             }, () => EventType != "" & EventType!= null);
             EditEvent = new Command(() =>
             {
-                Event e = new Event() { EventId = EventId, SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = $"{curname} {cursurname}", Date = "Montag", Time = "14:00-16:00" };
+                Event e = new Event() { EventId = EventId, SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CreatedPerson, Date = "Montag", Time = "14:00-16:00" };
                 _apiClient.PutEvent(e);
             });
             DeleteEvent = new Command((object e) =>
@@ -86,18 +86,20 @@ namespace AFStudiumApp.ViewModels
         }
         public async void GetUsersInfo()
         {
-            int CurMatrikel = 0;
+            //int CurMatrikel = 0;
             using (StreamReader sr = new StreamReader(CurUserPath))
             {
                 CurMatrikel = Int32.Parse(sr.ReadLine());
+                CurEmail = sr.ReadLine();
+                CurPass = sr.ReadLine();
+                CurName = sr.ReadLine();
+                CurSurname = sr.ReadLine();
+                CurCourse = sr.ReadLine();
+                CurSemester = Int32.Parse(sr.ReadLine());
+                CurRole = sr.ReadLine();
                 sr.Close();
             }
-            CurUser = await _apiClient.GetUserByMatrikelNum(CurMatrikel);
-            if (CurUser != null)
-            {
-                curname = CurUser.Name;
-                cursurname = CurUser.Surname;
-            }
+            
         }
 
         public async void LoadSubjects()
@@ -131,14 +133,14 @@ namespace AFStudiumApp.ViewModels
                 {
                     if (e.SubjectId == SubjectId)
                         EventsOfSubject.Add(e);
-                    else if (e.EventType == "Klausur")
+                    if (e.EventType == "Klausur")
                         Exams.Add(e);
                     else if (e.EventType == "Vorlesung")
                         Lectures.Add(e);
                     else if (e.EventType == "Übung")
                         Exercises.Add(e);
                 }
-                var myevents = await _apiClient.GetMyEvents($"{CurUser.Name} {CurUser.Surname}");
+                var myevents = await _apiClient.GetMyEvents(CurMatrikel);
                 foreach (Event e in myevents)
                 {
                     if (e.EventType != "Klausur")
@@ -183,6 +185,18 @@ namespace AFStudiumApp.ViewModels
                 if (studentsamount != value)
                 {
                     studentsamount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int CreatedPerson
+        {
+            get => createdperson;
+            set
+            {
+                if (createdperson != value)
+                {
+                    createdperson = value;
                     OnPropertyChanged();
                 }
             }
