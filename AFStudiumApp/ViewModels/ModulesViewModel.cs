@@ -16,11 +16,12 @@ namespace AFStudiumApp.ViewModels
     public class ModulesViewModel: INotifyPropertyChanged
     {
         private readonly AFStudiumAPIClientService _apiClient;
-        public int subjectid, eventid, studentsamount, CurMatrikel, CurSemester, createdperson;
+        public int subjectid, eventid, studentsamount, CurMatrikel, createdperson;
         public string subjectname, faculty, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole;
+        public bool isAllowed;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public User CurUser;
-        
+        public int? CurSemester;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -40,7 +41,7 @@ namespace AFStudiumApp.ViewModels
         public Subject SubjectToEdit { get; set; }
         public ModulesViewModel(AFStudiumAPIClientService apiClient)
         {
-            _apiClient = apiClient;
+            _apiClient = apiClient;            
             AllSubjects = new ObservableCollection<Subject>();
             EventsOfSubject = new ObservableCollection<Event>();
             Exams = new ObservableCollection<Event>();
@@ -99,7 +100,10 @@ namespace AFStudiumApp.ViewModels
                 CurRole = sr.ReadLine();
                 sr.Close();
             }
-            
+            if (CurRole == "student")
+                IsAllowed = false;
+            else
+                IsAllowed = true;
         }
 
         public async void LoadSubjects()
@@ -222,6 +226,19 @@ namespace AFStudiumApp.ViewModels
                 if (faculty != value)
                 {
                     faculty = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsAllowed
+        {
+            get => isAllowed;
+            set
+            {
+                if (isAllowed!=value)
+                {
+                    isAllowed = value;
                     OnPropertyChanged();
                 }
             }
