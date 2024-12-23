@@ -22,7 +22,7 @@
                 <Button Grid.Row="0" Grid.Column="0" Clicked="GoToModules" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Module" TextColor="White" FontSize="25"/>
                 <Button Grid.Row="0" Grid.Column="1" Clicked="GoToLectures" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Vorlesungen" TextColor="White" FontSize="20"/>
                 <Button Grid.Row="1" Grid.Column="0" Clicked="GoToExams" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Prüfungen" TextColor="White" FontSize="25"/>
-                <Button Grid.Row="1" Grid.Column="1" Clicked="GoToExercises" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Übungen" TextColor="White" FontSize="25"/>
+                <Button Grid.Row="1" Grid.Column="1" Clicked="TestAddUser" WidthRequest="150"  HeightRequest="150" BackgroundColor="Green" ContentLayout="Top,-10" HorizontalOptions="Center" VerticalOptions="Center" Text="Übungen" TextColor="White" FontSize="25"/>
 
             </Grid>
             <CollectionView x:Name="UsersCollection">
@@ -32,9 +32,9 @@
                             <Label>
                                 <Label.Text>
                                     <MultiBinding StringFormat="{}{0} {1} {2}">
-                                        <Binding Path="MatrikelNum"/>
-                                        <Binding Path="Name"/>
-                                        <Binding Path="Surname"/>
+                                        <Binding Path="Id"/>
+                                        <Binding Path="StudentId"/>
+                                        <Binding Path="EventId"/>
                                     </MultiBinding>
                                 </Label.Text>
                             </Label>

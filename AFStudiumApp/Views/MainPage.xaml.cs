@@ -51,7 +51,9 @@ namespace AFStudiumApp
         */
         public async void TestAddUser(object sender,  EventArgs e)
         {
-            var users = await _apiClient.GetUsers();
+            User u = new User { MatrikelNum = 333333, Email = "ah", Password = "b", Name = "c", Surname = "student2", Course = "e", Semester = 99, Role = "student" };
+            //_apiClient.PostConnection(333333, 13);
+            var users = await _apiClient.GetConnections();
             UsersCollection.ItemsSource = users;            //User testuser = new User() { MatrikelNum = 1 , Email="test", Password="testpass", Name="testname", Surname="testsurname", Course="testcourse", Semester=1};
             
         }
