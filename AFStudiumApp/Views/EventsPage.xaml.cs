@@ -51,12 +51,24 @@ public partial class EventsPage : ContentPage
 			SubjectsCollection.ItemsSource = thisContext.MyExams;
 		else
 			SubjectsCollection.ItemsSource = thisContext.MyEvents;
-		GetMyEvents();
+		GetMyEvents(isExam);
     }
-	public async void GetMyEvents()
+	public async void GetMyEvents(bool isExam)
 	{
-        var mysubjects = await _apiService.GetConnectionsByUserId(thisContext.CurMatrikel);
-        MySubjectsCollection.ItemsSource = mysubjects;
+        var myevents = await _apiService.GetConnectionsByUserId(thisContext.CurMatrikel);
+		List<Event> notexams = new List<Event>();
+		List<Event> exams = new List<Event>();
+		foreach (Event e in myevents)
+		{
+			if (e.EventType != "Klausur")
+				notexams.Add(e);
+			else
+				exams.Add(e);
+		}
+		if (isExam == false)
+			MySubjectsCollection.ItemsSource = notexams;
+		else
+			MySubjectsCollection.ItemsSource = exams;
     }
     /*public void SearchEvent(object sender, EventArgs e)
 	{

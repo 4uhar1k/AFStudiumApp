@@ -36,6 +36,7 @@ namespace AFStudiumApp.ViewModels
         public ICommand DeleteSubject { get; set; }
         public ICommand EditSubject { get; set; }
         public ICommand AddEvent { get; set; }
+        public ICommand AddEventForStudent { get; set; }
         public ICommand DeleteEvent { get; set; }
         public ICommand EditEvent { get; set; }
         public Subject SubjectToEdit { get; set; }
@@ -74,6 +75,11 @@ namespace AFStudiumApp.ViewModels
                 Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson=CreatedPerson, Date="Montag", Time="14:00-16:00" };
                 _apiClient.PostEvent(e);
             }, () => EventType != "" & EventType!= null);
+            AddEventForStudent = new Command((object e) =>
+            {
+                Event SelectedEvent = (Event)e;
+                AddEventForStudentAsync(SelectedEvent);
+            });
             EditEvent = new Command(() =>
             {
                 Event e = new Event() { EventId = EventId, SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CreatedPerson, Date = "Montag", Time = "14:00-16:00" };
@@ -154,6 +160,11 @@ namespace AFStudiumApp.ViewModels
                 }
             }
             catch { }
+        }
+
+        public async void AddEventForStudentAsync(Event e)
+        {
+            await _apiClient.PostConnection(CurMatrikel, e.EventId);
         }
 
         public int SubjectId
