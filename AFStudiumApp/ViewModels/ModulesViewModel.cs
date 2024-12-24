@@ -38,6 +38,7 @@ namespace AFStudiumApp.ViewModels
         public ICommand AddEvent { get; set; }
         public ICommand AddEventForStudent { get; set; }
         public ICommand DeleteEvent { get; set; }
+        public ICommand DeleteEventForStudent { get; set; }
         public ICommand EditEvent { get; set; }
         public Subject SubjectToEdit { get; set; }
         public ModulesViewModel(AFStudiumAPIClientService apiClient)
@@ -78,7 +79,7 @@ namespace AFStudiumApp.ViewModels
             AddEventForStudent = new Command((object e) =>
             {
                 Event SelectedEvent = (Event)e;
-                AddEventForStudentAsync(SelectedEvent);
+                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId);
             });
             EditEvent = new Command(() =>
             {
@@ -89,6 +90,11 @@ namespace AFStudiumApp.ViewModels
             {
                 Event EventToDelete = (Event)e;
                 _apiClient.DeleteEvent(EventToDelete.EventId);
+            });
+            DeleteEventForStudent = new Command((object e) =>
+            {
+                Event EventToDelete = (Event)e;
+                _apiClient.DeleteConnection(CurMatrikel, EventToDelete.EventId);
             });
         }
         public async void GetUsersInfo()
@@ -162,10 +168,10 @@ namespace AFStudiumApp.ViewModels
             catch { }
         }
 
-        public async void AddEventForStudentAsync(Event e)
-        {
-            await _apiClient.PostConnection(CurMatrikel, e.EventId);
-        }
+        //public async void AddEventForStudentAsync(Event e)
+        //{
+        //    await _apiClient.PostConnection(CurMatrikel, e.EventId);
+        //}
 
         public int SubjectId
         {

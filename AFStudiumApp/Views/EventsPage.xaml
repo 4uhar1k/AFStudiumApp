@@ -37,7 +37,7 @@
                         <StackLayout>
                             <Label FontSize="27" Text="{Binding EventName}" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label Text="{Binding SubjectId}" FontSize="15" HorizontalTextAlignment="End" TextColor="Grey" />
-                            <Button Text="Delete" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteEvent}" CommandParameter="{Binding .}" />
+                            <Button Text="Delete" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteEventForStudent}" CommandParameter="{Binding .}" />
                         </StackLayout>
                     </Border>
 
