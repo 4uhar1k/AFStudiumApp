@@ -25,6 +25,7 @@ namespace AFStudiumApp.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public ObservableCollection<Subject> AllSubjects { get; set; }
+        public ObservableCollection<User> Students { get; set; }
         public ObservableCollection<Event> EventsOfSubject { get; set; }
         public ObservableCollection<Event> Exams { get; set; }
         public ObservableCollection<Event> Lectures { get; set; }
@@ -44,6 +45,7 @@ namespace AFStudiumApp.ViewModels
         {
             _apiClient = apiClient;            
             AllSubjects = new ObservableCollection<Subject>();
+            Students = new ObservableCollection<User>();
             EventsOfSubject = new ObservableCollection<Event>();
             Exams = new ObservableCollection<Event>();
             Lectures = new ObservableCollection<Event>();
@@ -144,6 +146,15 @@ namespace AFStudiumApp.ViewModels
             foreach (Subject subject in subjects)
             {
                 AllSubjects.Add(subject);
+            }
+        }
+        public async Task LoadStudents()
+        {
+            var users = await _apiClient.GetUsers();
+            foreach (User user in users)
+            {
+                if (user.Role == "student")
+                    Students.Add(user);
             }
         }
         public async Task DeleteEventsOfSubject(Subject subject)

@@ -61,6 +61,11 @@ public partial class AddEventPage : ContentPage
 	   
     }
 
+	public async void AddStudents (object sender, EventArgs e)
+	{
+		await Navigation.PushAsync(new ListOfStudentsPage(_apiClient, thisContext.EventId));
+	}
+
 	public void ChangeText(object sender, EventArgs e)
 	{
 		string[] eventname = EventNameEntry.Text.Split(' ');

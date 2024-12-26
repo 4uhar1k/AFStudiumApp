@@ -17,6 +17,7 @@
                 <x:String>Klausur</x:String>
             </Picker.Items>
         </Picker>
+        <Button Text="Student manuell hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddStudents"  />
         <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" Command="{Binding AddEvent}" FontSize="20"/>
     </VerticalStackLayout>
 </ContentPage>
