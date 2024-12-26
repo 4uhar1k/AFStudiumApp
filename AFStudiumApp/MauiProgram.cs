@@ -28,18 +28,18 @@ namespace AFStudiumApp
             builder.Services.AddTransient<ProfilePage>();
             builder.Services.AddTransient<ViewModelBase>();
             builder.Services.AddTransient<ModulesViewModel>();
-            builder.Services.AddTransient<ModulesPage>();
-            builder.Services.AddTransient<AddModulPage>();
-            builder.Services.AddTransient<AddEventPage>();
-            builder.Services.AddTransient<AboutModulPage>();
+            //builder.Services.AddTransient<ModulesPage>();
+            //builder.Services.AddTransient<AddModulPage>();
+            //builder.Services.AddTransient<AddEventPage>();
+            //builder.Services.AddTransient<AboutModulPage>();
             
-            builder.Services.AddTransient<EventsPage>();
+            //builder.Services.AddTransient<EventsPage>();
             
 
             //builder.
 #if DEBUG
             builder.Logging.AddDebug();
-            //builder.Services.AddSingleton<SqliteConnectionBase>();
+            //builder.Services.AddSingleton<AFStudiumAPIClientService>();
 #endif
 
             return builder.Build();

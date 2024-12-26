@@ -9,7 +9,7 @@ namespace AFStudiumApp
     {
         public ObservableCollection<User> AllUsers { get; set; }
         //public SqlConnectionBase ConnectionBase { get; set; }
-        private readonly AFStudiumAPIClientService _apiClient;
+        public readonly AFStudiumAPIClientService _apiClient;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
 
 
@@ -53,7 +53,7 @@ namespace AFStudiumApp
         {
             User u = new User { MatrikelNum = 333333, Email = "ah", Password = "b", Name = "c", Surname = "student2", Course = "e", Semester = 99, Role = "student" };
             //_apiClient.PostConnection(333333, 13);
-            var users = await _apiClient.GetConnections();
+            var users = await _apiClient.GetConnectionsByUserId(333333);
             UsersCollection.ItemsSource = users;            //User testuser = new User() { MatrikelNum = 1 , Email="test", Password="testpass", Name="testname", Surname="testsurname", Course="testcourse", Semester=1};
             
         }

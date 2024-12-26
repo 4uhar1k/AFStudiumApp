@@ -12,7 +12,7 @@
             <Label Text="Alle Vorlesungen" Grid.Column="0" FontSize="21" Margin="8,5,0,0" />
             <SearchBar Placeholder="Suchen..." WidthRequest="250" Margin="-20,0,0,0" FontSize="17" Grid.Column="1" />
         </Grid>
-        <CollectionView IsVisible="{Binding IsAllowed}" x:Name="SubjectsCollection" HeightRequest="550" SelectionMode="Single"  
+        <CollectionView IsVisible="{Binding IsTeacher}" x:Name="SubjectsCollection" MaximumHeightRequest="550" SelectionMode="Single"  
              SelectionChangedCommandParameter="{Binding Source={x:Reference Name=SubjectsCollection}, Path=SelectedItem}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -20,16 +20,16 @@
                         <StackLayout>
                             <Label FontSize="27" Text="{Binding EventName}" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label Text="{Binding StudentsAmount}" FontSize="15" HorizontalTextAlignment="End" TextColor="Grey" />
-                            <Button x:Name="EditBtn" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsAllowed}" Clicked="EditEvent" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
-                            <Button Text="Delete" FontSize="20" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsAllowed}" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteEvent}" CommandParameter="{Binding .}" />
-                            <Button Text="+" BackgroundColor="Green"/>
+                            <Button x:Name="EditBtn" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsTeacher}" Clicked="EditEvent" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
+                            <Button Text="Delete" FontSize="20" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteEvent}" CommandParameter="{Binding .}" />
+                            <Button Text="+" BackgroundColor="Green" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.AddEventForStudent}" CommandParameter="{Binding .}"/>
                         </StackLayout>
                     </Border>
 
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <CollectionView  x:Name="MySubjectsCollection" HeightRequest="550" SelectionMode="Single"  
+        <CollectionView  x:Name="MySubjectsCollection" IsVisible="{Binding IsStudent}" MaximumHeightRequest="550" SelectionMode="Single"  
      SelectionChangedCommandParameter="{Binding Source={x:Reference Name=SubjectsCollection}, Path=SelectedItem}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

@@ -8,17 +8,17 @@ namespace AFStudiumApp;
 public partial class EventsPage : ContentPage
 {
 	private readonly AFStudiumAPIClientService _apiService;
-	private readonly string _eventType;
+	//private readonly string _eventType;
 	public ModulesViewModel thisContext { get; set; }
 	
     public EventsPage(AFStudiumAPIClientService apiService, string EventType)
 	{
 		InitializeComponent();
 		_apiService = apiService;
-		_eventType = EventType;
+		//_eventType = EventType;
 		thisContext = new ModulesViewModel(_apiService);
 		BindingContext = thisContext;
-		switch (_eventType)
+		switch (EventType)
 		{
             case ("Vorlesung"):
                 SubjectsCollection.ItemsSource = thisContext.Lectures;
@@ -36,9 +36,9 @@ public partial class EventsPage : ContentPage
         }
 
 		//if (_eventType == "Vorlesung")
-			//SubjectsCollection.BindingContext = thisContext.Lectures;
+		//	SubjectsCollection.BindingContext = thisContext.Lectures;
 
-        
+
 	}
 
     public EventsPage(AFStudiumAPIClientService apiService, bool isExam)
@@ -55,7 +55,7 @@ public partial class EventsPage : ContentPage
     }
 	public async void GetMyEvents(bool isExam)
 	{
-        var myevents = await _apiService.GetConnectionsByUserId(thisContext.CurMatrikel);
+        var myevents = await _apiService.GetConnectionsByUserId(333333);
 		List<Event> notexams = new List<Event>();
 		List<Event> exams = new List<Event>();
 		foreach (Event e in myevents)

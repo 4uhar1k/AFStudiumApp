@@ -18,9 +18,8 @@ namespace AFStudiumApp.ViewModels
         private readonly AFStudiumAPIClientService _apiClient;
         public int subjectid, eventid, studentsamount, CurMatrikel, createdperson;
         public string subjectname, faculty, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole;
-        public bool isAllowed;
+        public bool isstudent, isteacher;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
-        public User CurUser;
         public int? CurSemester;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -52,10 +51,12 @@ namespace AFStudiumApp.ViewModels
             MyEvents = new ObservableCollection<Event>();
             MyExams = new ObservableCollection<Event>();
             SubjectToEdit = new Subject();
+            GetUsersInfo();
             LoadSubjects();
             LoadEventsOfSubject();
-            GetUsersInfo();
 
+            
+            
             AddSubject = new Command(() =>
             {        
                 Subject NewSubject = new Subject() { SubjectName = SubjectName, Faculty = Faculty };
@@ -73,13 +74,15 @@ namespace AFStudiumApp.ViewModels
             });
             AddEvent = new Command(() =>
             {
-                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson=CreatedPerson, Date="Montag", Time="14:00-16:00" };
+                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson=CurMatrikel, Date="Montag", Time="14:00-16:00" };
                 _apiClient.PostEvent(e);
             }, () => EventType != "" & EventType!= null);
             AddEventForStudent = new Command((object e) =>
             {
                 Event SelectedEvent = (Event)e;
                 _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId);
+                SelectedEvent.StudentsAmount++;
+                _apiClient.PutEvent(SelectedEvent);
             });
             EditEvent = new Command(() =>
             {
@@ -95,9 +98,11 @@ namespace AFStudiumApp.ViewModels
             {
                 Event EventToDelete = (Event)e;
                 _apiClient.DeleteConnection(CurMatrikel, EventToDelete.EventId);
+                EventToDelete.StudentsAmount--;
+                _apiClient.PutEvent(EventToDelete);
             });
         }
-        public async void GetUsersInfo()
+        public void GetUsersInfo()
         {
             //int CurMatrikel = 0;
             using (StreamReader sr = new StreamReader(CurUserPath))
@@ -112,13 +117,27 @@ namespace AFStudiumApp.ViewModels
                 CurRole = sr.ReadLine();
                 sr.Close();
             }
-            if (CurRole == "student")
-                IsAllowed = false;
-            else
-                IsAllowed = true;
+            //IsStudent = (CurRole == "student" | CurRole == "admin");
+            //IsTeacher = (CurRole == "teacher" | CurRole == "admin");
+            //if (CurRole == "student")
+            //{
+            //    IsStudent = true;
+            //    IsTeacher = false;
+            //}
+            //else if (CurRole == "teacher")
+            //{
+            //    IsStudent = false;
+            //    IsTeacher = true;
+            //}
+            //else
+            //{
+            //    IsStudent = true;
+            //    IsTeacher = true;
+            //}
+                
         }
 
-        public async void LoadSubjects()
+        public async Task LoadSubjects()
         {
             var subjects = await _apiClient.GetSubjects();
             foreach (Subject subject in subjects)
@@ -126,7 +145,7 @@ namespace AFStudiumApp.ViewModels
                 AllSubjects.Add(subject);
             }
         }
-        public async void DeleteEventsOfSubject(Subject subject)
+        public async Task DeleteEventsOfSubject(Subject subject)
         {
             var eventsofsub = await _apiClient.GetEventsBySubjectId(subject.SubjectId);
             if (eventsofsub != null)
@@ -140,7 +159,7 @@ namespace AFStudiumApp.ViewModels
 
         }
 
-        public async void LoadEventsOfSubject()
+        public async Task LoadEventsOfSubject()
         {
             try
             {
@@ -165,7 +184,7 @@ namespace AFStudiumApp.ViewModels
                         MyExams.Add(e);
                 }
             }
-            catch { }
+            catch (Exception e) { Console.WriteLine(e.Message); }
         }
 
         //public async void AddEventForStudentAsync(Event e)
@@ -248,18 +267,30 @@ namespace AFStudiumApp.ViewModels
             }
         }
 
-        public bool IsAllowed
-        {
-            get => isAllowed;
-            set
-            {
-                if (isAllowed!=value)
-                {
-                    isAllowed = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        //public bool IsStudent
+        //{
+        //    get => isstudent;
+        //    set
+        //    {
+        //        if (isstudent != value)
+        //        {
+        //            isstudent = value;
+        //            OnPropertyChanged(nameof(IsStudent));
+        //        }
+        //    }
+        //}
+        //public bool IsTeacher
+        //{
+        //    get => isteacher;
+        //    set
+        //    {
+        //        if (isteacher != value)
+        //        {
+        //            isteacher = value;
+        //            OnPropertyChanged(nameof(IsTeacher));
+        //        }
+        //    }
+        //}
 
         public string EventName
         {
