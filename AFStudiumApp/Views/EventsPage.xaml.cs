@@ -17,7 +17,10 @@ public partial class EventsPage : ContentPage
 		_apiService = apiService;
 		//_eventType = EventType;
 		thisContext = new ModulesViewModel(_apiService);
-		BindingContext = thisContext;
+		thisContext.IsStudent = (thisContext.CurRole == "student" | thisContext.CurRole == "admin");
+        thisContext.IsTeacher = (thisContext.CurRole == "teacher" | thisContext.CurRole == "admin");
+
+        BindingContext = thisContext;
 		switch (EventType)
 		{
             case ("Vorlesung"):
@@ -34,7 +37,8 @@ public partial class EventsPage : ContentPage
 				break;
 
         }
-
+		if (thisContext.IsStudent)
+			SubjectsCollection.SelectionChanged += ShowMyEvent;
 		//if (_eventType == "Vorlesung")
 		//	SubjectsCollection.BindingContext = thisContext.Lectures;
 
@@ -46,16 +50,27 @@ public partial class EventsPage : ContentPage
 		InitializeComponent();
 		_apiService = apiService;
 		thisContext = new ModulesViewModel(_apiService);
-		BindingContext = thisContext;
-		if (isExam)
-			SubjectsCollection.ItemsSource = thisContext.MyExams;
+        thisContext.IsStudent = (thisContext.CurRole == "student" | thisContext.CurRole == "admin");
+        thisContext.IsTeacher = (thisContext.CurRole == "teacher" | thisContext.CurRole == "admin");
+        BindingContext = thisContext;
+		if (thisContext.CurRole == "student")
+		{
+            GetMyEvents(isExam);
+			SubjectsCollection.IsVisible = false;
+        }
 		else
-			SubjectsCollection.ItemsSource = thisContext.MyEvents;
-		GetMyEvents(isExam);
+		{
+            if (isExam)
+                SubjectsCollection.ItemsSource = thisContext.MyExams;
+            else
+                SubjectsCollection.ItemsSource = thisContext.MyEvents;
+        }
+		
+		
     }
 	public async void GetMyEvents(bool isExam)
 	{
-        var myevents = await _apiService.GetConnectionsByUserId(333333);
+        var myevents = await _apiService.GetConnectionsByUserId(thisContext.CurMatrikel);
 		List<Event> notexams = new List<Event>();
 		List<Event> exams = new List<Event>();
 		foreach (Event e in myevents)
@@ -81,6 +96,19 @@ public partial class EventsPage : ContentPage
 		Button EditBtn = (Button)sender;
 		Event ev = (Event)EditBtn.CommandParameter;
 		//object sub = _apiService.GetSubjectById(ev.SubjectId);
-		await Navigation.PushAsync(new AddEventPage(_apiService, ev));
+		await Navigation.PushAsync(new AddEventPage(_apiService, ev, true));
 	}
+
+    public async void ShowMyEvent(object sender, SelectionChangedEventArgs e)
+    {
+        //Button EditBtn = (Button)sender;
+        //Event ev = (Event)EditBtn.CommandParameter;
+        //object sub = _apiService.GetSubjectById(ev.SubjectId);
+        if (e.CurrentSelection.Count > 0)
+        {
+            var SelectedEvent = (Event)e.CurrentSelection[0];
+            await Navigation.PushAsync(new AddEventPage(_apiService, SelectedEvent, false));
+        }
+        
+    }
 }

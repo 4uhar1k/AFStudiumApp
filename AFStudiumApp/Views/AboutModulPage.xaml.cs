@@ -9,7 +9,7 @@ public partial class AboutModulPage : ContentPage
 {
 	private readonly AFStudiumAPIClientService _apiClient;
 	public Subject thisSubject;
-	public AboutModulPage(AFStudiumAPIClientService apiClient, Subject subject)
+	public AboutModulPage(AFStudiumAPIClientService apiClient, Subject subject, bool isAllowed)
 	{
 		InitializeComponent();
 		_apiClient = apiClient;
@@ -17,8 +17,13 @@ public partial class AboutModulPage : ContentPage
 		ModulesViewModel thisContext = new ModulesViewModel(_apiClient);
 		thisContext.SubjectName = subject.SubjectName;
 		thisContext.SubjectId = subject.SubjectId;
+		thisContext.IsTeacher = isAllowed;
+		thisContext.IsStudent = !isAllowed;
 		//thisContext.LoadEventsOfSubject();
 		BindingContext = thisContext;
+		if (!isAllowed)
+			SubjectsCollection.SelectionChanged += ShowMyEvent;
+
 	}
 
 	public async void AddEvent(object sender, EventArgs e)
@@ -30,6 +35,19 @@ public partial class AboutModulPage : ContentPage
         Button EditBtn = (Button)sender;
         Event ev = (Event)EditBtn.CommandParameter;
         //object sub = _apiService.GetSubjectById(ev.SubjectId);
-        await Navigation.PushAsync(new AddEventPage(_apiClient, ev));
+        await Navigation.PushAsync(new AddEventPage(_apiClient, ev, true));
+    }
+
+    public async void ShowMyEvent(object sender, SelectionChangedEventArgs e)
+    {
+        //Button EditBtn = (Button)sender;
+        //Event ev = (Event)EditBtn.CommandParameter;
+        //object sub = _apiService.GetSubjectById(ev.SubjectId);
+        if (e.CurrentSelection.Count > 0)
+        {
+            var SelectedEvent = (Event)e.CurrentSelection[0];
+            await Navigation.PushAsync(new AddEventPage(_apiClient, SelectedEvent, false));
+        }
+
     }
 }

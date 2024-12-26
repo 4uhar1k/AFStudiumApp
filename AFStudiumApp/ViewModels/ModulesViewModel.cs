@@ -54,9 +54,10 @@ namespace AFStudiumApp.ViewModels
             GetUsersInfo();
             LoadSubjects();
             LoadEventsOfSubject();
+            isstudent = (CurRole == "student" | CurRole == "admin");
+            isteacher = (CurRole == "teacher" | CurRole == "admin");
 
-            
-            
+
             AddSubject = new Command(() =>
             {        
                 Subject NewSubject = new Subject() { SubjectName = SubjectName, Faculty = Faculty };
@@ -158,7 +159,10 @@ namespace AFStudiumApp.ViewModels
            await _apiClient.DeleteSubject(subject.SubjectId);
 
         }
+        public async Task DeleteConnectionsWithSubject(Subject subject)
+        {
 
+        }
         public async Task LoadEventsOfSubject()
         {
             try
@@ -267,30 +271,30 @@ namespace AFStudiumApp.ViewModels
             }
         }
 
-        //public bool IsStudent
-        //{
-        //    get => isstudent;
-        //    set
-        //    {
-        //        if (isstudent != value)
-        //        {
-        //            isstudent = value;
-        //            OnPropertyChanged(nameof(IsStudent));
-        //        }
-        //    }
-        //}
-        //public bool IsTeacher
-        //{
-        //    get => isteacher;
-        //    set
-        //    {
-        //        if (isteacher != value)
-        //        {
-        //            isteacher = value;
-        //            OnPropertyChanged(nameof(IsTeacher));
-        //        }
-        //    }
-        //}
+        public bool IsStudent
+        {
+            get => isstudent;
+            set
+            {
+                if (isstudent != value)
+                {
+                    isstudent = value;
+                    OnPropertyChanged(nameof(IsStudent));
+                }
+            }
+        }
+        public bool IsTeacher
+        {
+            get => isteacher;
+            set
+            {
+                if (isteacher != value)
+                {
+                    isteacher = value;
+                    OnPropertyChanged(nameof(IsTeacher));
+                }
+            }
+        }
 
         public string EventName
         {

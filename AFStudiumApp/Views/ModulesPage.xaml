@@ -20,8 +20,8 @@
                         <StackLayout>
                             <Label Text="{Binding Faculty}" FontSize="20"/>
                             <Label FontSize="27" Text="{Binding SubjectName}" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            <Button x:Name="EditBtn" Clicked="EditModule" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
-                            <Button Text="Delete" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteSubject}" CommandParameter="{Binding .}" />
+                            <Button x:Name="EditBtn" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" Clicked="EditModule" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
+                            <Button Text="Delete" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteSubject}" CommandParameter="{Binding .}" />
                         </StackLayout>
                     </Border>
                     
@@ -29,6 +29,6 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         
-        <Button Text="+" BackgroundColor="Green" Clicked="AddModul" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="End"/>
+        <Button IsVisible="{Binding IsTeacher}" Text="+" BackgroundColor="Green" Clicked="AddModul" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="End"/>
     </VerticalStackLayout>
 </ContentPage>

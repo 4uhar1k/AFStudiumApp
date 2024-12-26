@@ -23,7 +23,7 @@ public partial class AddEventPage : ContentPage
 		BindingContext = thisContext;
         EventNameEntry.Text = subject.SubjectName;
     }
-	public AddEventPage(AFStudiumAPIClientService apiClient, Event e)
+	public AddEventPage(AFStudiumAPIClientService apiClient, Event e, bool isAllowed)
     {
         InitializeComponent();
         _apiClient = apiClient;
@@ -38,6 +38,8 @@ public partial class AddEventPage : ContentPage
 		thisContext.SubjectId = SelectedEvent.SubjectId;
 		thisContext.EventName = SelectedEvent.EventName;//GetSubject(SelectedEvent).Result;
         thisContext.EventType = SelectedEvent.EventType;
+		thisContext.IsTeacher = isAllowed;
+		thisContext.IsStudent = !isAllowed;
         BindingContext = thisContext;
         GetSubject(e);
         EventNameEntry.Text = e.EventName;
