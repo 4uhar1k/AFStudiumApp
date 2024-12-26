@@ -93,7 +93,7 @@ namespace AFStudiumApp.ViewModels
             DeleteEvent = new Command((object e) =>
             {
                 Event EventToDelete = (Event)e;
-                _apiClient.DeleteEvent(EventToDelete.EventId);
+                DeleteConnectionsWithEvent(EventToDelete);
             });
             DeleteEventForStudent = new Command((object e) =>
             {
@@ -153,15 +153,23 @@ namespace AFStudiumApp.ViewModels
             {
                 foreach (Event e in eventsofsub)
                 {
-                    _apiClient.DeleteEvent(e.EventId);
+                    await DeleteConnectionsWithEvent(e);
                 }
             }
            await _apiClient.DeleteSubject(subject.SubjectId);
 
         }
-        public async Task DeleteConnectionsWithSubject(Subject subject)
+        public async Task DeleteConnectionsWithEvent(Event e)
         {
-
+            var listofconnections = await _apiClient.GetConnectionsByEventId(e.EventId);
+            if (listofconnections != null)
+            {
+                foreach (StudentsEvents se in listofconnections)
+                {
+                    await _apiClient.DeleteConnection(se.StudentId, se.EventId);
+                }
+            }
+            await _apiClient.DeleteEvent(e.EventId);
         }
         public async Task LoadEventsOfSubject()
         {
