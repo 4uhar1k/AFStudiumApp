@@ -89,5 +89,25 @@ public partial class AddEventPage : ContentPage
 			
 
         }
+
+	public async void MessageClicked(object sender, EventArgs e)
+	{
+		if (MessageHeaderEntry.IsVisible == false)
+		{
+			ReceiverEntry.IsVisible = true;
+            MessageHeaderEntry.IsVisible = true;
+            MessageEntry.IsVisible = true;
+        }
+		else
+		{
+			Message message = new Message() { EventId = thisContext.EventId, SendFrom = thisContext.CurMatrikel, SendTo = Int32.Parse(ReceiverEntry.Text), MessageHeader = MessageHeaderEntry.Text, MessageText = MessageEntry.Text, MessageTime = DateTime.Now };
+			await _apiClient.PostMessage(message);
+			await DisplayAlert("", "Nachricht gesendet", "OK");
+            ReceiverEntry.IsVisible = false;
+            MessageHeaderEntry.IsVisible = false;
+            MessageEntry.IsVisible = false;
+        }
+		
+	}
 	}
 

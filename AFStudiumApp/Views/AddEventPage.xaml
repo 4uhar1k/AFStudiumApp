@@ -17,7 +17,11 @@
                 <x:String>Klausur</x:String>
             </Picker.Items>
         </Picker>
+        <Entry IsVisible="False" x:Name="ReceiverEntry" Placeholder="An...(Matrikelnummer)"/>
+        <Entry IsVisible="False" x:Name="MessageHeaderEntry" Placeholder="Title..." />
+        <Entry IsVisible="False" x:Name="MessageEntry" Placeholder="Message..." HeightRequest="100"/>
         <Button Text="Student manuell hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddStudents"  />
+        <Button Text="Nachricht senden" Clicked="MessageClicked"/>
         <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" Command="{Binding AddEvent}" FontSize="20"/>
     </VerticalStackLayout>
 </ContentPage>
