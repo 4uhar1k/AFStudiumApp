@@ -53,9 +53,10 @@ namespace AFStudiumApp
         {
             User u = new User { MatrikelNum = 333333, Email = "ah", Password = "b", Name = "c", Surname = "student2", Course = "e", Semester = 99, Role = "student" };
             //_apiClient.PostConnection(333333, 13);
-            var users = await _apiClient.GetConnectionsByUserId(333333);
-            UsersCollection.ItemsSource = users;            //User testuser = new User() { MatrikelNum = 1 , Email="test", Password="testpass", Name="testname", Surname="testsurname", Course="testcourse", Semester=1};
-            
+            //var users = await _apiClient.GetConnectionsByUserId(333333);
+            //UsersCollection.ItemsSource = users;            //User testuser = new User() { MatrikelNum = 1 , Email="test", Password="testpass", Name="testname", Surname="testsurname", Course="testcourse", Semester=1};
+            Message m = new Message() { MessageId = 1, SendFrom = 100000, SendTo = 257518, MessageHeader="ti dolboeb", MessageText="koncheniy", MessageTime=DateTime.Now };
+            await _apiClient.PostMessage(m);
         }
 
         public async void GoToModules(object sender, EventArgs e)
