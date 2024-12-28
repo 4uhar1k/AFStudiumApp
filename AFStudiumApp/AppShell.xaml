@@ -21,6 +21,10 @@
     ContentTemplate="{DataTemplate local:MainPage}"
     Route="MainPage" />
         <ShellContent
+Icon="email.png"
+ContentTemplate="{DataTemplate local:MessagesPage}"
+Route="MessagesPage" />
+        <ShellContent
     Icon="nutzer.png"
     ContentTemplate="{DataTemplate local:ProfilePage}"
     Route="ProfilePage" />
