@@ -18,10 +18,9 @@
             </Picker.Items>
         </Picker>
         <HorizontalStackLayout  x:Name="PermitReqCheck" IsVisible="False">
-            <CheckBox />
+            <CheckBox IsChecked="{Binding PermitRequired}"/>
             <Label Text="Studienleistung benötigt?" VerticalOptions="Center" />
-        </HorizontalStackLayout>
-        
+        </HorizontalStackLayout>        
         <Entry Text="{Binding Credits}" FontSize="18" Placeholder="Leistungspunkte (LP)" PlaceholderColor="DarkGray" />
         <Entry Text="{Binding Location}" Placeholder="Veranstaltungsort" FontSize="18" PlaceholderColor="DarkGray"/>
         <StackLayout>
@@ -52,8 +51,8 @@
 
         </CollectionView>
         <DatePicker x:Name="EventDatePicker" IsVisible="False" Date="{Binding Date}" Format="dd.MM.yyyy" FontSize="18"/>
-        <TimePicker Format="HH:mm"/>
-        <TimePicker Format="HH:mm"/>
+        <TimePicker Time="{Binding BeginTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
+        <TimePicker Time="{Binding EndTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
         <Entry IsVisible="False" x:Name="ReceiverEntry" Placeholder="An...(Matrikelnummer)"/>
         <Entry IsVisible="False" x:Name="MessageHeaderEntry" Placeholder="Title..." />
         <Entry IsVisible="False" x:Name="MessageEntry" Placeholder="Message..." HeightRequest="100"/>

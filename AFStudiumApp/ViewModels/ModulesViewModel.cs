@@ -18,11 +18,37 @@ namespace AFStudiumApp.ViewModels
         private readonly AFStudiumAPIClientService _apiClient;
         public int subjectid, eventid, studentsamount, CurMatrikel, createdperson, credits;
         public string subjectname, faculty, location, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole;
-        public bool isstudent, isteacher;
+        public bool isstudent, isteacher, permitrequired;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public int? CurSemester;
-
+        public TimeSpan begintime, endtime;
+        public DateTime date;
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public TimeSpan BeginTime
+        {
+            get => begintime;
+            set
+            {
+                if (begintime != value)
+                {
+                    begintime = value;
+                    OnPropertyChanged(nameof(BeginTime));
+                }
+            }
+        }
+        public TimeSpan EndTime
+        {
+            get => endtime;
+            set
+            {
+                if (endtime != value)
+                {
+                    endtime = value;
+                    OnPropertyChanged(nameof(EndTime));
+                }
+            }
+        }
 
         public ObservableCollection<Subject> AllSubjects { get; set; }
         public ObservableCollection<User> Students { get; set; }
@@ -55,6 +81,8 @@ namespace AFStudiumApp.ViewModels
             MyEvents = new ObservableCollection<Event>();
             MyExams = new ObservableCollection<Event>();
             SubjectToEdit = new Subject();
+            //BeginTime = new TimeSpan(0, 0, 0);
+            //EndTime = new TimeSpan(1, 0, 0);
             GetUsersInfo();
             LoadSubjects();
             LoadEventsOfSubject();
@@ -80,7 +108,7 @@ namespace AFStudiumApp.ViewModels
             AddEvent = new Command(() =>
             {
                 
-                    Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = "Montag", Time = "14:00-16:00" };
+                    Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired };
                     _apiClient.PostEvent(e);
                 
                
@@ -93,8 +121,8 @@ namespace AFStudiumApp.ViewModels
                 _apiClient.PutEvent(SelectedEvent);
             });
             EditEvent = new Command(() =>
-            {                
-                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = "Montag", Time = "14:00-16:00" };
+            {
+                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired };
                 _apiClient.PutEvent(e);                
             });
             DeleteEvent = new Command((object e) =>
@@ -321,6 +349,18 @@ namespace AFStudiumApp.ViewModels
             }
         }
 
+        public DateTime Date
+        {
+            get => date;
+            set
+            {
+                if (date != value)
+                {
+                    date = value;
+                    OnPropertyChanged(nameof(Date));
+                }
+            }
+        }
         public bool IsStudent
         {
             get => isstudent;
@@ -330,6 +370,18 @@ namespace AFStudiumApp.ViewModels
                 {
                     isstudent = value;
                     OnPropertyChanged(nameof(IsStudent));
+                }
+            }
+        }
+        public bool PermitRequired
+        {
+            get => permitrequired;
+            set
+            {
+                if (permitrequired != value)
+                {
+                    permitrequired = value;
+                    OnPropertyChanged(nameof(PermitRequired));
                 }
             }
         }
@@ -346,6 +398,7 @@ namespace AFStudiumApp.ViewModels
             }
         }
 
+        
         public string EventName
         {
             get => eventname;

@@ -107,7 +107,7 @@ public partial class EventsPage : ContentPage
         if (e.CurrentSelection.Count > 0)
         {
             var SelectedEvent = (Event)e.CurrentSelection[0];
-            await Navigation.PushAsync(new AddEventPage(_apiService, SelectedEvent, false));
+            await Navigation.PushAsync(new AddEventPage(_apiService, SelectedEvent, thisContext.IsTeacher));
         }
         
     }
