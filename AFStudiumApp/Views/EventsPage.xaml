@@ -44,6 +44,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="+" BackgroundColor="Green" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="End"/>
+        <!--<Button Text="+" BackgroundColor="Green" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="End"/>-->
     </VerticalStackLayout>
 </ContentPage>

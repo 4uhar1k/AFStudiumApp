@@ -1,4 +1,4 @@
-using AFStudiumAPIClient;
+﻿using AFStudiumAPIClient;
 using AFStudiumAPIClient.Models.ApiModels;
 using AFStudiumApp.ViewModels;
 
@@ -86,9 +86,24 @@ public partial class AddEventPage : ContentPage
 			EventNameEntry.Text += thisContext.SubjectName; 
             EventNameEntry.Text += $" {EventPicker.SelectedItem.ToString()}";
         }
-			
-
+        Picker picker = (Picker)sender;
+        if (picker.SelectedItem != null)
+        {
+            if (picker.SelectedItem.ToString() == "Klausur")
+            {
+                PermitReqCheck.IsVisible = true;
+            }
+            else
+                PermitReqCheck.IsVisible = false;
         }
+
+
+    }
+
+	public void IsExamPicked(object sender, EventArgs e)
+	{
+		
+	}
 
 	public async void MessageClicked(object sender, EventArgs e)
 	{
@@ -109,5 +124,38 @@ public partial class AddEventPage : ContentPage
         }
 		
 	}
+
+	public void EventChecked(object sender, CheckedChangedEventArgs e)
+	{
+		RadioButton rb = (RadioButton)sender;
+		switch (rb.Content)
+		{
+			case "Täglich":
+                DaysOfWeekCollection.IsVisible = false;
+                EventDatePicker.IsVisible = false;
+				break;
+			case "Wochentlich":
+                DaysOfWeekCollection.IsVisible = true;
+                EventDatePicker.IsVisible = false;
+				break;
+			case "Einzeln":
+                DaysOfWeekCollection.IsVisible = false;
+                EventDatePicker.IsVisible = true;
+				break;
+        }
+
+
 	}
+    public void WeeklyEventChecked(object sender, CheckedChangedEventArgs e)
+    {
+        
+    }
+    public void UniqueEventChecked(object sender, CheckedChangedEventArgs e)
+    {
+       
+    }
+
+
+
+}
 

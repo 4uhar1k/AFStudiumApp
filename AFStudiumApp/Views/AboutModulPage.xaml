@@ -8,7 +8,7 @@
             Text="{Binding SubjectName}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <CollectionView x:Name="SubjectsCollection" HeightRequest="550" SelectionMode="Single" SelectionChangedCommandParameter="{Binding Source={x:Reference SubjectsCollection}, Path=SelectedItem}" ItemsSource="{Binding EventsOfSubject}" 
+        <CollectionView x:Name="SubjectsCollection" MaximumHeightRequest="500" SelectionMode="Single" SelectionChanged="ShowMyEvent" SelectionChangedCommandParameter="{Binding Source={x:Reference SubjectsCollection}, Path=SelectedItem}" ItemsSource="{Binding EventsOfSubject}" 
                 >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -18,7 +18,7 @@
                             <Label FontSize="27" Text="{Binding CreatedPerson}" HorizontalOptions="Center" VerticalOptions="Center"/>
 
                             <Button Text="+" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsStudent}" BackgroundColor="Green" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.AddEventForStudent}" CommandParameter="{Binding .}"/>
-                            <Button x:Name="EditBtn" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" Clicked="EditEvent" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
+                            <!--<Button x:Name="EditBtn" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" Clicked="EditEvent" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />-->
                             <Button Text="Delete" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteEvent}" CommandParameter="{Binding .}" />
                         </StackLayout>
                     </Border>

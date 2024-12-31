@@ -9,12 +9,14 @@ public partial class AboutModulPage : ContentPage
 {
 	private readonly AFStudiumAPIClientService _apiClient;
 	public Subject thisSubject;
-	public AboutModulPage(AFStudiumAPIClientService apiClient, Subject subject, bool isAllowed)
+    public ModulesViewModel thisContext { get; set; }
+
+    public AboutModulPage(AFStudiumAPIClientService apiClient, Subject subject, bool isAllowed)
 	{
 		InitializeComponent();
 		_apiClient = apiClient;
 		thisSubject = subject;
-		ModulesViewModel thisContext = new ModulesViewModel(_apiClient);
+		thisContext = new ModulesViewModel(_apiClient);
 		thisContext.SubjectName = subject.SubjectName;
 		thisContext.SubjectId = subject.SubjectId;
 		thisContext.IsTeacher = isAllowed;
@@ -46,7 +48,7 @@ public partial class AboutModulPage : ContentPage
         if (e.CurrentSelection.Count > 0)
         {
             var SelectedEvent = (Event)e.CurrentSelection[0];
-            await Navigation.PushAsync(new AddEventPage(_apiClient, SelectedEvent, false));
+            await Navigation.PushAsync(new AddEventPage(_apiClient, SelectedEvent, thisContext.IsTeacher));
         }
 
     }

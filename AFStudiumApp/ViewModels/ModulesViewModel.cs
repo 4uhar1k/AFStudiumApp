@@ -16,8 +16,8 @@ namespace AFStudiumApp.ViewModels
     public class ModulesViewModel: INotifyPropertyChanged
     {
         private readonly AFStudiumAPIClientService _apiClient;
-        public int subjectid, eventid, studentsamount, CurMatrikel, createdperson;
-        public string subjectname, faculty, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole;
+        public int subjectid, eventid, studentsamount, CurMatrikel, createdperson, credits;
+        public string subjectname, faculty, location, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole;
         public bool isstudent, isteacher;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public int? CurSemester;
@@ -30,6 +30,7 @@ namespace AFStudiumApp.ViewModels
         public ObservableCollection<Event> Exams { get; set; }
         public ObservableCollection<Event> Lectures { get; set; }
         public ObservableCollection<Event> Exercises { get; set; }
+        public ObservableCollection<Event> Permits { get; set; }
         public ObservableCollection<Event> MyEvents { get; set; }
         public ObservableCollection<Event> MyExams { get; set; }
         public ICommand AddSubject { get; set; }
@@ -50,6 +51,7 @@ namespace AFStudiumApp.ViewModels
             Exams = new ObservableCollection<Event>();
             Lectures = new ObservableCollection<Event>();
             Exercises = new ObservableCollection<Event>();
+            Permits = new ObservableCollection<Event>();
             MyEvents = new ObservableCollection<Event>();
             MyExams = new ObservableCollection<Event>();
             SubjectToEdit = new Subject();
@@ -77,20 +79,23 @@ namespace AFStudiumApp.ViewModels
             });
             AddEvent = new Command(() =>
             {
-                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson=CurMatrikel, Date="Montag", Time="14:00-16:00" };
-                _apiClient.PostEvent(e);
-            }, () => EventType != "" & EventType!= null);
+                
+                    Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = "Montag", Time = "14:00-16:00" };
+                    _apiClient.PostEvent(e);
+                
+               
+            }, () => EventType != "" & EventType!= null & Location!="" & Location!=null );
             AddEventForStudent = new Command((object e) =>
             {
                 Event SelectedEvent = (Event)e;
-                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId);
+                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, 0);
                 SelectedEvent.StudentsAmount++;
                 _apiClient.PutEvent(SelectedEvent);
             });
             EditEvent = new Command(() =>
-            {
-                Event e = new Event() { EventId = EventId, SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CreatedPerson, Date = "Montag", Time = "14:00-16:00" };
-                _apiClient.PutEvent(e);
+            {                
+                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = "Montag", Time = "14:00-16:00" };
+                _apiClient.PutEvent(e);                
             });
             DeleteEvent = new Command((object e) =>
             {
@@ -197,6 +202,8 @@ namespace AFStudiumApp.ViewModels
                         Lectures.Add(e);
                     else if (e.EventType == "Übung")
                         Exercises.Add(e);
+                    else if (e.EventType == "Studienleistung")
+                        Permits.Add(e);
                 }
                 var myevents = await _apiClient.GetMyEvents(CurMatrikel);
                 foreach (Event e in myevents)
@@ -264,6 +271,18 @@ namespace AFStudiumApp.ViewModels
                 }
             }
         }
+        public int Credits
+        {
+            get => credits;
+            set
+            {
+                if (credits != value)
+                {
+                    credits = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public string SubjectName
         {
@@ -285,6 +304,18 @@ namespace AFStudiumApp.ViewModels
                 if (faculty != value)
                 {
                     faculty = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string Location
+        {
+            get => location;
+            set
+            {
+                if (location != value)
+                {
+                    location = value;
                     OnPropertyChanged();
                 }
             }
