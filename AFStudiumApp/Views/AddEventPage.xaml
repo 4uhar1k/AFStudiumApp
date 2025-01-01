@@ -50,14 +50,14 @@
 
 
         </CollectionView>
-        <DatePicker x:Name="EventDatePicker" IsVisible="False" Date="{Binding Date}" Format="dd.MM.yyyy" FontSize="18"/>
+        <DatePicker MinimumDate="01.01.2025" x:Name="EventDatePicker" IsVisible="False" Date="{Binding Date}" Format="dd.MM.yyyy" FontSize="18"/>
         <TimePicker Time="{Binding BeginTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
         <TimePicker Time="{Binding EndTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
         <Entry IsVisible="False" x:Name="ReceiverEntry" Placeholder="An...(Matrikelnummer)"/>
         <Entry IsVisible="False" x:Name="MessageHeaderEntry" Placeholder="Title..." />
         <Entry IsVisible="False" x:Name="MessageEntry" Placeholder="Message..." HeightRequest="100"/>
-        <Button Text="Student manuell hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddStudents"  />
-        <Button Text="Nachricht senden" Clicked="MessageClicked"/>
+        <Button x:Name="AddStudentBtn" Text="Student manuell hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddStudents"  />
+        <Button x:Name="SendMessageBtn" Text="Nachricht senden" Clicked="MessageClicked"/>
         <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" Command="{Binding AddEvent}" FontSize="20"/>
     </VerticalStackLayout>
 </ContentPage>

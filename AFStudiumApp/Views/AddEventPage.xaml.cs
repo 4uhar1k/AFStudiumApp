@@ -22,6 +22,8 @@ public partial class AddEventPage : ContentPage
 		
 		BindingContext = thisContext;
         EventNameEntry.Text = subject.SubjectName;
+		AddStudentBtn.IsVisible = false;
+		SendMessageBtn.IsVisible = false;
     }
 	public AddEventPage(AFStudiumAPIClientService apiClient, Event e, bool isAllowed)
     {
