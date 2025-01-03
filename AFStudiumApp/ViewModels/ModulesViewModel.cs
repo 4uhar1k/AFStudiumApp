@@ -24,7 +24,7 @@ namespace AFStudiumApp.ViewModels
         public TimeSpan begintime, endtime;
         public DateTime date;
         public event PropertyChangedEventHandler? PropertyChanged;
-
+        public bool OldPermitRequired { get; set; }
         public TimeSpan BeginTime
         {
             get => begintime;
@@ -109,7 +109,7 @@ namespace AFStudiumApp.ViewModels
             AddEvent = new Command(() =>
             {
 
-                AddEventAsync();
+                AddEventAsync(true);
                 
                
             }, () => EventType != "" & EventType!= null & Location!="" & Location!=null );
@@ -122,8 +122,11 @@ namespace AFStudiumApp.ViewModels
             });
             EditEvent = new Command(() =>
             {
-                Event e = new Event() {EventId = EventId, SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired };
-                _apiClient.PutEvent(e);                
+                //Event e = new Event() {EventId = EventId, SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired };
+
+                //_apiClient.PutEvent(e);
+                
+                AddEventAsync(false);
             });
             DeleteEvent = new Command((object e) =>
             {
@@ -190,25 +193,54 @@ namespace AFStudiumApp.ViewModels
                     Students.Add(user);
             }
         }
-        public async Task AddEventAsync()
+        public async Task AddEventAsync(bool isAdding)
         {
             Event sl = new Event();
-            Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
-            if (PermitRequired)
+            Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, StudentsAmount = StudentsAmount, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
+            
+            if (isAdding)
             {
-                sl.SubjectId = SubjectId;
-                sl.EventName = $"Studienleistung für {EventName}";
-                sl.EventType = "Studienleistung";
-                sl.CreatedPerson = CurMatrikel;
-                sl.Date = "";
-                sl.Time = "";
-                sl.Location = "";
-                await _apiClient.PostEvent(sl);
-                var events = await _apiClient.GetEventsBySubjectId(SubjectId);
-                Event studienleistung = events.Where(n => n.EventType == "Studienleistung").FirstOrDefault();
-                e.PermitionEvent = studienleistung.EventId;
+                if (PermitRequired)
+                {
+                    sl.SubjectId = SubjectId;
+                    sl.EventName = $"Studienleistung für {EventName}";
+                    sl.EventType = "Studienleistung";
+                    sl.CreatedPerson = CurMatrikel;
+                    sl.Date = "";
+                    sl.Time = "";
+                    sl.Location = "";
+                    await _apiClient.PostEvent(sl);
+                    var events = await _apiClient.GetEventsBySubjectId(SubjectId);
+                    Event studienleistung = events.Where(n => n.EventType == "Studienleistung").FirstOrDefault();
+                    e.PermitionEvent = studienleistung.EventId;
+                }                
+                await _apiClient.PostEvent(e);
+            }                
+            else
+            {
+                e.EventId = EventId;
+                if (OldPermitRequired & !PermitRequired)
+                {
+                    var events = await _apiClient.GetEventsBySubjectId(SubjectId);
+                    await _apiClient.DeleteEvent(events.Where(n => n.EventType == "Studienleistung").FirstOrDefault().EventId);
+                }
+                else if (!OldPermitRequired & PermitRequired)
+                {
+                    sl.SubjectId = SubjectId;
+                    sl.EventName = $"Studienleistung für {EventName}";
+                    sl.EventType = "Studienleistung";
+                    sl.CreatedPerson = CurMatrikel;
+                    sl.Date = "";
+                    sl.Time = "";
+                    sl.Location = "";
+                    await _apiClient.PostEvent(sl);
+                    var events = await _apiClient.GetEventsBySubjectId(SubjectId);
+                    Event studienleistung = events.Where(n => n.EventType == "Studienleistung").FirstOrDefault();
+                    e.PermitionEvent = studienleistung.EventId;
+                }
+                await _apiClient.PutEvent(e);
+
             }
-            await _apiClient.PostEvent(e);
         }
         public async Task DeleteEventsOfSubject(Subject subject)
         {

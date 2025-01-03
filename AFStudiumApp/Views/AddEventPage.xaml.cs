@@ -51,6 +51,7 @@ public partial class AddEventPage : ContentPage
 		thisContext.EndTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[1]);
 		thisContext.Location = SelectedEvent.Location;
 		thisContext.PermitRequired = SelectedEvent.PermitRequired;
+		thisContext.OldPermitRequired = SelectedEvent.PermitRequired;
         thisContext.IsTeacher = isAllowed;
 		thisContext.IsStudent = !isAllowed;
         BindingContext = thisContext;
