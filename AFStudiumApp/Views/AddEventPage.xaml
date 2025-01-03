@@ -58,6 +58,7 @@
         <Entry IsVisible="False" x:Name="MessageEntry" Placeholder="Message..." HeightRequest="100"/>
         <Button x:Name="AddStudentBtn" Text="Student manuell hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddStudents"  />
         <Button x:Name="SendMessageBtn" Text="Nachricht senden" Clicked="MessageClicked"/>
+        <Button x:Name="AddGradesBtn" Text="Noten hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddGrades" FontSize="20"/>
         <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" Command="{Binding AddEvent}" FontSize="20"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -52,6 +52,7 @@ namespace AFStudiumApp.ViewModels
 
         public ObservableCollection<Subject> AllSubjects { get; set; }
         public ObservableCollection<User> Students { get; set; }
+        public ObservableCollection<User> ConnectionsOfEvent { get; set; }
         public ObservableCollection<Event> EventsOfSubject { get; set; }
         public ObservableCollection<Event> Exams { get; set; }
         public ObservableCollection<Event> Lectures { get; set; }
@@ -73,6 +74,7 @@ namespace AFStudiumApp.ViewModels
             _apiClient = apiClient;            
             AllSubjects = new ObservableCollection<Subject>();
             Students = new ObservableCollection<User>();
+            ConnectionsOfEvent = new ObservableCollection<User>();
             EventsOfSubject = new ObservableCollection<Event>();
             Exams = new ObservableCollection<Event>();
             Lectures = new ObservableCollection<Event>();
@@ -189,8 +191,17 @@ namespace AFStudiumApp.ViewModels
             var users = await _apiClient.GetUsers();
             foreach (User user in users)
             {
-                if (user.Role == "student")
+                if (user.Role=="student")
                     Students.Add(user);
+            }
+        }
+        public async Task LoadStudentsOfEvent(int eid)
+        {
+            var users = await _apiClient.GetConnectionsByEventId(eid);
+            foreach (StudentsEvents connection in users)
+            {
+                ConnectionsOfEvent.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
+                //Students.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
             }
         }
         public async Task AddEventAsync(bool isAdding)

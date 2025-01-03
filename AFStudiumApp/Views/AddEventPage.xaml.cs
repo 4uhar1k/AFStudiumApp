@@ -11,6 +11,7 @@ public partial class AddEventPage : ContentPage
 	private readonly AFStudiumAPIClientService _apiClient;
 	public ModulesViewModel thisContext { get; set; }
 	public Subject subject { get; set; }
+	public Event SelectedEvent { get; set; }
 	public AddEventPage(AFStudiumAPIClientService apiClient, Subject subject)
 	{
 		InitializeComponent();
@@ -24,12 +25,13 @@ public partial class AddEventPage : ContentPage
         EventNameEntry.Text = subject.SubjectName;
 		AddStudentBtn.IsVisible = false;
 		SendMessageBtn.IsVisible = false;
+		AddGradesBtn.IsVisible = false;
     }
 	public AddEventPage(AFStudiumAPIClientService apiClient, Event e, bool isAllowed)
     {
         InitializeComponent();
         _apiClient = apiClient;
-		Event SelectedEvent = e;
+		SelectedEvent = e;
 		subject = new Subject();
 		DateTime dt = new DateTime();
 		//var tasksubject = _apiClient.GetSubjects();//.Result.Where(n=> n.SubjectId == SelectedEvent.SubjectId).FirstOrDefault();(Task<Subject>)s
@@ -160,14 +162,10 @@ public partial class AddEventPage : ContentPage
 
 
 	}
-    public void WeeklyEventChecked(object sender, CheckedChangedEventArgs e)
-    {
-        
-    }
-    public void UniqueEventChecked(object sender, CheckedChangedEventArgs e)
-    {
-       
-    }
+    public async void AddGrades(object sender, EventArgs e)
+	{
+		await Navigation.PushAsync(new ListOfGradesPage(_apiClient, SelectedEvent));
+	}
 
 
 
