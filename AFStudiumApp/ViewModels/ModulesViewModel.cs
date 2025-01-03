@@ -193,7 +193,7 @@ namespace AFStudiumApp.ViewModels
         {
             Event sl = new Event();
             Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
-            if (EventType == "Klausur" & PermitRequired)
+            if (PermitRequired)
             {
                 sl.SubjectId = SubjectId;
                 sl.EventName = $"Studienleistung für {EventName}";
@@ -232,6 +232,8 @@ namespace AFStudiumApp.ViewModels
                     await _apiClient.DeleteConnection(se.StudentId, se.EventId);
                 }
             }
+            if (e.PermitRequired)
+                await _apiClient.DeleteEvent(e.PermitionEvent);
             await _apiClient.DeleteEvent(e.EventId);
         }
         public async Task LoadEventsOfSubject()
