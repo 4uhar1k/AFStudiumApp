@@ -16,4 +16,9 @@ public partial class ListOfGradesPage : ContentPage
 		thisContext.LoadStudentsOfEvent(e.EventId);
         BindingContext = thisContext;
 	}
+
+	public async void GoBack(object sender, EventArgs e)
+	{
+		await Navigation.PopAsync();
+	}
 }

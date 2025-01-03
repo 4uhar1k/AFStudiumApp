@@ -9,21 +9,48 @@
                 <DataTemplate>
                     <Border>
                         <StackLayout>
-                            <Label FontSize="25">
-                                <Label.Text>
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="Name"/>
-                                        <Binding Path="Surname"/>
-                                    </MultiBinding>
-                                </Label.Text>
-                            </Label>
-                            <Label Text="{Binding MatrikelNum}"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label FontSize="25" Grid.Row="0" Grid.Column="0">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="StudentId"/>
+                                            <Binding Path="EventId"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Picker Grid.Row="0" SelectedItem="{Binding Grade}" Grid.Column="1" WidthRequest="60" HorizontalTextAlignment="Center" FontSize="25">
+                                    <Picker.Items>
+                                        <x:String>1.0</x:String>
+                                        <x:String>1.3</x:String>
+                                        <x:String>1.7</x:String>
+                                        <x:String>2.0</x:String>
+                                        <x:String>2.3</x:String>
+                                        <x:String>2.7</x:String>
+                                        <x:String>3.0</x:String>
+                                        <x:String>3.3</x:String>
+                                        <x:String>3.7</x:String>
+                                        <x:String>4.0</x:String>
+                                        <x:String>5.0</x:String>
+                                        
+                                    </Picker.Items>
+                                </Picker>
+                                <Label Text="{Binding MatrikelNum}" Grid.Row="1" Grid.Column="0"/>
+                            </Grid>
+                            
                         </StackLayout>
                     </Border>
 
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Hinzufuegen" />
+        <Button Text="Hinzufuegen" Command="{Binding UpdateGrades}" Clicked="GoBack" />
     </VerticalStackLayout>
 </ContentPage>

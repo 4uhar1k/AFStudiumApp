@@ -52,7 +52,7 @@ namespace AFStudiumApp.ViewModels
 
         public ObservableCollection<Subject> AllSubjects { get; set; }
         public ObservableCollection<User> Students { get; set; }
-        public ObservableCollection<User> ConnectionsOfEvent { get; set; }
+        public ObservableCollection<StudentsEvents> ConnectionsOfEvent { get; set; }
         public ObservableCollection<Event> EventsOfSubject { get; set; }
         public ObservableCollection<Event> Exams { get; set; }
         public ObservableCollection<Event> Lectures { get; set; }
@@ -68,13 +68,14 @@ namespace AFStudiumApp.ViewModels
         public ICommand DeleteEvent { get; set; }
         public ICommand DeleteEventForStudent { get; set; }
         public ICommand EditEvent { get; set; }
+        public ICommand UpdateGrades { get; set; }
         public Subject SubjectToEdit { get; set; }
         public ModulesViewModel(AFStudiumAPIClientService apiClient)
         {
             _apiClient = apiClient;            
             AllSubjects = new ObservableCollection<Subject>();
             Students = new ObservableCollection<User>();
-            ConnectionsOfEvent = new ObservableCollection<User>();
+            ConnectionsOfEvent = new ObservableCollection<StudentsEvents>();
             EventsOfSubject = new ObservableCollection<Event>();
             Exams = new ObservableCollection<Event>();
             Lectures = new ObservableCollection<Event>();
@@ -118,7 +119,7 @@ namespace AFStudiumApp.ViewModels
             AddEventForStudent = new Command((object e) =>
             {
                 SelectedEvent = (Event)e;
-                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, 0);
+                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, "");
                 SelectedEvent.StudentsAmount++;
                 _apiClient.PutEvent(SelectedEvent);
             });
@@ -141,6 +142,14 @@ namespace AFStudiumApp.ViewModels
                 _apiClient.DeleteConnection(CurMatrikel, EventToDelete.EventId);
                 EventToDelete.StudentsAmount--;
                 _apiClient.PutEvent(EventToDelete);
+            });
+            UpdateGrades = new Command(() =>
+            {
+                foreach (StudentsEvents connection in ConnectionsOfEvent)
+                {
+                    _apiClient.PutConnection(connection);
+                    //Students.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
+                }
             });
         }
         public void GetUsersInfo()
@@ -200,7 +209,7 @@ namespace AFStudiumApp.ViewModels
             var users = await _apiClient.GetConnectionsByEventId(eid);
             foreach (StudentsEvents connection in users)
             {
-                ConnectionsOfEvent.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
+                ConnectionsOfEvent.Add(connection);
                 //Students.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
             }
         }

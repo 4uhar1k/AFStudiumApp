@@ -35,8 +35,10 @@ public partial class AddEventPage : ContentPage
 		subject = new Subject();
 		DateTime dt = new DateTime();
 		//var tasksubject = _apiClient.GetSubjects();//.Result.Where(n=> n.SubjectId == SelectedEvent.SubjectId).FirstOrDefault();(Task<Subject>)s
-		
-		
+		if (SelectedEvent.EventType != "Klausur")
+            AddGradesBtn.IsVisible = false;
+
+
         thisContext = new ModulesViewModel(_apiClient);
 		thisContext.EventId = SelectedEvent.EventId;
 		thisContext.SubjectId = SelectedEvent.SubjectId;
