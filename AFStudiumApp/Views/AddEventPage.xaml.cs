@@ -31,7 +31,7 @@ public partial class AddEventPage : ContentPage
         _apiClient = apiClient;
 		Event SelectedEvent = e;
 		subject = new Subject();
-
+		DateTime dt = new DateTime();
 		//var tasksubject = _apiClient.GetSubjects();//.Result.Where(n=> n.SubjectId == SelectedEvent.SubjectId).FirstOrDefault();(Task<Subject>)s
 		
 		
@@ -40,7 +40,18 @@ public partial class AddEventPage : ContentPage
 		thisContext.SubjectId = SelectedEvent.SubjectId;
 		thisContext.EventName = SelectedEvent.EventName;//GetSubject(SelectedEvent).Result;
         thisContext.EventType = SelectedEvent.EventType;
-		thisContext.IsTeacher = isAllowed;
+		thisContext.Credits = SelectedEvent.Credits;
+		if (DateTime.TryParseExact(SelectedEvent.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dt))
+		{
+			thisContext.Date = DateTime.ParseExact(SelectedEvent.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
+			EventDatePicker.IsVisible = true;
+        }
+		
+		thisContext.BeginTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[0]);
+		thisContext.EndTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[1]);
+		thisContext.Location = SelectedEvent.Location;
+		thisContext.PermitRequired = SelectedEvent.PermitRequired;
+        thisContext.IsTeacher = isAllowed;
 		thisContext.IsStudent = !isAllowed;
         BindingContext = thisContext;
         GetSubject(e);

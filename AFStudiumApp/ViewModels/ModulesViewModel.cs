@@ -81,6 +81,7 @@ namespace AFStudiumApp.ViewModels
             MyEvents = new ObservableCollection<Event>();
             MyExams = new ObservableCollection<Event>();
             SubjectToEdit = new Subject();
+            Event SelectedEvent = new Event();
             //BeginTime = new TimeSpan(0, 0, 0);
             //EndTime = new TimeSpan(1, 0, 0);
             GetUsersInfo();
@@ -114,14 +115,14 @@ namespace AFStudiumApp.ViewModels
             }, () => EventType != "" & EventType!= null & Location!="" & Location!=null );
             AddEventForStudent = new Command((object e) =>
             {
-                Event SelectedEvent = (Event)e;
+                SelectedEvent = (Event)e;
                 _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, 0);
                 SelectedEvent.StudentsAmount++;
                 _apiClient.PutEvent(SelectedEvent);
             });
             EditEvent = new Command(() =>
             {
-                Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired };
+                Event e = new Event() {EventId = EventId, SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired };
                 _apiClient.PutEvent(e);                
             });
             DeleteEvent = new Command((object e) =>
@@ -265,6 +266,11 @@ namespace AFStudiumApp.ViewModels
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
         }
+
+        //public async Task<bool> IsPermitted(Event e)
+        //{
+        //    return true;
+        //}
 
         //public async void AddEventForStudentAsync(Event e)
         //{
@@ -450,6 +456,7 @@ namespace AFStudiumApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
             ((Command)AddSubject).ChangeCanExecute();
             ((Command)AddEvent).ChangeCanExecute();
+            ((Command)AddEventForStudent).ChangeCanExecute();            
         }
 
     }
