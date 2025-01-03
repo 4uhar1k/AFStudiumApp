@@ -107,9 +107,8 @@ namespace AFStudiumApp.ViewModels
             });
             AddEvent = new Command(() =>
             {
-               
-                    Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
-                    _apiClient.PostEvent(e);
+
+                AddEventAsync();
                 
                
             }, () => EventType != "" & EventType!= null & Location!="" & Location!=null );
@@ -189,6 +188,26 @@ namespace AFStudiumApp.ViewModels
                 if (user.Role == "student")
                     Students.Add(user);
             }
+        }
+        public async Task AddEventAsync()
+        {
+            Event sl = new Event();
+            Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
+            if (EventType == "Klausur" & PermitRequired)
+            {
+                sl.SubjectId = SubjectId;
+                sl.EventName = $"Studienleistung für {EventName}";
+                sl.EventType = "Studienleistung";
+                sl.CreatedPerson = CurMatrikel;
+                sl.Date = "";
+                sl.Time = "";
+                sl.Location = "";
+                await _apiClient.PostEvent(sl);
+                var events = await _apiClient.GetEventsBySubjectId(SubjectId);
+                Event studienleistung = events.Where(n => n.EventType == "Studienleistung").FirstOrDefault();
+                e.PermitionEvent = studienleistung.EventId;
+            }
+            await _apiClient.PostEvent(e);
         }
         public async Task DeleteEventsOfSubject(Subject subject)
         {
