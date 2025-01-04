@@ -28,9 +28,9 @@
                 <Entry Text="{Binding Location}" Placeholder="Veranstaltungsort" FontSize="18" PlaceholderColor="DarkGray"/>
                 <StackLayout>
                     <Label Text="Wie oft wird es veranstaltet werden?" FontSize="18"/>
-                    <RadioButton GroupName="EventHaufigkeit" Content="Täglich" CheckedChanged="EventChecked"/>
-                    <RadioButton GroupName="EventHaufigkeit" Content="Wochentlich" CheckedChanged="EventChecked" />
-                    <RadioButton GroupName="EventHaufigkeit" Content="Einzeln" CheckedChanged="EventChecked"  />
+                    <RadioButton x:Name="EventRadioBtn1" GroupName="EventHaufigkeit" Content="Täglich" CheckedChanged="EventChecked"/>
+                    <RadioButton x:Name="EventRadioBtn2" GroupName="EventHaufigkeit" Content="Wochentlich" CheckedChanged="EventChecked" />
+                    <RadioButton x:Name="EventRadioBtn3" GroupName="EventHaufigkeit" Content="Einzeln" CheckedChanged="EventChecked"  />
                 </StackLayout>
                 <Label x:Name="WeeklyEventLabel" Text="{Binding WeeklyEventText}" FontSize="25" HorizontalTextAlignment="Center" />
                 <CollectionView x:Name="DaysOfWeekCollection" IsVisible="False" SelectionMode="Multiple"  SelectionChanged="UpdateWeeklyLabel" >

@@ -45,11 +45,20 @@ public partial class AddEventPage : ContentPage
 		thisContext.EventName = SelectedEvent.EventName;//GetSubject(SelectedEvent).Result;
         thisContext.EventType = SelectedEvent.EventType;
 		thisContext.Credits = SelectedEvent.Credits;
+		thisContext.StudentsAmount = SelectedEvent.StudentsAmount;
 		if (DateTime.TryParseExact(SelectedEvent.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dt))
 		{
 			thisContext.Date = DateTime.ParseExact(SelectedEvent.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
-			EventDatePicker.IsVisible = true;
+			EventRadioBtn3.IsChecked = true;
         }
+		else
+		{
+            thisContext.WeeklyEventText = SelectedEvent.Date;
+            if (SelectedEvent.Date == "Jeden Montag Dienstag Mittwoch Donnerstag Freitag")
+				EventRadioBtn1.IsChecked = true;
+			else
+				EventRadioBtn2.IsChecked = true;
+		}
 		
 		thisContext.BeginTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[0]);
 		thisContext.EndTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[1]);
