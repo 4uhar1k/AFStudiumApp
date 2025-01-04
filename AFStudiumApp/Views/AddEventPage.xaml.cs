@@ -151,15 +151,25 @@ public partial class AddEventPage : ContentPage
 			case "Täglich":
                 DaysOfWeekCollection.IsVisible = false;
                 EventDatePicker.IsVisible = false;
+				thisContext.WeeklyEventText = "Jeden Montag Dienstag Mittwoch Donnerstag Freitag";
+				WeeklyEventLabel.IsVisible = false;
 				break;
 			case "Wochentlich":
                 DaysOfWeekCollection.IsVisible = true;
                 EventDatePicker.IsVisible = false;
-				break;
+                thisContext.WeeklyEventText = "Jeden ";
+				for (int i = 0; i < DaysOfWeekCollection.SelectedItems.Count; i++)
+				{
+                    thisContext.WeeklyEventText += $" {DaysOfWeekCollection.SelectedItems[i]}";
+				}
+				WeeklyEventLabel.IsVisible = true;				
+                break;
 			case "Einzeln":
                 DaysOfWeekCollection.IsVisible = false;
                 EventDatePicker.IsVisible = true;
-				break;
+                thisContext.WeeklyEventText = "";
+                WeeklyEventLabel.IsVisible = false;
+                break;
         }
 
 
@@ -169,7 +179,24 @@ public partial class AddEventPage : ContentPage
 		await Navigation.PushAsync(new ListOfGradesPage(_apiClient, SelectedEvent));
 	}
 
+	public void UpdateWeeklyLabel(object sender, SelectionChangedEventArgs e)
+	{
+        thisContext.WeeklyEventText = "Jeden ";
+		if (e.CurrentSelection.Count > 0)
+		{
+			for (int i = 0; i < DaysOfWeekCollection.SelectedItems.Count; i++) 
+			{
+                thisContext.WeeklyEventText += $" {DaysOfWeekCollection.SelectedItems[i]}";
+            }
 
+			//for (int i = 0; i < 5; i++)
+			//{
+				//if (DaysOfWeekCollection.SelectedItems[i] == "" )
+			//}
+			
+
+        }
+	}
 
 }
 

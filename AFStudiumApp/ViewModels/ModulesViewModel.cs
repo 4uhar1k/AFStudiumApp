@@ -17,7 +17,7 @@ namespace AFStudiumApp.ViewModels
     {
         private readonly AFStudiumAPIClientService _apiClient;
         public int subjectid, eventid, studentsamount, CurMatrikel, createdperson, credits;
-        public string subjectname, faculty, location, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole;
+        public string subjectname, faculty, location, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole, weeklyeventtxt;
         public bool isstudent, isteacher, permitrequired;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public int? CurSemester;
@@ -46,6 +46,18 @@ namespace AFStudiumApp.ViewModels
                 {
                     endtime = value;
                     OnPropertyChanged(nameof(EndTime));
+                }
+            }
+        }
+        public string WeeklyEventText
+        {
+            get => weeklyeventtxt;
+            set
+            {
+                if (weeklyeventtxt != value)
+                {
+                    weeklyeventtxt = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -216,8 +228,11 @@ namespace AFStudiumApp.ViewModels
         public async Task AddEventAsync(bool isAdding)
         {
             Event sl = new Event();
-            Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, StudentsAmount = StudentsAmount, Date = Date.ToString("dd.MM.yyyy"), Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
-            
+            Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, StudentsAmount = StudentsAmount, Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
+            if (WeeklyEventText != "" & WeeklyEventText != null)
+                e.Date = WeeklyEventText;
+            else
+                e.Date = Date.ToString("dd.MM.yyyy");
             if (isAdding)
             {
                 if (PermitRequired)

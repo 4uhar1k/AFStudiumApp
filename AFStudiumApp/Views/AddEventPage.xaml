@@ -3,62 +3,70 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AFStudiumApp.AddEventPage"
              Title="AddEventPage">
+    
     <VerticalStackLayout>
-        <Entry Text="{Binding EventName}" IsReadOnly="{Binding IsStudent}" x:Name="EventNameEntry" FontSize="25" PlaceholderColor="Black" Placeholder="Modulname..." >
+        <ScrollView>
+            <StackLayout>
+                <Entry Text="{Binding EventName}" IsReadOnly="{Binding IsStudent}" x:Name="EventNameEntry" FontSize="25" PlaceholderColor="Black" Placeholder="Modulname..." >
+
+                </Entry>
+                <Picker x:Name="EventPicker" IsEnabled="{Binding IsTeacher}" FontSize="18" SelectedIndexChanged="ChangeText" Title="Veranstaltungstyp" SelectedItem="{Binding EventType}">
+                    <Picker.Items>
+                        <x:String>Vorlesung</x:String>
+                        <x:String>Übung</x:String>
+                        <x:String>Seminar</x:String>
+                        <x:String>Praktikum</x:String>
+                        <x:String>Tutorium</x:String>
+                        <x:String>Klausur</x:String>
+                    </Picker.Items>
+                </Picker>
+                <HorizontalStackLayout  x:Name="PermitReqCheck" IsVisible="False">
+                    <CheckBox IsChecked="{Binding PermitRequired}"/>
+                    <Label Text="Studienleistung benötigt?" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Entry Text="{Binding Credits}" FontSize="18" Placeholder="Leistungspunkte (LP)" PlaceholderColor="DarkGray" />
+                <Entry Text="{Binding Location}" Placeholder="Veranstaltungsort" FontSize="18" PlaceholderColor="DarkGray"/>
+                <StackLayout>
+                    <Label Text="Wie oft wird es veranstaltet werden?" FontSize="18"/>
+                    <RadioButton GroupName="EventHaufigkeit" Content="Täglich" CheckedChanged="EventChecked"/>
+                    <RadioButton GroupName="EventHaufigkeit" Content="Wochentlich" CheckedChanged="EventChecked" />
+                    <RadioButton GroupName="EventHaufigkeit" Content="Einzeln" CheckedChanged="EventChecked"  />
+                </StackLayout>
+                <Label x:Name="WeeklyEventLabel" Text="{Binding WeeklyEventText}" FontSize="25" HorizontalTextAlignment="Center" />
+                <CollectionView x:Name="DaysOfWeekCollection" IsVisible="False" SelectionMode="Multiple"  SelectionChanged="UpdateWeeklyLabel" >
+                    <CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Montag</x:String>
+                            <x:String>Dienstag</x:String>
+                            <x:String>Mittwoch</x:String>
+                            <x:String>Donnerstag</x:String>
+                            <x:String>Freitag</x:String>
+                        </x:Array>
+                    </CollectionView.ItemsSource>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <Label Text="{Binding}" FontSize="18" />
+                            </Border>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+
+                </CollectionView>
+                <DatePicker MinimumDate="01.01.2025" x:Name="EventDatePicker" IsVisible="False" Date="{Binding Date}" Format="dd.MM.yyyy" FontSize="18"/>
+                <TimePicker Time="{Binding BeginTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
+                <TimePicker Time="{Binding EndTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
+                <Entry IsVisible="False" x:Name="ReceiverEntry" Placeholder="An...(Matrikelnummer)"/>
+                <Entry IsVisible="False" x:Name="MessageHeaderEntry" Placeholder="Title..." />
+                <Entry IsVisible="False" x:Name="MessageEntry" Placeholder="Message..." HeightRequest="100"/>
+                <Button x:Name="AddStudentBtn" Text="Student manuell hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddStudents"  />
+                <Button x:Name="SendMessageBtn" Text="Nachricht senden" Clicked="MessageClicked"/>
+                <Button x:Name="AddGradesBtn" Text="Noten hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddGrades" FontSize="20"/>
+                <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" Command="{Binding AddEvent}" FontSize="20"/>
+            </StackLayout>
             
-        </Entry>
-        <Picker x:Name="EventPicker" IsEnabled="{Binding IsTeacher}" FontSize="18" SelectedIndexChanged="ChangeText" Title="Veranstaltungstyp" SelectedItem="{Binding EventType}">
-            <Picker.Items>
-                <x:String>Vorlesung</x:String>
-                <x:String>Übung</x:String>
-                <x:String>Seminar</x:String>
-                <x:String>Praktikum</x:String>
-                <x:String>Tutorium</x:String>
-                <x:String>Klausur</x:String>
-            </Picker.Items>
-        </Picker>
-        <HorizontalStackLayout  x:Name="PermitReqCheck" IsVisible="False">
-            <CheckBox IsChecked="{Binding PermitRequired}"/>
-            <Label Text="Studienleistung benötigt?" VerticalOptions="Center" />
-        </HorizontalStackLayout>        
-        <Entry Text="{Binding Credits}" FontSize="18" Placeholder="Leistungspunkte (LP)" PlaceholderColor="DarkGray" />
-        <Entry Text="{Binding Location}" Placeholder="Veranstaltungsort" FontSize="18" PlaceholderColor="DarkGray"/>
-        <StackLayout>
-            <Label Text="Wie oft wird es veranstaltet werden?" FontSize="18"/>
-            <RadioButton GroupName="EventHaufigkeit" Content="Täglich" CheckedChanged="EventChecked"/>
-            <RadioButton GroupName="EventHaufigkeit" Content="Wochentlich" CheckedChanged="EventChecked" />
-            <RadioButton GroupName="EventHaufigkeit" Content="Einzeln" CheckedChanged="EventChecked"  />
-        </StackLayout>
-        <CollectionView x:Name="DaysOfWeekCollection" IsVisible="False" SelectionMode="Multiple" >
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Montag</x:String>
-                    <x:String>Dienstag</x:String>
-                    <x:String>Mittwoch</x:String>
-                    <x:String>Donnerstag</x:String>
-                    <x:String>Freitag</x:String>
-                </x:Array>
-            </CollectionView.ItemsSource>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border>
-                        <Label Text="{Binding}" FontSize="18" />
-                    </Border>
-                    
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-
-
-        </CollectionView>
-        <DatePicker MinimumDate="01.01.2025" x:Name="EventDatePicker" IsVisible="False" Date="{Binding Date}" Format="dd.MM.yyyy" FontSize="18"/>
-        <TimePicker Time="{Binding BeginTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
-        <TimePicker Time="{Binding EndTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
-        <Entry IsVisible="False" x:Name="ReceiverEntry" Placeholder="An...(Matrikelnummer)"/>
-        <Entry IsVisible="False" x:Name="MessageHeaderEntry" Placeholder="Title..." />
-        <Entry IsVisible="False" x:Name="MessageEntry" Placeholder="Message..." HeightRequest="100"/>
-        <Button x:Name="AddStudentBtn" Text="Student manuell hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddStudents"  />
-        <Button x:Name="SendMessageBtn" Text="Nachricht senden" Clicked="MessageClicked"/>
-        <Button x:Name="AddGradesBtn" Text="Noten hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddGrades" FontSize="20"/>
-        <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" Command="{Binding AddEvent}" FontSize="20"/>
+        </ScrollView>
+        
     </VerticalStackLayout>
 </ContentPage>
