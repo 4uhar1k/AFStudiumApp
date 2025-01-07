@@ -13,6 +13,10 @@ public partial class ProfilePage : ContentPage
         _apiClient = apiClient;
         BindingContext = new ViewModelBase(apiClient);
 	}
+    public async void GoToTimetable(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new TimeTablePage(_apiClient));
+    }
 
     public async void GoToModules(object sender, EventArgs e)
     {

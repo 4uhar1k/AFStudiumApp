@@ -54,7 +54,7 @@ public partial class AddEventPage : ContentPage
 		else
 		{
             thisContext.WeeklyEventText = SelectedEvent.Date;
-            if (SelectedEvent.Date == "Jeden Montag Dienstag Mittwoch Donnerstag Freitag")
+            if (SelectedEvent.Date == "Montag Dienstag Mittwoch Donnerstag Freitag")
 				EventRadioBtn1.IsChecked = true;
 			else
 				EventRadioBtn2.IsChecked = true;
@@ -158,23 +158,58 @@ public partial class AddEventPage : ContentPage
 		switch (rb.Content)
 		{
 			case "Täglich":
-                DaysOfWeekCollection.IsVisible = false;
+				//DaysOfWeekCollection.IsVisible = false;
+				MondayCheck.IsVisible = false;
+				TuesdayCheck.IsVisible = false;
+				WednesdayCheck.IsVisible = false;
+				ThursdayCheck.IsVisible = false;
+				FridayCheck.IsVisible = false;
                 EventDatePicker.IsVisible = false;
-				thisContext.WeeklyEventText = "Jeden Montag Dienstag Mittwoch Donnerstag Freitag";
+				thisContext.WeeklyEventText = "Montag Dienstag Mittwoch Donnerstag Freitag";
 				WeeklyEventLabel.IsVisible = false;
 				break;
 			case "Wochentlich":
-                DaysOfWeekCollection.IsVisible = true;
+                //DaysOfWeekCollection.IsVisible = true;
+                MondayCheck.IsVisible = true;
+                TuesdayCheck.IsVisible = true;
+                WednesdayCheck.IsVisible = true;
+                ThursdayCheck.IsVisible = true;
+                FridayCheck.IsVisible = true;
                 EventDatePicker.IsVisible = false;
-                thisContext.WeeklyEventText = "Jeden ";
-				for (int i = 0; i < DaysOfWeekCollection.SelectedItems.Count; i++)
+                thisContext.WeeklyEventText = "";
+                if (MCheck.IsChecked)
+                {
+                    thisContext.WeeklyEventText += "Montag ";
+                }
+                if (TCheck.IsChecked)
+                {
+                    thisContext.WeeklyEventText += "Dienstag ";
+                }
+                if (WCheck.IsChecked)
+                {
+                    thisContext.WeeklyEventText += "Mittwoch ";
+                }
+                if (ThCheck.IsChecked)
+                {
+                    thisContext.WeeklyEventText += "Donnerstag ";
+                }
+                if (FCheck.IsChecked)
+                {
+                    thisContext.WeeklyEventText += "Freitag ";
+                }
+                /*for (int i = 0; i < DaysOfWeekCollection.SelectedItems.Count; i++)
 				{
                     thisContext.WeeklyEventText += $" {DaysOfWeekCollection.SelectedItems[i]}";
-				}
-				WeeklyEventLabel.IsVisible = true;				
+				}*/
+                WeeklyEventLabel.IsVisible = true;				
                 break;
 			case "Einzeln":
-                DaysOfWeekCollection.IsVisible = false;
+                //DaysOfWeekCollection.IsVisible = false;
+                MondayCheck.IsVisible = false;
+                TuesdayCheck.IsVisible = false;
+                WednesdayCheck.IsVisible = false;
+                ThursdayCheck.IsVisible = false;
+                FridayCheck.IsVisible = false;
                 EventDatePicker.IsVisible = true;
                 thisContext.WeeklyEventText = "";
                 WeeklyEventLabel.IsVisible = false;
@@ -188,10 +223,30 @@ public partial class AddEventPage : ContentPage
 		await Navigation.PushAsync(new ListOfGradesPage(_apiClient, SelectedEvent));
 	}
 
-	public void UpdateWeeklyLabel(object sender, SelectionChangedEventArgs e)
+	public void UpdateWeeklyLabel(object sender, CheckedChangedEventArgs e)
 	{
-        thisContext.WeeklyEventText = "Jeden ";
-		if (e.CurrentSelection.Count > 0)
+        thisContext.WeeklyEventText = "";
+		if (MCheck.IsChecked)
+		{
+			thisContext.WeeklyEventText += "Montag ";
+        }
+        if (TCheck.IsChecked)
+        {
+            thisContext.WeeklyEventText += "Dienstag ";
+        }
+        if (WCheck.IsChecked)
+        {
+            thisContext.WeeklyEventText += "Mittwoch ";
+        }
+        if (ThCheck.IsChecked)
+        {
+            thisContext.WeeklyEventText += "Donnerstag ";
+        }
+        if (FCheck.IsChecked)
+        {
+            thisContext.WeeklyEventText += "Freitag ";
+        }
+        /*if (e.CurrentSelection.Count > 0)
 		{
 			for (int i = 0; i < DaysOfWeekCollection.SelectedItems.Count; i++) 
 			{
@@ -204,8 +259,8 @@ public partial class AddEventPage : ContentPage
 			//}
 			
 
-        }
-	}
+        }*/
+    }
 
 }
 

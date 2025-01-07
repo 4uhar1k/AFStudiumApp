@@ -4,9 +4,9 @@
              x:Class="AFStudiumApp.AddEventPage"
              Title="AddEventPage">
     
-    <VerticalStackLayout>
-        <ScrollView>
-            <StackLayout>
+    <VerticalStackLayout VerticalOptions="FillAndExpand">
+       <ScrollView VerticalOptions="FillAndExpand" BackgroundColor="White" VerticalScrollBarVisibility="Always">
+            <StackLayout VerticalOptions="FillAndExpand">
                 <Entry Text="{Binding EventName}" IsReadOnly="{Binding IsStudent}" x:Name="EventNameEntry" FontSize="25" PlaceholderColor="Black" Placeholder="Modulname..." >
 
                 </Entry>
@@ -32,8 +32,9 @@
                     <RadioButton x:Name="EventRadioBtn2" GroupName="EventHaufigkeit" Content="Wochentlich" CheckedChanged="EventChecked" />
                     <RadioButton x:Name="EventRadioBtn3" GroupName="EventHaufigkeit" Content="Einzeln" CheckedChanged="EventChecked"  />
                 </StackLayout>
+
                 <Label x:Name="WeeklyEventLabel" Text="{Binding WeeklyEventText}" FontSize="25" HorizontalTextAlignment="Center" />
-                <CollectionView x:Name="DaysOfWeekCollection" IsVisible="False" SelectionMode="Multiple"  SelectionChanged="UpdateWeeklyLabel" >
+                <!-- <CollectionView x:Name="DaysOfWeekCollection" IsVisible="False" SelectionMode="Multiple" HeightRequest="160" SelectionChanged="UpdateWeeklyLabel" >
                     <CollectionView.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Montag</x:String>
@@ -50,13 +51,34 @@
                             </Border>
 
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
+                    </CollectionView.ItemTemplate> 
 
 
-                </CollectionView>
+                </CollectionView>-->
+                <HorizontalStackLayout  x:Name="MondayCheck">
+                    <CheckBox x:Name="MCheck" CheckedChanged="UpdateWeeklyLabel" />
+                    <Label Text="Montag" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout  x:Name="TuesdayCheck">
+                    <CheckBox x:Name="TCheck" CheckedChanged="UpdateWeeklyLabel"  />
+                    <Label Text="Dienstag" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout  x:Name="WednesdayCheck">
+                    <CheckBox x:Name="WCheck" CheckedChanged="UpdateWeeklyLabel"  />
+                    <Label Text="Mittwoch" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout  x:Name="ThursdayCheck">
+                    <CheckBox x:Name="ThCheck" CheckedChanged="UpdateWeeklyLabel"  />
+                    <Label Text="Donnerstag" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout  x:Name="FridayCheck">
+                    <CheckBox x:Name="FCheck" CheckedChanged="UpdateWeeklyLabel"  />
+                    <Label Text="Freitag" VerticalOptions="Center" />
+                </HorizontalStackLayout>
                 <DatePicker MinimumDate="01.01.2025" x:Name="EventDatePicker" IsVisible="False" Date="{Binding Date}" Format="dd.MM.yyyy" FontSize="18"/>
                 <TimePicker Time="{Binding BeginTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
                 <TimePicker Time="{Binding EndTime, StringFormat='{}{0:HH:mm}'}" Format="HH:mm"/>
+
                 <Entry IsVisible="False" x:Name="ReceiverEntry" Placeholder="An...(Matrikelnummer)"/>
                 <Entry IsVisible="False" x:Name="MessageHeaderEntry" Placeholder="Title..." />
                 <Entry IsVisible="False" x:Name="MessageEntry" Placeholder="Message..." HeightRequest="100"/>
@@ -65,8 +87,8 @@
                 <Button x:Name="AddGradesBtn" Text="Noten hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddGrades" FontSize="20"/>
                 <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" Command="{Binding AddEvent}" FontSize="20"/>
             </StackLayout>
-            
+
         </ScrollView>
-        
+
     </VerticalStackLayout>
 </ContentPage>
