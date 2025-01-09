@@ -9,11 +9,11 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Label Text="Alle Module" Grid.Column="0" FontSize="25" Margin="20,5,0,0" />
+            <Label Text="Meine Module" Grid.Column="0" FontSize="25" Margin="20,5,0,0" />
             <SearchBar Placeholder="Suchen..."  WidthRequest="250" Margin="-20,0,0,0" FontSize="17" Grid.Column="1" />
         </Grid>
-        <CollectionView x:Name="SubjectsCollection" HeightRequest="550" ItemsSource="{Binding AllSubjects}" SelectionMode="Single" SelectionChanged="ShowModul" 
-                        SelectionChangedCommandParameter="{Binding Source={x:Reference Name=SubjectsCollection}, Path=SelectedItem}">
+        <CollectionView x:Name="MySubjectsCollection" VerticalOptions="FillAndExpand" ItemsSource="{Binding MySubjects}" SelectionMode="Single" SelectionChanged="ShowMyModul" 
+                 SelectionChangedCommandParameter="{Binding Source={x:Reference Name=MySubjectsCollection}, Path=SelectedItem}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border>
@@ -22,6 +22,22 @@
                             <Label FontSize="27" Text="{Binding SubjectName}" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Button x:Name="EditBtn" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" Clicked="EditModule" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
                             <Button Text="Delete" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteSubject}" CommandParameter="{Binding .}" />
+                        </StackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Alle Module" Grid.Column="0" FontSize="25" Margin="20,5,0,0" />
+        <CollectionView x:Name="SubjectsCollection" VerticalOptions="FillAndExpand" ItemsSource="{Binding AllSubjects}" SelectionMode="Single" SelectionChanged="ShowModul" 
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference Name=SubjectsCollection}, Path=SelectedItem}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border>
+                        <StackLayout>
+                            <Label Text="{Binding Faculty}" FontSize="20"/>
+                            <Label FontSize="27" Text="{Binding SubjectName}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <!--<Button x:Name="EditBtn" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" Clicked="EditModule" Text="Edit" FontSize="20" CommandParameter="{Binding .}" />
+                            <Button Text="Delete" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.IsTeacher}" FontSize="20" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type Page}}, Path=BindingContext.DeleteSubject}" CommandParameter="{Binding .}" />-->
                         </StackLayout>
                     </Border>
                     

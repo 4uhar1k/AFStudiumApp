@@ -18,7 +18,7 @@ namespace AFStudiumApp.ViewModels
         private readonly AFStudiumAPIClientService _apiClient;
         public int subjectid, eventid, studentsamount, CurMatrikel, createdperson, credits;
         public string subjectname, faculty, location, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole, weeklyeventtxt;
-        public bool isstudent, isteacher, permitrequired, ismyevent;
+        public bool isstudent, isteacher, permitrequired;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public int? CurSemester;
         public TimeSpan begintime, endtime;
@@ -63,6 +63,7 @@ namespace AFStudiumApp.ViewModels
         }
 
         public ObservableCollection<Subject> AllSubjects { get; set; }
+        public ObservableCollection<Subject> MySubjects { get; set; }
         public ObservableCollection<User> Students { get; set; }
         public ObservableCollection<Connections> ConnectionsOfEvent { get; set; }
         public ObservableCollection<Event> EventsOfSubject { get; set; }
@@ -99,6 +100,7 @@ namespace AFStudiumApp.ViewModels
         {
             _apiClient = apiClient;            
             AllSubjects = new ObservableCollection<Subject>();
+            MySubjects = new ObservableCollection<Subject>();
             Students = new ObservableCollection<User>();
             ConnectionsOfEvent = new ObservableCollection<Connections>();
             EventsOfSubject = new ObservableCollection<Event>();
@@ -129,7 +131,7 @@ namespace AFStudiumApp.ViewModels
 
             AddSubject = new Command(() =>
             {        
-                Subject NewSubject = new Subject() { SubjectName = SubjectName, Faculty = Faculty };
+                Subject NewSubject = new Subject() { SubjectName = SubjectName, Faculty = Faculty, CreatedPerson = CurMatrikel };
                 _apiClient.PostSubject(NewSubject);
             }, () => SubjectName!="" & SubjectName!=null & Faculty!=null);
             EditSubject = new Command(() =>
@@ -225,7 +227,10 @@ namespace AFStudiumApp.ViewModels
             var subjects = await _apiClient.GetSubjects();
             foreach (Subject subject in subjects)
             {
-                AllSubjects.Add(subject);
+                if (subject.CreatedPerson == CurMatrikel)
+                    MySubjects.Add(subject);
+                else
+                    AllSubjects.Add(subject);
             }
         }
         public async Task LoadStudents()
@@ -378,7 +383,6 @@ namespace AFStudiumApp.ViewModels
                         Exercises.Add(e);
                     //else if (e.EventType == "Studienleistung")
                     //    Permits.Add(e);
-                    IsMyEvent = false;
                 }
                 var myevents = await _apiClient.GetMyEvents(CurMatrikel);
                 foreach (Event e in myevents)
@@ -401,7 +405,6 @@ namespace AFStudiumApp.ViewModels
 
                     else
                         MyExams.Add(e);
-                    IsMyEvent = true;
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
@@ -540,18 +543,7 @@ namespace AFStudiumApp.ViewModels
                 }
             }
         }
-        public bool IsMyEvent
-        {
-            get => ismyevent;
-            set
-            {
-                if (ismyevent != value)
-                {
-                    ismyevent = value;
-                    OnPropertyChanged(nameof(IsMyEvent));
-                }
-            }
-        }
+        
         public bool PermitRequired
         {
             get => permitrequired;
