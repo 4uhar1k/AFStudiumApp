@@ -18,7 +18,7 @@ namespace AFStudiumApp.ViewModels
         private readonly AFStudiumAPIClientService _apiClient;
         public int subjectid, eventid, studentsamount, CurMatrikel, createdperson, credits;
         public string subjectname, faculty, location, CurName, CurSurname, eventname, eventtype, CurEmail, CurPass, CurCourse, CurRole, weeklyeventtxt;
-        public bool isstudent, isteacher, permitrequired;
+        public bool isstudent, isteacher, permitrequired, ismyevent;
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
         public int? CurSemester;
         public TimeSpan begintime, endtime;
@@ -64,14 +64,27 @@ namespace AFStudiumApp.ViewModels
 
         public ObservableCollection<Subject> AllSubjects { get; set; }
         public ObservableCollection<User> Students { get; set; }
-        public ObservableCollection<StudentsEvents> ConnectionsOfEvent { get; set; }
+        public ObservableCollection<Connections> ConnectionsOfEvent { get; set; }
         public ObservableCollection<Event> EventsOfSubject { get; set; }
         public ObservableCollection<Event> Exams { get; set; }
         public ObservableCollection<Event> Lectures { get; set; }
         public ObservableCollection<Event> Exercises { get; set; }
         public ObservableCollection<Event> Permits { get; set; }
         public ObservableCollection<Event> MyEvents { get; set; }
+        public ObservableCollection<Event> MyLectures { get; set; }
+        public ObservableCollection<Event> MyExercises { get; set; }
         public ObservableCollection<Event> MyExams { get; set; }
+        public ObservableCollection<Event> MondayEvents { get; set; }
+        public ObservableCollection<Event> TuesdayEvents { get; set; }
+
+        public ObservableCollection<Event> WednesdayEvents { get; set; }
+
+        public ObservableCollection<Event> ThursdayEvents { get; set; }
+
+        public ObservableCollection<Event> FridayEvents { get; set; }
+
+        public ObservableCollection<Event>[] EventsOfWeekCollection = new ObservableCollection<Event>[5] { new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>() };
+
         public ICommand AddSubject { get; set; }
         public ICommand DeleteSubject { get; set; }
         public ICommand EditSubject { get; set; }
@@ -87,14 +100,22 @@ namespace AFStudiumApp.ViewModels
             _apiClient = apiClient;            
             AllSubjects = new ObservableCollection<Subject>();
             Students = new ObservableCollection<User>();
-            ConnectionsOfEvent = new ObservableCollection<StudentsEvents>();
+            ConnectionsOfEvent = new ObservableCollection<Connections>();
             EventsOfSubject = new ObservableCollection<Event>();
             Exams = new ObservableCollection<Event>();
             Lectures = new ObservableCollection<Event>();
             Exercises = new ObservableCollection<Event>();
             Permits = new ObservableCollection<Event>();
             MyEvents = new ObservableCollection<Event>();
+            MyLectures = new ObservableCollection<Event>();
+            MyExercises = new ObservableCollection<Event>();
             MyExams = new ObservableCollection<Event>();
+            MondayEvents = new ObservableCollection<Event>();
+            TuesdayEvents = new ObservableCollection<Event>();
+            WednesdayEvents = new ObservableCollection<Event>();
+            ThursdayEvents = new ObservableCollection<Event>();
+            FridayEvents = new ObservableCollection<Event>();
+            //EventsOfWeekCollection = new ObservableCollection<Event>();
             SubjectToEdit = new Subject();
             Event SelectedEvent = new Event();
             //BeginTime = new TimeSpan(0, 0, 0);
@@ -131,7 +152,7 @@ namespace AFStudiumApp.ViewModels
             AddEventForStudent = new Command((object e) =>
             {
                 SelectedEvent = (Event)e;
-                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, "");
+                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, false);
                 SelectedEvent.StudentsAmount++;
                 _apiClient.PutEvent(SelectedEvent);
             });
@@ -157,7 +178,7 @@ namespace AFStudiumApp.ViewModels
             });
             UpdateGrades = new Command(() =>
             {
-                foreach (StudentsEvents connection in ConnectionsOfEvent)
+                foreach (Connections connection in ConnectionsOfEvent)
                 {
                     _apiClient.PutConnection(connection);
                     //Students.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
@@ -219,11 +240,46 @@ namespace AFStudiumApp.ViewModels
         public async Task LoadStudentsOfEvent(int eid)
         {
             var users = await _apiClient.GetConnectionsByEventId(eid);
-            foreach (StudentsEvents connection in users)
+            foreach (Connections connection in users)
             {
                 ConnectionsOfEvent.Add(connection);
                 //Students.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
             }
+        }
+        public async Task LoadEventsByDays()
+        {
+            
+            var allevents = await _apiClient.GetConnectionsByUserId(CurMatrikel);
+            ObservableCollection<Event>[] arrayoflists = new ObservableCollection<Event>[5] {new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>() };
+            foreach (Event connection in allevents)
+            {
+                if (connection.Date.Contains("Montag"))
+                {
+                    MondayEvents.Add(connection);
+                    EventsOfWeekCollection[0].Add(connection);
+                }
+                else if (connection.Date.Contains("Dienstag"))
+                {
+                    TuesdayEvents.Add(connection);
+                    EventsOfWeekCollection[1].Add(connection);
+                }
+                else if (connection.Date.Contains("Mittwoch"))
+                {
+                    WednesdayEvents.Add(connection);
+                    EventsOfWeekCollection[2].Add(connection);
+                }
+                else if (connection.Date.Contains("Donnerstag"))
+                {
+                    ThursdayEvents.Add(connection);
+                    EventsOfWeekCollection[3].Add(connection);
+                }
+                else if (connection.Date.Contains("Freitag"))
+                {
+                    FridayEvents.Add(connection);
+                    EventsOfWeekCollection[4].Add(connection);
+                }
+            }
+            //EventsOfWeekCollection = new ObservableCollection<Event>(arrayoflists.SelectMany(x => x));
         }
         public async Task AddEventAsync(bool isAdding)
         {
@@ -295,7 +351,7 @@ namespace AFStudiumApp.ViewModels
             var listofconnections = await _apiClient.GetConnectionsByEventId(e.EventId);
             if (listofconnections != null)
             {
-                foreach (StudentsEvents se in listofconnections)
+                foreach (Connections se in listofconnections)
                 {
                     await _apiClient.DeleteConnection(se.StudentId, se.EventId);
                 }
@@ -308,27 +364,44 @@ namespace AFStudiumApp.ViewModels
         {
             try
             {
+                
                 var events = await _apiClient.GetEvents();
                 foreach (Event e in events)
                 {
                     if (e.SubjectId == SubjectId)
                         EventsOfSubject.Add(e);
-                    if (e.EventType == "Klausur")
+                    if (e.EventType == "Klausur"/* & !MyExams.Contains(e)*/)
                         Exams.Add(e);
-                    else if (e.EventType == "Vorlesung")
+                    else if (e.EventType == "Vorlesung"/* & !MyLectures.Contains(e)*/)
                         Lectures.Add(e);
-                    else if (e.EventType == "Übung")
+                    else if (e.EventType == "Übung" )/*& !MyExercises.Contains(e))*/
                         Exercises.Add(e);
-                    else if (e.EventType == "Studienleistung")
-                        Permits.Add(e);
+                    //else if (e.EventType == "Studienleistung")
+                    //    Permits.Add(e);
+                    IsMyEvent = false;
                 }
                 var myevents = await _apiClient.GetMyEvents(CurMatrikel);
                 foreach (Event e in myevents)
                 {
                     if (e.EventType != "Klausur")
+                    {
                         MyEvents.Add(e);
+                        switch (e.EventType)
+                        {
+                            case "Vorlesung":
+                                MyLectures.Add(e);
+
+                                break;
+                            case "Übung":
+                                MyExercises.Add(e);
+                                break;
+
+                        }
+                    }
+
                     else
                         MyExams.Add(e);
+                    IsMyEvent = true;
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
@@ -464,6 +537,18 @@ namespace AFStudiumApp.ViewModels
                 {
                     isstudent = value;
                     OnPropertyChanged(nameof(IsStudent));
+                }
+            }
+        }
+        public bool IsMyEvent
+        {
+            get => ismyevent;
+            set
+            {
+                if (ismyevent != value)
+                {
+                    ismyevent = value;
+                    OnPropertyChanged(nameof(IsMyEvent));
                 }
             }
         }

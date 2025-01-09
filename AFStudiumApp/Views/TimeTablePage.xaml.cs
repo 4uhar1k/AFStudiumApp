@@ -12,6 +12,9 @@ public partial class TimeTablePage : ContentPage
 		InitializeComponent();
 		_apiService = apiService;
 		thisContext = new ModulesViewModel(_apiService);
+        thisContext.LoadEventsByDays(); 
 		BindingContext = thisContext;
 	}
+
+	
 }

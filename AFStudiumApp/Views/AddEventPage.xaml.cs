@@ -170,11 +170,11 @@ public partial class AddEventPage : ContentPage
 				break;
 			case "Wochentlich":
                 //DaysOfWeekCollection.IsVisible = true;
-                MondayCheck.IsVisible = true;
-                TuesdayCheck.IsVisible = true;
-                WednesdayCheck.IsVisible = true;
-                ThursdayCheck.IsVisible = true;
-                FridayCheck.IsVisible = true;
+                MondayCheck.IsVisible = thisContext.IsTeacher;
+                TuesdayCheck.IsVisible = thisContext.IsTeacher;
+                WednesdayCheck.IsVisible = thisContext.IsTeacher;
+                ThursdayCheck.IsVisible = thisContext.IsTeacher;
+                FridayCheck.IsVisible = thisContext.IsTeacher;
                 EventDatePicker.IsVisible = false;
                 thisContext.WeeklyEventText = "";
                 if (MCheck.IsChecked)

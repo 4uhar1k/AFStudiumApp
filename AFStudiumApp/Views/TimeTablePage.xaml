@@ -4,9 +4,23 @@
              x:Class="AFStudiumApp.TimeTablePage"
              Title="TimeTablePage">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <CarouselView ItemsSource="{Binding EventsOfWeekCollection[0]}" HeightRequest="300">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <!--<CarouselView ItemsSource="{Binding EventsOfWeekCollection[0]}">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>-->
+                                        <Label FontSize="30" Text="{Binding EventName}"/>
+                                    <!--</StackLayout>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>-->
+                       
+                    </StackLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
     </VerticalStackLayout>
 </ContentPage>

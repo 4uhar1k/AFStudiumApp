@@ -25,7 +25,7 @@ public partial class ListOfStudentsPage : ContentPage
 		{
 			foreach (User user in StudentsCollection.SelectedItems)
 			{
-				await _apiService.PostConnection(user.MatrikelNum, CurEventId, "");
+				await _apiService.PostConnection(user.MatrikelNum, CurEventId, false);
 			}
 			Event ev = await _apiService.GetEventById(CurEventId);
 			ev.StudentsAmount += StudentsCollection.SelectedItems.Count;

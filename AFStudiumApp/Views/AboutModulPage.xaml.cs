@@ -1,7 +1,6 @@
 using AFStudiumAPIClient;
 using AFStudiumAPIClient.Models.ApiModels;
 using AFStudiumApp.ViewModels;
-using System.Security.Cryptography.X509Certificates;
 
 namespace AFStudiumApp;
 

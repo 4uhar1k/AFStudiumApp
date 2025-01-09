@@ -18,20 +18,23 @@ public partial class EventsPage : ContentPage
 		//_eventType = EventType;
 		thisContext = new ModulesViewModel(_apiService);
 		thisContext.IsStudent = (thisContext.CurRole == "student" | thisContext.CurRole == "admin");
-        thisContext.IsTeacher = (thisContext.CurRole == "teacher" | thisContext.CurRole == "admin");
-
+		thisContext.IsTeacher = false;//(thisContext.CurRole == "teacher" | thisContext.CurRole == "admin");
         BindingContext = thisContext;
+		//AddEventBtn.IsVisible = false;
 		switch (EventType)
 		{
             case ("Vorlesung"):
                 SubjectsCollection.ItemsSource = thisContext.Lectures;
+				//TeachersSubjectsCollection.ItemsSource = thisContext.MyLectures;
 				break;
 			case ("Uebung"):
                 SubjectsCollection.ItemsSource = thisContext.Exercises;
-				break;
+                //TeachersSubjectsCollection.ItemsSource = thisContext.MyExercises;
+                break;
 			case ("Klausur"):
 				SubjectsCollection.ItemsSource = thisContext.Exams;
-				break;
+                //TeachersSubjectsCollection.ItemsSource = thisContext.MyExams;
+                break;
 			default:
                 SubjectsCollection.ItemsSource = thisContext.Exercises;
 				break;
@@ -81,9 +84,9 @@ public partial class EventsPage : ContentPage
 				exams.Add(e);
 		}
 		if (isExam == false)
-			MySubjectsCollection.ItemsSource = notexams;
+            MySubjectsCollection.ItemsSource = notexams;
 		else
-			MySubjectsCollection.ItemsSource = exams;
+            MySubjectsCollection.ItemsSource = exams;
     }
     /*public void SearchEvent(object sender, EventArgs e)
 	{
