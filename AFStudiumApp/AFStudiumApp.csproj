@@ -72,7 +72,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\AFStudiumDBAPI\AFStudiumAPIClient\AFStudiumAPIClient.csproj" />
+	  <ProjectReference Include="..\..\AFStudiumAPIClient\AFStudiumAPIClient.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

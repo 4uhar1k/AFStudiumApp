@@ -1,5 +1,6 @@
 ﻿using AFStudiumAPIClient;
 using AFStudiumAPIClient.Models.ApiModels;
+using Microsoft.Maui.Devices.Sensors;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -44,17 +45,13 @@ namespace AFStudiumApp.ViewModels
         //}
         public async void GetUsersInfo()
         {
-            int CurMatrikel = 0;
             using (StreamReader sr = new StreamReader(CurUserPath))
             {
-                CurMatrikel = Int32.Parse(sr.ReadLine());
+                
+                CurName = sr.ReadLine();
+                CurSurName = sr.ReadLine();
+                
                 sr.Close();
-            }
-            CurUser = await _apiClient.GetUserByMatrikelNum(CurMatrikel);
-            if (CurUser != null)
-            {
-                CurName = CurUser.Name;
-                CurSurName = CurUser.Surname;
             }
         }
 

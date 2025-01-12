@@ -84,7 +84,7 @@ namespace AFStudiumApp.ViewModels
 
         public ObservableCollection<Event> FridayEvents { get; set; }
 
-        public ObservableCollection<Event>[] EventsOfWeekCollection = new ObservableCollection<Event>[5] { new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>() };
+        public ObservableCollection<Event>[] EventsOfWeekCollection { get; set; } 
 
         public ICommand AddSubject { get; set; }
         public ICommand DeleteSubject { get; set; }
@@ -117,6 +117,7 @@ namespace AFStudiumApp.ViewModels
             WednesdayEvents = new ObservableCollection<Event>();
             ThursdayEvents = new ObservableCollection<Event>();
             FridayEvents = new ObservableCollection<Event>();
+            EventsOfWeekCollection = new ObservableCollection<Event>[5] { new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>() };
             //EventsOfWeekCollection = new ObservableCollection<Event>();
             SubjectToEdit = new Subject();
             Event SelectedEvent = new Event();
@@ -125,6 +126,7 @@ namespace AFStudiumApp.ViewModels
             GetUsersInfo();
             LoadSubjects();
             LoadEventsOfSubject();
+            LoadEventsByDays();
             isstudent = (CurRole == "student" | CurRole == "admin");
             isteacher = (CurRole == "teacher" | CurRole == "admin");
 
