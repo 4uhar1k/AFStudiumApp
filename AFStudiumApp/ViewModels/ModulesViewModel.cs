@@ -84,7 +84,7 @@ namespace AFStudiumApp.ViewModels
 
         public ObservableCollection<Event> FridayEvents { get; set; }
 
-        public ObservableCollection<Event>[] EventsOfWeekCollection { get; set; } 
+        public ObservableCollection<ObservableCollection<Event>> EventsOfWeekCollection { get; set; } 
 
         public ICommand AddSubject { get; set; }
         public ICommand DeleteSubject { get; set; }
@@ -117,7 +117,7 @@ namespace AFStudiumApp.ViewModels
             WednesdayEvents = new ObservableCollection<Event>();
             ThursdayEvents = new ObservableCollection<Event>();
             FridayEvents = new ObservableCollection<Event>();
-            EventsOfWeekCollection = new ObservableCollection<Event>[5] { new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>() };
+            EventsOfWeekCollection = new ObservableCollection<ObservableCollection<Event>>();//new ObservableCollection<Event>[5] { new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>(), new ObservableCollection<Event>() };
             //EventsOfWeekCollection = new ObservableCollection<Event>();
             SubjectToEdit = new Subject();
             Event SelectedEvent = new Event();
@@ -263,29 +263,34 @@ namespace AFStudiumApp.ViewModels
                 if (connection.Date.Contains("Montag"))
                 {
                     MondayEvents.Add(connection);
-                    EventsOfWeekCollection[0].Add(connection);
+                    //EventsOfWeekCollection[0].Add(connection);
                 }
-                else if (connection.Date.Contains("Dienstag"))
+                if (connection.Date.Contains("Dienstag"))
                 {
                     TuesdayEvents.Add(connection);
-                    EventsOfWeekCollection[1].Add(connection);
+                    //EventsOfWeekCollection[1].Add(connection);
                 }
-                else if (connection.Date.Contains("Mittwoch"))
+                if (connection.Date.Contains("Mittwoch"))
                 {
                     WednesdayEvents.Add(connection);
-                    EventsOfWeekCollection[2].Add(connection);
+                    //EventsOfWeekCollection[2].Add(connection);
                 }
-                else if (connection.Date.Contains("Donnerstag"))
+                if (connection.Date.Contains("Donnerstag"))
                 {
                     ThursdayEvents.Add(connection);
-                    EventsOfWeekCollection[3].Add(connection);
+                    //EventsOfWeekCollection[3].Add(connection);
                 }
-                else if (connection.Date.Contains("Freitag"))
+                if (connection.Date.Contains("Freitag"))
                 {
                     FridayEvents.Add(connection);
-                    EventsOfWeekCollection[4].Add(connection);
+                    //EventsOfWeekCollection[4].Add(connection);
                 }
             }
+            EventsOfWeekCollection.Add(MondayEvents);
+            EventsOfWeekCollection.Add(TuesdayEvents);
+            EventsOfWeekCollection.Add(WednesdayEvents);
+            EventsOfWeekCollection.Add(ThursdayEvents);
+            EventsOfWeekCollection.Add(FridayEvents);
             //EventsOfWeekCollection = new ObservableCollection<Event>(arrayoflists.SelectMany(x => x));
         }
         public async Task AddEventAsync(bool isAdding)

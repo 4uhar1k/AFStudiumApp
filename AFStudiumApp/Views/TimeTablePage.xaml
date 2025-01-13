@@ -4,20 +4,19 @@
              x:Class="AFStudiumApp.TimeTablePage"
              Title="TimeTablePage">
     <VerticalStackLayout>
-        <CarouselView ItemsSource="{Binding EventsOfWeekCollection[0]}" HeightRequest="300">
+        <CarouselView  HeightRequest="300" ItemsSource="{Binding EventsOfWeekCollection}">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>
-                        <!--<CarouselView ItemsSource="{Binding EventsOfWeekCollection[0]}">
-                            <CarouselView.ItemTemplate>
+                        <CollectionView ItemsSource="{Binding .}">
+                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout>-->
+                                    <StackLayout>
                                         <Label FontSize="30" Text="{Binding EventName}"/>
-                                    <!--</StackLayout>
+                                    </StackLayout>
                                 </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>-->
-                       
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>                       
                     </StackLayout>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
