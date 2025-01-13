@@ -296,7 +296,7 @@ namespace AFStudiumApp.ViewModels
         public async Task AddEventAsync(bool isAdding)
         {
             Event sl = new Event();
-            Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, StudentsAmount = StudentsAmount, Time = $"{BeginTime.ToString()}-{EndTime.ToString()}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
+            Event e = new Event() { SubjectId = SubjectId, EventName = EventName, EventType = EventType, CreatedPerson = CurMatrikel, StudentsAmount = StudentsAmount, Time = $"{BeginTime.ToString(@"hh\:mm")}-{EndTime.ToString(@"hh\:mm")}", Credits = Credits, Location = Location, PermitRequired = PermitRequired};
             if (WeeklyEventText != "" & WeeklyEventText != null)
                 e.Date = WeeklyEventText;
             else

@@ -8,12 +8,27 @@
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>
+                        <Label Text="{Binding Date}"/>
                         <CollectionView ItemsSource="{Binding .}">
                              <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout>
-                                        <Label FontSize="30" Text="{Binding EventName}"/>
-                                    </StackLayout>
+                                    <Border>
+                                        <StackLayout>
+                                            
+                                            <Label FontSize="30" Text="{Binding EventName}" HorizontalTextAlignment="Center"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Text="{Binding Time}" FontSize="20" />
+                                                <Label Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding Location}" FontSize="20"/>
+                                            </Grid>
+                                            
+                                                
+                                        </StackLayout>
+                                    </Border>
+                                    
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>                       
@@ -21,5 +36,6 @@
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
+        
     </VerticalStackLayout>
 </ContentPage>
