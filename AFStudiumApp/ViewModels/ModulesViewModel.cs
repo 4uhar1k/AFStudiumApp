@@ -316,7 +316,14 @@ namespace AFStudiumApp.ViewModels
                     var events = await _apiClient.GetEventsBySubjectId(SubjectId);
                     Event studienleistung = events.Where(n => n.EventType == "Studienleistung").FirstOrDefault();
                     e.PermitionEvent = studienleistung.EventId;
-                }                
+                }   
+                else if (e.EventType == "Studienleistung")
+                {
+                    e.Date = "";
+                    e.Time = "";
+                    e.Location = "";
+
+                }
                 await _apiClient.PostEvent(e);
             }                
             else
@@ -340,6 +347,13 @@ namespace AFStudiumApp.ViewModels
                     var events = await _apiClient.GetEventsBySubjectId(SubjectId);
                     Event studienleistung = events.Where(n => n.EventType == "Studienleistung").FirstOrDefault();
                     e.PermitionEvent = studienleistung.EventId;
+                }
+                else if (e.EventType == "Studienleistung")
+                {
+                    e.Date = "";
+                    e.Time = "";
+                    e.Location = "";
+
                 }
                 await _apiClient.PutEvent(e);
 

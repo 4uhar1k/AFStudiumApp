@@ -24,9 +24,9 @@
                     <CheckBox IsChecked="{Binding PermitRequired}" IsEnabled="{Binding IsTeacher}"/>
                     <Label Text="Studienleistung benötigt?" VerticalOptions="Center" />
                 </HorizontalStackLayout>
-                <Entry Text="{Binding Credits}" IsEnabled="{Binding IsTeacher}" FontSize="18" Placeholder="Leistungspunkte (LP)" PlaceholderColor="DarkGray" />
-                <Entry Text="{Binding Location}"  IsEnabled="{Binding IsTeacher}" Placeholder="Veranstaltungsort" FontSize="18" PlaceholderColor="DarkGray"/>
-                <StackLayout>
+                <Entry  x:Name="CreditsEntry" Text="{Binding Credits}" IsEnabled="{Binding IsTeacher}" FontSize="18" Placeholder="Leistungspunkte (LP)" PlaceholderColor="DarkGray" />
+                <Entry x:Name="LocationEntry" Text="{Binding Location}"  IsEnabled="{Binding IsTeacher}" Placeholder="Veranstaltungsort" FontSize="18" PlaceholderColor="DarkGray"/>
+                <StackLayout x:Name="HaufigkeitsStack">
                     <Label Text="Wie oft wird es veranstaltet werden?" FontSize="18" />
                     <RadioButton x:Name="EventRadioBtn1" GroupName="EventHaufigkeit" IsEnabled="{Binding IsTeacher}" Content="Täglich" CheckedChanged="EventChecked"/>
                     <RadioButton x:Name="EventRadioBtn2" GroupName="EventHaufigkeit" IsEnabled="{Binding IsTeacher}" Content="Wochentlich" CheckedChanged="EventChecked" />
@@ -76,8 +76,8 @@
                     <Label Text="Freitag" VerticalOptions="Center" />
                 </HorizontalStackLayout>
                 <DatePicker MinimumDate="01.01.2025" x:Name="EventDatePicker" IsEnabled="{Binding IsTeacher}" IsVisible="False" Date="{Binding Date}" Format="dd.MM.yyyy" FontSize="18"/>
-                <TimePicker Time="{Binding BeginTime, StringFormat='{}{0:HH:mm}'}" IsEnabled="{Binding IsTeacher}" Format="HH:mm"/>
-                <TimePicker Time="{Binding EndTime, StringFormat='{}{0:HH:mm}'}" IsEnabled="{Binding IsTeacher}" Format="HH:mm"/>
+                <TimePicker x:Name="BeginTimePicker" Time="{Binding BeginTime, StringFormat='{}{0:HH:mm}'}" IsEnabled="{Binding IsTeacher}" Format="HH:mm"/>
+                <TimePicker x:Name="EndTimePicker" Time="{Binding EndTime, StringFormat='{}{0:HH:mm}'}" IsEnabled="{Binding IsTeacher}" Format="HH:mm"/>
 
                 <Entry IsVisible="False" x:Name="ReceiverEntry" Placeholder="An...(Matrikelnummer)"/>
                 <Entry IsVisible="False" x:Name="MessageHeaderEntry" Placeholder="Title..." />

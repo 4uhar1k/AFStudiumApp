@@ -46,22 +46,47 @@ public partial class AddEventPage : ContentPage
         thisContext.EventType = SelectedEvent.EventType;
 		thisContext.Credits = SelectedEvent.Credits;
 		thisContext.StudentsAmount = SelectedEvent.StudentsAmount;
-		if (DateTime.TryParseExact(SelectedEvent.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dt))
+		if (SelectedEvent.EventType != "Studienleistung")
 		{
-			thisContext.Date = DateTime.ParseExact(SelectedEvent.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
-			EventRadioBtn3.IsChecked = true;
+            if (DateTime.TryParseExact(SelectedEvent.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dt))
+            {
+                thisContext.Date = DateTime.ParseExact(SelectedEvent.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                EventRadioBtn3.IsChecked = true;
+            }
+            else
+            {
+                thisContext.WeeklyEventText = SelectedEvent.Date;
+                if (SelectedEvent.Date == "Montag Dienstag Mittwoch Donnerstag Freitag")
+                    EventRadioBtn1.IsChecked = true;
+                else
+                    EventRadioBtn2.IsChecked = true;
+            }
+
+            thisContext.BeginTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[0]);
+            thisContext.EndTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[1]);
         }
-		else
-		{
-            thisContext.WeeklyEventText = SelectedEvent.Date;
-            if (SelectedEvent.Date == "Montag Dienstag Mittwoch Donnerstag Freitag")
-				EventRadioBtn1.IsChecked = true;
-			else
-				EventRadioBtn2.IsChecked = true;
-		}
+        else
+        {
+            
+            EventPicker.IsEnabled = false;
+            PermitReqCheck.IsVisible = false;
+            CreditsEntry.IsVisible = false;
+            LocationEntry.IsVisible = false;
+            HaufigkeitsStack.IsVisible = false;
+            WeeklyEventLabel.IsVisible = false;
+            MondayCheck.IsVisible = false;
+            TuesdayCheck.IsVisible = false;
+            WednesdayCheck.IsVisible = false;
+            ThursdayCheck.IsVisible = false;
+            FridayCheck.IsVisible = false;
+            EventDatePicker.IsVisible = false;
+            BeginTimePicker.IsVisible = false;
+            EndTimePicker.IsVisible = false;
+            SendMessageBtn.IsVisible = false;
+            AddGradesBtn.IsVisible = false;
+        }
+        
 		
-		thisContext.BeginTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[0]);
-		thisContext.EndTime = TimeSpan.Parse(SelectedEvent.Time.Split('-')[1]);
 		thisContext.Location = SelectedEvent.Location;
 		thisContext.PermitRequired = SelectedEvent.PermitRequired;
 		thisContext.OldPermitRequired = SelectedEvent.PermitRequired;
