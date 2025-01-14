@@ -11,7 +11,7 @@ public partial class ProfilePage : ContentPage
 	{
 		InitializeComponent();
         _apiClient = apiClient;
-        BindingContext = new ViewModelBase(apiClient);
+        BindingContext = new ViewModelBase();
 	}
     public async void GoToTimetable(object sender, EventArgs e)
     {

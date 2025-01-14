@@ -18,17 +18,17 @@ namespace AFStudiumApp.ViewModels
         // public SqliteConnectionBase CurUserBase { get; set; }
         // public ISQLiteAsyncConnection CurUserConnection { get; set; }
         public string CurUserPath = Path.Combine(FileSystem.AppDataDirectory, "curuser.txt");
-        public string curname, cursurname;
+        public string curname, cursurname, curmatrikel, curemail, curpass;
         protected readonly AFStudiumAPIClientService _apiClient;
         public User CurUser { get; set; }
         // public bool IsLoggedIn { get; set; }
 
         
 
-        public ViewModelBase(AFStudiumAPIClientService apiClient)
+        public ViewModelBase(/*AFStudiumAPIClientService apiClient*/)
         {
             CurUser = new User();
-            _apiClient = apiClient;
+            //_apiClient = apiClient;
             GetUsersInfo();
             // CurUserBase = new SqliteConnectionBase();
 
@@ -45,14 +45,20 @@ namespace AFStudiumApp.ViewModels
         //}
         public async void GetUsersInfo()
         {
-            using (StreamReader sr = new StreamReader(CurUserPath))
+            try
             {
-                
-                CurName = sr.ReadLine();
-                CurSurName = sr.ReadLine();
-                
-                sr.Close();
+                using (StreamReader sr = new StreamReader(CurUserPath))
+                {
+                    curmatrikel = sr.ReadLine();
+                    curemail = sr.ReadLine();
+                    curpass = sr.ReadLine();
+                    CurName = sr.ReadLine();
+                    CurSurName = sr.ReadLine();
+
+                    sr.Close();
+                }
             }
+            catch { }
         }
 
         public string CurName
