@@ -54,13 +54,13 @@ namespace AFStudiumApp
         {
             User u = new User { MatrikelNum = 333333, Email = "ah", Password = "b", Name = "c", Surname = "student2", Course = "e", Semester = 99, Role = "student" };
             //_apiClient.PostConnection(333333, 13);
-            //var users = await _apiClient.GetConnectionsByUserId(333333);
-            //UsersCollection.ItemsSource = users;            //User testuser = new User() { MatrikelNum = 1 , Email="test", Password="testpass", Name="testname", Surname="testsurname", Course="testcourse", Semester=1};
+            var users = await _apiClient.GetGrades();
+            UsersCollection.ItemsSource = users;            //User testuser = new User() { MatrikelNum = 1 , Email="test", Password="testpass", Name="testname", Surname="testsurname", Course="testcourse", Semester=1};
             //Message m = new Message() { MessageId = 1, SendFrom = 100000, SendTo = 257518, MessageHeader="ti dolboeb", MessageText="koncheniy", MessageTime=DateTime.Now };
             //await _apiClient.PostMessage(m);
-            Event exam = new Event() { SubjectId = 6, EventName="AnChe Vorlesung", EventType="Vorlesung", CreatedPerson = 333333, StudentsAmount = 0, Date = "Mittwoch", Time = "01:00", Credits=5, Location="HG 2 HS 3", PermitRequired=false};
+            //Event exam = new Event() { SubjectId = 6, EventName="AnChe Vorlesung", EventType="Vorlesung", CreatedPerson = 333333, StudentsAmount = 0, Date = "Mittwoch", Time = "01:00", Credits=5, Location="HG 2 HS 3", PermitRequired=false};
             //Exam examm = new Exam() { SubjectId = 6, ExamName = "blablaaaa", CreatedPerson = 333333, StudentsAmount = 0, ExamDate = DateTime.Now, ExamTime = "01:00" };
-            await _apiClient.PostEvent(exam);
+            //await _apiClient.PostEvent(exam);
         }
 
         public async void GoToModules(object sender, EventArgs e)

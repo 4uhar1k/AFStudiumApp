@@ -65,7 +65,7 @@ namespace AFStudiumApp.ViewModels
         public ObservableCollection<Subject> AllSubjects { get; set; }
         public ObservableCollection<Subject> MySubjects { get; set; }
         public ObservableCollection<User> Students { get; set; }
-        public ObservableCollection<Connections> ConnectionsOfEvent { get; set; }
+        public ObservableCollection<Grades> GradesOfEvent { get; set; }
         public ObservableCollection<Event> EventsOfSubject { get; set; }
         public ObservableCollection<Event> Exams { get; set; }
         public ObservableCollection<Event> Lectures { get; set; }
@@ -103,7 +103,7 @@ namespace AFStudiumApp.ViewModels
             AllSubjects = new ObservableCollection<Subject>();
             MySubjects = new ObservableCollection<Subject>();
             Students = new ObservableCollection<User>();
-            ConnectionsOfEvent = new ObservableCollection<Connections>();
+            GradesOfEvent = new ObservableCollection<Grades>();
             EventsOfSubject = new ObservableCollection<Event>();
             Exams = new ObservableCollection<Event>();
             Lectures = new ObservableCollection<Event>();
@@ -158,6 +158,8 @@ namespace AFStudiumApp.ViewModels
             {
                 SelectedEvent = (Event)e;
                 _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, false);
+                if (SelectedEvent.EventType == "Klausur")
+                    _apiClient.PostGrades(CurMatrikel, SelectedEvent.EventId, "");
                 SelectedEvent.StudentsAmount++;
                 _apiClient.PutEvent(SelectedEvent);
             });
@@ -182,14 +184,16 @@ namespace AFStudiumApp.ViewModels
             {
                 Event EventToDelete = (Event)e;
                 _apiClient.DeleteConnection(CurMatrikel, EventToDelete.EventId);
+                if (SelectedEvent.EventType == "Klausur")
+                    _apiClient.DeleteGrade(CurMatrikel, EventToDelete.EventId);
                 EventToDelete.StudentsAmount--;
                 _apiClient.PutEvent(EventToDelete);
             });
             UpdateGrades = new Command(() =>
             {
-                foreach (Connections connection in ConnectionsOfEvent)
+                foreach (Grades grade in GradesOfEvent)
                 {
-                    _apiClient.PutConnection(connection);
+                    _apiClient.PutGrade(grade);
                     //Students.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
                 }
             });
@@ -252,10 +256,10 @@ namespace AFStudiumApp.ViewModels
         }
         public async Task LoadStudentsOfEvent(int eid)
         {
-            var users = await _apiClient.GetConnectionsByEventId(eid);
-            foreach (Connections connection in users)
+            var users = await _apiClient.GetGradesByEventId(eid);
+            foreach (Grades connection in users)
             {
-                ConnectionsOfEvent.Add(connection);
+                GradesOfEvent.Add(connection);
                 //Students.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
             }
         }
@@ -268,8 +272,17 @@ namespace AFStudiumApp.ViewModels
                 var ConOfEvents = await _apiClient.GetConnectionsByEventId(EventToFind.EventId);
                 foreach (Connections cons in ConOfEvents)
                 {
-                    await _apiClient.DeleteConnection(cons.StudentId, cons.EventId);
+                    await _apiClient.DeleteConnection(cons.StudentId, cons.EventId);                    
                 }
+                if (EventToFind.EventType == "Klausur")
+                {
+                    var GradesOfEvent = await _apiClient.GetGradesByEventId(EventToFind.EventId);
+                    foreach (Grades cons in GradesOfEvent)
+                    {
+                        await _apiClient.DeleteGrade(cons.StudentId, EventToFind.EventId);
+                    }
+                }
+                    
                 EventToFind.StudentsAmount = 0;
                 await _apiClient.PutEvent(EventToFind);
            }

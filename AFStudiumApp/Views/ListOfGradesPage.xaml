@@ -4,7 +4,7 @@
              x:Class="AFStudiumApp.ListOfGradesPage"
              Title="ListOfGradesPage">
     <VerticalStackLayout>
-        <CollectionView x:Name="StudentsCollection" ItemsSource="{Binding ConnectionsOfEvent}" SelectionMode="Multiple">
+        <CollectionView x:Name="StudentsCollection" ItemsSource="{Binding GradesOfEvent}" SelectionMode="Multiple">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border>

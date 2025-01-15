@@ -23,11 +23,14 @@ public partial class ListOfStudentsPage : ContentPage
 	{
 		if (StudentsCollection.SelectedItems.Count>0)
 		{
-			foreach (User user in StudentsCollection.SelectedItems)
+            Event ev = await _apiService.GetEventById(CurEventId);
+            foreach (User user in StudentsCollection.SelectedItems)
 			{
 				await _apiService.PostConnection(user.MatrikelNum, CurEventId, false);
-			}
-			Event ev = await _apiService.GetEventById(CurEventId);
+                if (ev.EventType == "Klausur")
+                    _apiService.PostGrades(user.MatrikelNum, CurEventId, "");
+            }
+			
 			ev.StudentsAmount += StudentsCollection.SelectedItems.Count;
 			await _apiService.PutEvent(ev);
 			await Navigation.PopAsync();

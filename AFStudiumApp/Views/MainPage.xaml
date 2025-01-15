@@ -34,7 +34,7 @@
                                     <MultiBinding StringFormat="{}{0} {1} {2}">
                                         <Binding Path="Id"/>
                                         <Binding Path="EventId"/>
-                                        <Binding Path="CreatedPerson"/>
+                                        <Binding Path="StudentId"/>
                                     </MultiBinding>
                                 </Label.Text>
                             </Label>
