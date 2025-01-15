@@ -157,7 +157,7 @@ namespace AFStudiumApp.ViewModels
             AddEventForStudent = new Command((object e) =>
             {
                 SelectedEvent = (Event)e;
-                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, false);
+                _apiClient.PostConnection(CurMatrikel, SelectedEvent.EventId, 3);
                 if (SelectedEvent.EventType == "Klausur")
                     _apiClient.PostGrades(CurMatrikel, SelectedEvent.EventId, "");
                 SelectedEvent.StudentsAmount++;
@@ -359,6 +359,7 @@ namespace AFStudiumApp.ViewModels
 
                 }
                 await _apiClient.PostEvent(e);
+                Connections ConOfCreator = new Connections() { EventId = e.EventId, StudentId = CurMatrikel, Status = 1 };
             }                
             else
             {

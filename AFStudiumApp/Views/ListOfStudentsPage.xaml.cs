@@ -26,7 +26,7 @@ public partial class ListOfStudentsPage : ContentPage
             Event ev = await _apiService.GetEventById(CurEventId);
             foreach (User user in StudentsCollection.SelectedItems)
 			{
-				await _apiService.PostConnection(user.MatrikelNum, CurEventId, false);
+				await _apiService.PostConnection(user.MatrikelNum, CurEventId, 3);
                 if (ev.EventType == "Klausur")
                     _apiService.PostGrades(user.MatrikelNum, CurEventId, "");
             }
