@@ -261,7 +261,7 @@ namespace AFStudiumApp.ViewModels
         }
         public async Task CloseEventAsync(int eid)
         {
-            var EventToFind = _apiClient.GetEventById(eid).Result;
+            var EventToFind = await _apiClient.GetEventById(eid);
             if (EventToFind != null)
             {
                 //EventToClose = (Event)EventToFind;
@@ -270,7 +270,9 @@ namespace AFStudiumApp.ViewModels
                 {
                     await _apiClient.DeleteConnection(cons.StudentId, cons.EventId);
                 }
-            }
+                EventToFind.StudentsAmount = 0;
+                await _apiClient.PutEvent(EventToFind);
+           }
         }
         public async Task LoadEventsByDays()
         {
