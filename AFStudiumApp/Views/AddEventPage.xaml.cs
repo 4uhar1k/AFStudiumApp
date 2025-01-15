@@ -26,6 +26,7 @@ public partial class AddEventPage : ContentPage
 		AddStudentBtn.IsVisible = false;
 		SendMessageBtn.IsVisible = false;
 		AddGradesBtn.IsVisible = false;
+        AddBtn.Command = thisContext.AddEvent;
     }
 	public AddEventPage(AFStudiumAPIClientService apiClient, Event e, bool isAllowed)
     {

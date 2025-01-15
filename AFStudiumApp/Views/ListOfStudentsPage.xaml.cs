@@ -15,7 +15,7 @@ public partial class ListOfStudentsPage : ContentPage
 		_apiService = apiService;
 		CurEventId = eid;
 		thisContext = new ModulesViewModel(_apiService);
-		thisContext.LoadStudents();
+		thisContext.LoadStudents(eid);
 		BindingContext = thisContext;
 	}
 

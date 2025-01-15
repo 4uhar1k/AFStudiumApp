@@ -92,6 +92,7 @@ namespace AFStudiumApp.ViewModels
         public ICommand AddEvent { get; set; }
         public ICommand AddEventForStudent { get; set; }
         public ICommand DeleteEvent { get; set; }
+        public ICommand CloseEvent { get; set; }
         public ICommand DeleteEventForStudent { get; set; }
         public ICommand EditEvent { get; set; }
         public ICommand UpdateGrades { get; set; }
@@ -173,6 +174,10 @@ namespace AFStudiumApp.ViewModels
                 Event EventToDelete = (Event)e;
                 DeleteConnectionsWithEvent(EventToDelete);
             });
+            CloseEvent = new Command(() =>
+            {
+                CloseEventAsync(EventId);
+            });
             DeleteEventForStudent = new Command((object e) =>
             {
                 Event EventToDelete = (Event)e;
@@ -235,12 +240,13 @@ namespace AFStudiumApp.ViewModels
                     AllSubjects.Add(subject);
             }
         }
-        public async Task LoadStudents()
+        public async Task LoadStudents(int eid)
         {
             var users = await _apiClient.GetUsers();
+            var usersofevent = await _apiClient.GetConnectionsByEventId(eid);
             foreach (User user in users)
             {
-                if (user.Role=="student")
+                if (user.Role=="student" & usersofevent.Where(n=> n.StudentId == user.MatrikelNum).FirstOrDefault() == null)
                     Students.Add(user);
             }
         }
@@ -251,6 +257,19 @@ namespace AFStudiumApp.ViewModels
             {
                 ConnectionsOfEvent.Add(connection);
                 //Students.Add(await _apiClient.GetUserByMatrikelNum(connection.StudentId));
+            }
+        }
+        public async Task CloseEventAsync(int eid)
+        {
+            var EventToFind = _apiClient.GetEventById(eid).Result;
+            if (EventToFind != null)
+            {
+                //EventToClose = (Event)EventToFind;
+                var ConOfEvents = await _apiClient.GetConnectionsByEventId(EventToFind.EventId);
+                foreach (Connections cons in ConOfEvents)
+                {
+                    await _apiClient.DeleteConnection(cons.StudentId, cons.EventId);
+                }
             }
         }
         public async Task LoadEventsByDays()

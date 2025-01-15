@@ -85,7 +85,8 @@
                 <Button x:Name="AddStudentBtn" Text="Student manuell hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddStudents"  />
                 <Button x:Name="SendMessageBtn" Text="Nachricht senden" Clicked="MessageClicked" IsVisible="{Binding IsTeacher}"/>
                 <Button x:Name="AddGradesBtn" Text="Noten hinzufügen" IsVisible="{Binding IsTeacher}" Clicked="AddGrades" FontSize="20"/>
-                <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" Command="{Binding AddEvent}" FontSize="20"/>
+                <Button x:Name="CloseEventBtn" Text="Veranstaltung beenden" IsVisible="{Binding IsTeacher}" Command="{Binding CloseEvent}" FontSize="20"/>
+                <Button x:Name="AddBtn" Text="Hinzufügen" IsVisible="{Binding IsTeacher}" FontSize="20"/>
             </StackLayout>
 
         </ScrollView>
