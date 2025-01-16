@@ -29,7 +29,8 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>-->
-        <CollectionView x:Name="SubjectsCollection" MaximumHeightRequest="550"  SelectionMode="Single"  SelectionChanged="ShowMyEvent"
+       
+        <CollectionView x:Name="SubjectsCollection" MaximumHeightRequest="550"  SelectionMode="Single" BackgroundColor="White"  SelectionChanged="ShowMyEvent"
              SelectionChangedCommandParameter="{Binding Source={x:Reference Name=SubjectsCollection}, Path=SelectedItem}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -47,7 +48,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <CollectionView  x:Name="MySubjectsCollection" SelectionMode="Single" SelectionChanged="ShowMyEvent" IsVisible="{Binding IsStudent}" MaximumHeightRequest="550" 
-     SelectionChangedCommandParameter="{Binding Source={x:Reference Name=MySubjectsCollection}, Path=SelectedItem}">
+SelectionChangedCommandParameter="{Binding Source={x:Reference Name=MySubjectsCollection}, Path=SelectedItem}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border>
@@ -61,6 +62,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-       <!-- <Button x:Name="AddEventBtn" Text="+" IsVisible="{Binding IsTeacher}" BackgroundColor="Green" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="End"/>-->
+
+        <!-- <Button x:Name="AddEventBtn" Text="+" IsVisible="{Binding IsTeacher}" BackgroundColor="Green" WidthRequest="80" HeightRequest="80" FontSize="50" Padding="0,-2" VerticalOptions="End" HorizontalOptions="End"/>-->
     </VerticalStackLayout>
 </ContentPage>

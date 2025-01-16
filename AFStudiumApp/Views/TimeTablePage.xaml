@@ -4,7 +4,7 @@
              x:Class="AFStudiumApp.TimeTablePage"
              Title="TimeTablePage">
     <VerticalStackLayout>
-        <CarouselView  HeightRequest="300" ItemsSource="{Binding EventsOfWeekCollection}">
+        <CarouselView  VerticalOptions="Fill" ItemsSource="{Binding EventsOfWeekCollection}">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>

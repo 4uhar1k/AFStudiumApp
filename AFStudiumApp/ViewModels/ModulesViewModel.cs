@@ -463,7 +463,7 @@ namespace AFStudiumApp.ViewModels
                     //else if (e.EventType == "Studienleistung")
                     //    Permits.Add(e);
                 }
-                var myevents = await _apiClient.GetMyEvents(CurMatrikel);
+                var myevents = await _apiClient.GetConnectionsByUserId(CurMatrikel);
                 foreach (Event e in myevents)
                 {
                     if (e.EventType != "Klausur")

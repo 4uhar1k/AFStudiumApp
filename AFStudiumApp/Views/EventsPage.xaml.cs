@@ -58,8 +58,12 @@ public partial class EventsPage : ContentPage
         BindingContext = thisContext;
 		if (thisContext.CurRole == "student")
 		{
-            GetMyEvents(isExam);
+            //GetMyEvents(isExam);
 			SubjectsCollection.IsVisible = false;
+            if (isExam)
+                MySubjectsCollection.ItemsSource = thisContext.MyExams;
+            else
+                MySubjectsCollection.ItemsSource = thisContext.MyEvents;
         }
 		else
 		{
@@ -76,17 +80,21 @@ public partial class EventsPage : ContentPage
         var myevents = await _apiService.GetConnectionsByUserId(thisContext.CurMatrikel);
 		List<Event> notexams = new List<Event>();
 		List<Event> exams = new List<Event>();
-		foreach (Event e in myevents)
+		if (myevents != null)
 		{
-			if (e.EventType != "Klausur")
-				notexams.Add(e);
-			else
-				exams.Add(e);
-		}
-		if (isExam == false)
-            MySubjectsCollection.ItemsSource = notexams;
-		else
-            MySubjectsCollection.ItemsSource = exams;
+            foreach (Event e in myevents)
+            {
+                if (e.EventType != "Klausur")
+                    notexams.Add(e);
+                else
+                    exams.Add(e);
+            }
+            if (isExam == false)
+                MySubjectsCollection.ItemsSource = notexams;
+            else
+                MySubjectsCollection.ItemsSource = exams;
+        }
+		
     }
     /*public void SearchEvent(object sender, EventArgs e)
 	{
