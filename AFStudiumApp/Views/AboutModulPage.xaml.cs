@@ -48,6 +48,7 @@ public partial class AboutModulPage : ContentPage
         {
             var SelectedEvent = (Event)e.CurrentSelection[0];
             await Navigation.PushAsync(new AddEventPage(_apiClient, SelectedEvent, thisContext.IsTeacher));
+            SubjectsCollection.SelectedItem = null;
         }
 
     }

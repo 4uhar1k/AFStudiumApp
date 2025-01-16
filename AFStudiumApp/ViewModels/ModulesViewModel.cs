@@ -337,6 +337,7 @@ namespace AFStudiumApp.ViewModels
                 e.Date = Date.ToString("dd.MM.yyyy");
             if (isAdding)
             {
+                
                 if (PermitRequired)
                 {
                     sl.SubjectId = SubjectId;
@@ -350,6 +351,7 @@ namespace AFStudiumApp.ViewModels
                     var events = await _apiClient.GetEventsBySubjectId(SubjectId);
                     Event studienleistung = events.Where(n => n.EventType == "Studienleistung").FirstOrDefault();
                     e.PermitionEvent = studienleistung.EventId;
+                    await _apiClient.PostConnection(CurMatrikel, studienleistung.EventId, 1);
                 }   
                 else if (e.EventType == "Studienleistung")
                 {
@@ -359,7 +361,11 @@ namespace AFStudiumApp.ViewModels
 
                 }
                 await _apiClient.PostEvent(e);
-                Connections ConOfCreator = new Connections() { EventId = e.EventId, StudentId = CurMatrikel, Status = 1 };
+                //var  = await _apiClient.GetEventsBySubjectId(SubjectId);
+                var updevents = await _apiClient.GetEventsBySubjectId(SubjectId);
+                Event addedevent = updevents.Where(n => n.EventName == EventName).FirstOrDefault();
+                //Connections ConOfCreator = new Connections() { EventId = e.EventId, StudentId = CurMatrikel, Status = 1 };
+                await _apiClient.PostConnection(CurMatrikel, addedevent.EventId, 1);
             }                
             else
             {
@@ -367,7 +373,23 @@ namespace AFStudiumApp.ViewModels
                 if (OldPermitRequired & !PermitRequired)
                 {
                     var events = await _apiClient.GetEventsBySubjectId(SubjectId);
-                    await _apiClient.DeleteEvent(events.Where(n => n.EventType == "Studienleistung").FirstOrDefault().EventId);
+                    try
+                    {
+                        var connections = await _apiClient.GetConnectionsByEventId(e.PermitionEvent);
+                        if (connections != null)
+                        {
+                            foreach (Connections con in connections)
+                            {
+                                await _apiClient.DeleteConnection(con.StudentId, con.EventId);
+                            }
+                        }
+                        
+                        
+                        //await _apiClient.DeleteEvent(e.PermitionEvent);
+                        await _apiClient.DeleteEvent(events.Where(n => n.EventType == "Studienleistung").FirstOrDefault().EventId);
+                    }
+                    catch { }
+                    
                 }
                 else if (!OldPermitRequired & PermitRequired)
                 {
@@ -382,6 +404,7 @@ namespace AFStudiumApp.ViewModels
                     var events = await _apiClient.GetEventsBySubjectId(SubjectId);
                     Event studienleistung = events.Where(n => n.EventType == "Studienleistung").FirstOrDefault();
                     e.PermitionEvent = studienleistung.EventId;
+                    await _apiClient.PostConnection(CurMatrikel, studienleistung.EventId, 1);
                 }
                 else if (e.EventType == "Studienleistung")
                 {

@@ -68,7 +68,7 @@ public partial class AddEventPage : ContentPage
         }
         else
         {
-            
+            EventPicker.Title = "Studienleistung";
             EventPicker.IsEnabled = false;
             PermitReqCheck.IsVisible = false;
             CreditsEntry.IsVisible = false;
@@ -286,6 +286,11 @@ public partial class AddEventPage : ContentPage
 			
 
         }*/
+    }
+
+    public async void GoBack(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 
 }

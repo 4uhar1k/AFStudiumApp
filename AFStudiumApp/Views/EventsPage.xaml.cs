@@ -111,6 +111,8 @@ public partial class EventsPage : ContentPage
         {
             Event SelectedEvent = (Event)e.CurrentSelection[0];
 			await Navigation.PushAsync(new AddEventPage(_apiService, SelectedEvent, thisContext.IsTeacher));
+			SubjectsCollection.SelectedItem = null;
+			MySubjectsCollection.SelectedItem = null;
         }
         
     }

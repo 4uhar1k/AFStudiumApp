@@ -30,7 +30,8 @@ public partial class ModulesPage : ContentPage
 		{
 			var SelectedSubject = (Subject)e.CurrentSelection[0];
 			await Navigation.PushAsync(new AboutModulPage(_apiClient, SelectedSubject, thisContext.IsTeacher));
-		}
+            MySubjectsCollection.SelectedItem = null;
+        }
 	}
     public async void ShowModul(object sender, SelectionChangedEventArgs e)
     {
@@ -38,6 +39,7 @@ public partial class ModulesPage : ContentPage
         {
             var SelectedSubject = (Subject)e.CurrentSelection[0];
             await Navigation.PushAsync(new AboutModulPage(_apiClient, SelectedSubject, false));
+            SubjectsCollection.SelectedItem = null;
         }
     }
     public async void EditModule(object sender, EventArgs e)
