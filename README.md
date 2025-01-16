@@ -22,4 +22,5 @@ How to test the application:
 6) Use the MySQL database attached to this repository (afstudiumdb.sql).
 
 If you got any troubles feel free to text me.
+
 Have fun by testing!
