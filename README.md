@@ -23,9 +23,8 @@ How to test the application:
 1) Clone this repository to your PC.
 2) Clone the AFStudiumDBAPI repository from this link: https://github.com/4uhar1k/AFStudiumDBAPI
 3) Combine both repositories into a single Visual Studio solution.
-4) Right-click on the AFStudiumAPIClient project, select Build Dependencies, then Project Dependencies, and check the box for AFStudiumDBAPI.
-5) Right-click on the AFStudium project, select Build Dependencies, then Project Dependencies, and check the box for AFStudiumAPIClient.
-6) Use the MySQL database attached to this repository (afstudiumdb.sql).
+4) Right-click on the AFStudium project, select Build Dependencies, then Project Dependencies, and check the box for AFStudiumAPIClient.
+5) Use the MySQL database attached to this repository (afstudiumdb.sql).
 
 If you got any troubles feel free to text me.
 
